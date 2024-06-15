@@ -27,13 +27,21 @@ export const BidSeparationTableExample = ({
     loops = 2;
   }
 
+  const roundToTwo = (value: number) => Number(value.toFixed(2));
+
+  let initialCostPerClick = costPerClick;
+
   for (let i = 0; i < loops; i++) {
-    if (i > 0 && costPerClick > 0) {
-      bidSeparationArray.push(
-        (costPerClick += costPerClick * (1 * bidSeparation))
-      );
+    if (i === 0) {
+      bidSeparationArray.push(roundToTwo(costPerClick));
+    } else if (i === 1) {
+      costPerClick =
+        initialCostPerClick + initialCostPerClick * (1 * bidSeparation);
+      bidSeparationArray.push(roundToTwo(costPerClick));
     } else {
-      bidSeparationArray.push(costPerClick);
+      costPerClick =
+        initialCostPerClick + initialCostPerClick * (2 * bidSeparation);
+      bidSeparationArray.push(roundToTwo(costPerClick));
     }
   }
 

@@ -87,10 +87,13 @@ export default function BillingFaqs() {
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              Your very first payment is charged immediately via Stripe. Each
-              billing period is 30 days from the start date of your
+              Your very first payment is charged immediately via Stripe. After,
+              each billing period is 30 days from the start date of your
               subscription. Once a plan is selected, billing periods are managed
-              internally through stripe.
+              internally through stripe. Users are charged by the millisecond
+              for time used on the app to allow for seamless upgrading and
+              downgrading as needed (for appropriate billing proration). In the
+              event where a customer cancels, the billing is not prorated.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -113,7 +116,8 @@ export default function BillingFaqs() {
               become 0 and plan type updated to <code>'canceled'</code> plan.
             </Alert>
             <Typography gutterBottom variant="h6">
-              Did not upgrade or downgrade before canceling in same month?
+              What happens if I did not upgrade or downgrade before canceling in
+              same month?
             </Typography>
             <Typography
               variant="body2"
@@ -122,11 +126,11 @@ export default function BillingFaqs() {
             >
               As long as you canceled before the end of your next billing
               period, you will no longer receive any charges unless settling any
-              amount owed. These situations usually occur when
-              upgrading/downgrading before canceling in the same month.
+              amount owed. Additional fees are usually only incurred due to
+              upgrading & downgrading in the same month.
             </Typography>
             <Typography gutterBottom variant="h6">
-              Upgraded & Canceled
+              I upgraded then canceled, what happens?
             </Typography>
             <Typography
               variant="body2"
@@ -139,22 +143,27 @@ export default function BillingFaqs() {
               on a 'growing' and then upgraded to 'pro' and then canceled, the
               difference would be settled based on the amount of time passed
               since the original plan, the amount remaining on the new plan and
-              the difference in total due.
+              the difference in total due. The same is for the opposite case
+              (pro to growing). Please note that the prorations apply for the
+              following billing period.Your first month is charged in full.
             </Typography>
-            <Typography variant="h6">Downgraded & Canceled</Typography>
+            <Typography variant="h6">
+              I downgraded and canceled, what's next?
+            </Typography>
             <Typography
               variant="body2"
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
               In the event where you downgrade from 'pro' to 'growing' and then
-              cancel, the difference is applied as credit to your account. The
-              difference will be credited/charged. Note, all credits applied to
-              your balance are applied for future invoices. We do not issue
-              refunds for downgrades. If you wish to cancel your plan and not be
-              charged for an additional month, you must cancel before the plan
-              expiry date. Please make sure to review our privacy policy and
-              terms of service.
+              cancel, the difference is applied to your account. The difference
+              will be credited/charged. Note, all credits applied to your
+              balance are applied for future invoices. We do not issue refunds
+              for downgrades. If you wish to cancel your plan and not be charged
+              for an additional month, you must cancel before the plan expiry
+              date. Please make sure to review our privacy policy and terms of
+              service. Please note that the prorations apply for the following
+              billing period. Your first month is charged in full.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -178,13 +187,14 @@ export default function BillingFaqs() {
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
               If you upgrade your plan, Stripe prorates the subscription cost
-              when you upgraded. This means that the unused portion of the
-              currently paid billing period is credited towards the new plan.
-              The difference would be settled based on the amount of time passed
-              since the original plan, the amount remaining on the new plan and
-              the difference in total due. In the event where you downgrade from
-              'pro' to 'growing', the difference is applied on top of the
-              subscription fee for the next billing cycle.
+              when you upgrade/downgrade. This means that the unused portion of
+              the currently paid billing period is credited towards the new
+              plan. The difference would be settled based on the amount of time
+              passed since the currently selected plan, the would be amount of
+              time remaining on the new plan and the calculated difference in
+              total due. In the event where you downgrade from 'pro' to
+              'growing', the difference is applied on top of the subscription
+              fee for the next billing cycle.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -208,7 +218,7 @@ export default function BillingFaqs() {
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              All features are available except tiered campaign creation. It it
+              All features are available except tiered campaign creation. It is
               encouraged to create the campaigns you need before canceling.
               After you've canceled, your creation quota will become 0 and any
               further attemps will result in an unathorized error.
@@ -225,9 +235,9 @@ export default function BillingFaqs() {
             id="panel6d-header"
           >
             <Typography component="h3" variant="subtitle2">
-              I started off as pro, created 15 campaigns, then quickly
-              downgraded to the <code>growing</code> plan. Why am I seeing a
-              lower campaign quota for my new billing period?
+              I started off as pro, created 15 campaigns, then downgraded to the{" "}
+              <code>growing</code> plan. Why am I seeing a lower campaign quota
+              for my new billing period?
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
@@ -237,9 +247,10 @@ export default function BillingFaqs() {
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
               If you downgrade after exceeding the campaign quota of a growing
-              plan, the difference is deducted from your next billing period.
-              This keeps it fair for us to offer the service as intended as well
-              as for the customers who use our service as intended.
+              plan, the difference is deducted from your quota for next billing
+              period. Campaign creation quotas are managed internally by Query
+              Level. Each user is allowed a specific set of tiered campaign
+              creations each month.
             </Typography>
           </AccordionDetails>
         </Accordion>

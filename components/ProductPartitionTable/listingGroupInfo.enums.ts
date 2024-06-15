@@ -1,22 +1,3 @@
-import { enums } from "google-ads-api";
-
-//listing group details
-
-enums.ListingGroupType;
-enums.ListingGroupFilterType;
-enums.ListingGroupFilterProductTypeLevel;
-enums.ListingGroupFilterProductCondition;
-enums.ListingGroupFilterProductTypeLevel;
-enums.ListingGroupFilterType;
-
-const listingGroupType = {
-  [enums.ListingGroupType.SUBDIVISION]: "SUBDIVISION",
-  [enums.ListingGroupType.UNIT]: "UNIT",
-  [enums.ListingGroupType.UNSPECIFIED]: " NOT SPECIFIED",
-};
-
-const listingGroupTypeFilter = {};
-
 /**
  * LISTING_GROUP_INFO
 

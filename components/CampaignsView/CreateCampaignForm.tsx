@@ -406,11 +406,7 @@ const CreateNewCampaign = () => {
           {message && (
             <Stack>
               <Typography color="text.secondary">{message}</Typography>
-              <Button
-                variant="outlined"
-                component={Link}
-                href="/create-campaign"
-              >
+              <Button variant="outlined" component={Link} href="/campaign-view">
                 Close
               </Button>
             </Stack>

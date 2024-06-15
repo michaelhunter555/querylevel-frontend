@@ -147,7 +147,8 @@ export const useCreateRootPartitionNode = () => {
     setCreateRootNodeIsLoading(true);
     try {
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_APP_SERVER}/api/adGroupActions/AdGroupCriterionActions/create-root-node?id=${session?.user?._id}&adGroupId=${adGroupId}`
+        `${process.env.NEXT_PUBLIC_APP_SERVER}/api/adGroupActions/AdGroupCriterionActions/create-root-node?id=${session?.user?._id}&adGroupId=${adGroupId}`,
+        { method: "POST" }
       );
 
       if (!response.ok) {

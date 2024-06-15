@@ -1,9 +1,4 @@
-import React, {
-  useCallback,
-  useEffect,
-  useMemo,
-  useState,
-} from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 
 import {
   MaterialReactTable,
@@ -12,60 +7,52 @@ import {
   MRT_RowData,
   MRT_RowSelectionState,
   useMaterialReactTable,
-} from 'material-react-table';
-import { useSession } from 'next-auth/react';
-import dynamic from 'next/dynamic';
+} from "material-react-table";
+import { useSession } from "next-auth/react";
+import dynamic from "next/dynamic";
 
-import {
-  useCreateAdGroup,
-  useGetAdGroups,
-} from '@/hooks/adGroups-hook';
+import { useCreateAdGroup, useGetAdGroups } from "@/hooks/adGroups-hook";
 import {
   useAdScheduleApi,
   useDeleteCampaign,
   useInventoryFilter,
   useUpdateCampaignStatus,
-} from '@/hooks/campaign-hooks';
+} from "@/hooks/campaign-hooks";
 import {
   useCreateRootPartitionNode,
   useEditProductPartition,
   useGetProductPartitions,
   useUpdateCpcBids,
   useUpdateNegativeStatus,
-} from '@/hooks/productPartion-hook';
-import {
-  NestedProps,
-  UserCampaign,
-} from '@/types';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import EventRepeatIcon from '@mui/icons-material/EventRepeat';
-import Inventory2OutlinedIcon from '@mui/icons-material/Inventory2Outlined';
-import PublicIcon from '@mui/icons-material/Public';
-import SettingsIcon from '@mui/icons-material/Settings';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Divider from '@mui/material/Divider';
-import Fab from '@mui/material/Fab';
-import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Tooltip from '@mui/material/Tooltip';
-import Typography from '@mui/material/Typography';
+} from "@/hooks/productPartion-hook";
+import { NestedProps, UserCampaign } from "@/types";
+import ArrowBackIcon from "@mui/icons-material/ArrowBack";
+import EventRepeatIcon from "@mui/icons-material/EventRepeat";
+import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
+import PublicIcon from "@mui/icons-material/Public";
+import SettingsIcon from "@mui/icons-material/Settings";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import Fab from "@mui/material/Fab";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
+import Typography from "@mui/material/Typography";
 import {
   QueryObserverResult,
   RefetchOptions,
   useQuery,
-} from '@tanstack/react-query';
+} from "@tanstack/react-query";
 
-import { AdScheduleModal } from '../AdScheduleModal.tsx/AdScheduleModal';
-import { AdGroupsTableData } from '../CampaignsView/AdGroupsTable';
-import {
-  CampaignViewSideBar,
-} from '../CampaignsView/CampaignViewSideBarMenu/CampaignViewSideBar';
+import { AdScheduleModal } from "../AdScheduleModal.tsx/AdScheduleModal";
+import { AdGroupsTableData } from "../CampaignsView/AdGroupsTable";
+import { CampaignViewSideBar } from "../CampaignsView/CampaignViewSideBarMenu/CampaignViewSideBar";
 //import  RenderCampaignViewSideBar from "../CampaignsView/CampaignViewSideBarMenu/RenderCampaignViewSideBar";
 //import { EditCampaignDrawer } from "../EditCampaignDrawer/EditCampaignDrawer";
-import { GeoLocationModal } from '../Modal/GeoLocationModal';
-import { InventoryFilterModal } from '../Modal/InventoryFilterModal';
-import { StatusDot } from '../Shared/StatusDot';
+import { GeoLocationModal } from "../Modal/GeoLocationModal";
+import { InventoryFilterModal } from "../Modal/InventoryFilterModal";
+import { StatusDot } from "../Shared/StatusDot";
 
 const EditCampaignDrawer = dynamic(
   () => import("../EditCampaignDrawer/EditCampaignDrawer"),
@@ -334,7 +321,7 @@ const DynamicCampaignTable = ({
     staleTime: Infinity,
   });
 
-  console.log("Product Partition Data:", productPartitionData);
+  //console.log("Product Partition Data:", productPartitionData);
 
   const { data: listingScopeData, isLoading: loadingListingScope } = useQuery({
     queryKey: ["listingScopeData", campaignId],

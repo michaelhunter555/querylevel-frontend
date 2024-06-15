@@ -6,7 +6,7 @@ import { decryptData } from "@/util/encryption/decryptData";
 import { encryptData } from "@/util/encryption/encryptData";
 import { PaletteMode } from "@mui/material";
 
-import dbConnect from "../dbConnect";
+import dbConnect from "../../../util/dbConnect";
 
 declare module "next-auth" {
   interface Session extends AuthOptions {
