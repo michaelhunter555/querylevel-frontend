@@ -13,7 +13,6 @@ import { AuthActionTypes } from "@/context/authActions";
 import { userCanAccessApp } from "@/util/helpers/confirmUserPrivelages";
 import { selectPalette } from "@/util/siteTheme/selectPalette";
 import { createTheme, ThemeProvider } from "@mui/material";
-import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
@@ -35,7 +34,7 @@ const AppLayout = ({ children }: LayoutProps) => {
   const authContext = useContext(AuthContext);
   const [openPrivacyPolicy, setOpenPrivacyPolicy] = useState(false);
   const [openTerms, setOpenTerms] = useState(false);
-  const [component, setComponent] = useState("authenticate"); //billing
+  //const [component, setComponent] = useState("authenticate"); //billing
   const canAccess = userCanAccessApp(session);
   const routerIsHome = router.pathname === "/";
   const routerIsAuthPage = router.pathname === "/user-dashboard";
@@ -58,7 +57,7 @@ const AppLayout = ({ children }: LayoutProps) => {
     if (session?.user?._id && !canAccess) {
       router.push("/manage-subscription"); //instead route to /manage-subscription page
     }
-  }, [session?.user?._id, component]);
+  }, [session?.user?._id]);
 
   useEffect(() => {
     if (source === "stripe") {
@@ -103,7 +102,7 @@ const AppLayout = ({ children }: LayoutProps) => {
                 {children}
               </Grid>
             )}
-            {status === "loading" && <CircularProgress />}
+            {/* {status === "loading" && <CircularProgress />} */}
           </Grid>
         </Content>
         <Divider variant="fullWidth" flexItem sx={{ marginTop: "5rem" }} />

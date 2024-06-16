@@ -9,7 +9,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-export const UserAccountCard = () => {
+export const UserAccountCard = ({ loading }: { loading: boolean }) => {
   const { data: session } = useSession();
 
   const handleSignOut = () => {
@@ -33,7 +33,8 @@ export const UserAccountCard = () => {
           sx={{ width: 50, height: 50, marginBottom: 1 }}
         />
         <Typography variant="subtitle2" color="text.secondary">
-          Connected to Account Id: {session?.user?.googleAccountId}
+          Connected to Account Id:{" "}
+          {loading ? "loading..." : session?.user?.googleAccountId}
         </Typography>
       </Stack>
       <Stack justifyContent="center" alignItems="center" sx={{ width: "100%" }}>

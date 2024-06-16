@@ -7,6 +7,7 @@ import { useGetGoogleAdAccountId } from "@/hooks/accountId-hook";
 import { useGetAppAnalytics } from "@/hooks/customer-hooks";
 import { ProductPerformanceData } from "@/types";
 import { SelectChangeEvent } from "@mui/material";
+import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import Skeleton from "@mui/material/Skeleton";
@@ -90,10 +91,9 @@ const GoogleAuthButton = () => {
   //This hook should only ever run once as long as the user's data is not removed from the DB.
   useEffect(() => {
     if (session?.user?._id && !session?.user?.googleAccountId) {
-      // console.log("get Resources Names ran.");
       getResourceNamesHandler();
     }
-  }, [session?.user?._id, session?.user?.googleAccountId]);
+  }, [session?.user?._id]);
 
   //const worker = new Worker("worker.ts")
 
@@ -206,16 +206,21 @@ const GoogleAuthButton = () => {
             onSegmentChange={segmentsHandler}
           />
         )}
-
-        {!isLoading && session?.user?._id && <UserAccountCard />}
+        {/* isLoading represents cases for needing to find the user's GoogleAccountId */}
         {isLoading && (
-          <Stack spacing={2} alignItems="center" direction="row">
-            <LinearProgress />
+          <Stack
+            spacing={2}
+            alignItems="center"
+            direction="row"
+            sx={{ width: "50%" }}
+          >
+            <CircularProgress />
             <Typography color="text.secondary">
-              Fetching Google AccountId...Please wait.
+              Initializing app for new user...Please wait.
             </Typography>
           </Stack>
         )}
+        {session?.user?._id && <UserAccountCard loading={isLoading} />}
 
         <Stack direction="column" alignItems="center" spacing={2}>
           <UserNotLoggedIn isLoading={isLoading as boolean} />
