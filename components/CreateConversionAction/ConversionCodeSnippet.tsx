@@ -13,7 +13,6 @@ interface IConversionSnippet {
 }
 
 export const ConversionCode = ({ data }: IConversionSnippet) => {
-  console.log("CONVERSION DATA", data);
   return (
     <Stack spacing={2}>
       {data?.tag_snippets?.length && (

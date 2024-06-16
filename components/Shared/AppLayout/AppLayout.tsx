@@ -40,8 +40,10 @@ const AppLayout = ({ children }: LayoutProps) => {
   const routerIsHome = router.pathname === "/";
   const routerIsAuthPage = router.pathname === "/user-dashboard";
 
+  const checkUserStatus = status !== "loading" && status === "unauthenticated";
+
   useEffect(() => {
-    if (!session?.user?._id && !routerIsHome && !routerIsAuthPage) {
+    if (checkUserStatus && !routerIsHome && !routerIsAuthPage) {
       router.push("/user-dashboard");
     }
   }, [session?.user?._id, router]);
@@ -49,21 +51,18 @@ const AppLayout = ({ children }: LayoutProps) => {
   useEffect(() => {
     if (!session?.user?._id && authContext?.state.accountId) {
       authContext?.dispatch({ type: AuthActionTypes.LOGOUT });
-      console.log("I Ran");
     }
   }, [session?.user?._id, authContext?.state.accountId]);
 
   useEffect(() => {
     if (session?.user?._id && !canAccess) {
       router.push("/manage-subscription"); //instead route to /manage-subscription page
-      console.log("me tooo billing check");
     }
   }, [session?.user?._id, component]);
 
   useEffect(() => {
     if (source === "stripe") {
       router.push("/manage-subscription"); //instead route to billing page
-      console.log("Page source check");
     }
   }, [source]);
 

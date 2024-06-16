@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
@@ -20,8 +21,18 @@ import { ToggleTheme } from "./ToggleTheme";
 const SidebarMenu: React.FC<{
   hasAppAccess: boolean;
 }> = ({ hasAppAccess }): JSX.Element => {
+  const router = useRouter();
   const { data: session } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
+  useEffect(() => {
+    if (router.pathname) {
+      const index = menuItems?.findIndex(
+        (value) => value?.route === router.pathname
+      );
+      setSelectedIndex(index !== -1 ? index : 0);
+    }
+  }, [router.pathname]);
 
   return (
     <>
@@ -56,10 +67,7 @@ const SidebarMenu: React.FC<{
                   disabled={!session?.user?._id || !hasAppAccess}
                   sx={{ borderRadius: "15px" }}
                   selected={selectedIndex === i}
-                  onClick={() => {
-                    // onMenuItemClick(menuText.component);
-                    setSelectedIndex(i);
-                  }}
+                  aria-current={selectedIndex === i ? "page" : undefined}
                 >
                   <ListItemIcon>{menuText.icon}</ListItemIcon>
                   <ListItemText
