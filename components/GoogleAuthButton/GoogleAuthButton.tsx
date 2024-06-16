@@ -11,6 +11,7 @@ import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
 //import AccountDataCards from "./AccountDataCards";
@@ -88,18 +89,19 @@ const GoogleAuthButton = () => {
   //check if the user has a googleAccountId added yet.
   //This hook should only ever run once as long as the user's data is not removed from the DB.
   useEffect(() => {
-    if (session?.user?._id && session?.user?.googleAccountId === "") {
+    if (session?.user?._id && !session?.user?.googleAccountId) {
       // console.log("get Resources Names ran.");
       getResourceNamesHandler();
     }
   }, [session?.user?._id, session?.user?.googleAccountId]);
 
-  //const worker = new Worker("worker.ts");
+  //const worker = new Worker("worker.ts")
 
   const authDataIsAvailable =
     session?.user?._id !== undefined &&
     segment &&
-    session?.user?.googleAccountId !== "";
+    session?.user?.googleAccountId;
+
   const { data: shoppingPerformanceData, isLoading: analyticsLoading } =
     useQuery({
       queryKey: ["AppAnalytics", segment],
@@ -206,6 +208,14 @@ const GoogleAuthButton = () => {
         )}
 
         {!isLoading && session?.user?._id && <UserAccountCard />}
+        {isLoading && (
+          <Stack spacing={2} alignItems="center" direction="row">
+            <LinearProgress />
+            <Typography color="text.secondary">
+              Fetching Google AccountId...Please wait.
+            </Typography>
+          </Stack>
+        )}
 
         <Stack direction="column" alignItems="center" spacing={2}>
           <UserNotLoggedIn isLoading={isLoading as boolean} />
