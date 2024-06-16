@@ -15,7 +15,7 @@ export const useGetGoogleAdAccountId = () => {
     try {
       const response = await fetch(
         `${process.env.NEXT_PUBLIC_APP_SERVER}/api/get-resource-names?id=${session?.user._id}`,
-        { method: "POST" }
+        { method: "GET" }
       );
 
       if (!response.ok) {
