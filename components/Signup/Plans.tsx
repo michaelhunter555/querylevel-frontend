@@ -297,7 +297,6 @@ const UserPlans = ({
                       }}
                     />
                     <Typography
-                      component="text"
                       variant="subtitle2"
                       sx={{
                         color:

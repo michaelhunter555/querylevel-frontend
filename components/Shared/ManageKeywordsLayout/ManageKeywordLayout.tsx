@@ -20,7 +20,10 @@ import { useQuery } from "@tanstack/react-query";
 interface ManageKeywordLayoutProps {
   keywordLevel: "AD_GROUP" | "CAMPAIGN";
   getCampaignNames: () => Promise<string[]>;
-  getNegativeKeywords: (campaignId: string) => Promise<any>;
+  getNegativeKeywords: (
+    campaignId: string,
+    keywordLevel: "AD_GROUP" | "CAMPAIGN"
+  ) => Promise<any>;
   ManageNegativeKeywordsComponent: React.ComponentType<{
     keywordLevel: "AD_GROUP" | "CAMPAIGN";
     campaignId: string;
@@ -67,8 +70,9 @@ const ManageKeywordsLayout = ({
 
   const { data: negativeKeywordsData, isLoading: negativeKeywordsLoading } =
     useQuery({
-      queryKey: ["negativeKeywords", campaignId?.split(":")[1]],
-      queryFn: () => getNegativeKeywords(campaignId?.split(":")[1]),
+      queryKey: ["negativeKeywords", campaignId?.split(":")[1], keywordLevel],
+      queryFn: () =>
+        getNegativeKeywords(campaignId?.split(":")[1], keywordLevel),
       enabled: Boolean(campaignId?.split(":")[1] && session?.user?._id),
       staleTime: Infinity,
     });

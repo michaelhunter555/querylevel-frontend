@@ -154,10 +154,6 @@ export default function HomePageFooter({ mode }: HomeFooter) {
                   sx={{ minWidth: "auto" }}
                   aria-label="Enter your email address"
                   placeholder="Your email address"
-                  inputProps={{
-                    autocomplete: "off",
-                    ariaLabel: "Enter your email address",
-                  }}
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
                     inputHandler(
                       "subscribeEmail",
@@ -173,11 +169,6 @@ export default function HomePageFooter({ mode }: HomeFooter) {
                         true
                       );
                     }
-                    console.log(
-                      "EMAIL IS VALID:",
-                      emailIsValid(e.target.value),
-                      formState.isValid
-                    );
                   }}
                 />
                 <Button

@@ -188,10 +188,13 @@ export const useGetShoppingSearchTerms = () => {
 
   //negativeKeywords at ad_group_criterion level
   const getNegativeKeywords = useCallback(
-    async (campaignId: string | number) => {
+    async (
+      campaignId: string | number,
+      keywordLevel: "AD_GROUP" | "CAMPAIGN"
+    ) => {
       try {
         const response = await fetch(
-          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/get-negative-keywords?id=${session?.user?._id}&campaignId=${campaignId}`,
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/get-negative-keywords?id=${session?.user?._id}&campaignId=${campaignId}&keywordLevel=${keywordLevel}`,
           { method: "GET" }
         );
         if (!response.ok) {
@@ -202,28 +205,32 @@ export const useGetShoppingSearchTerms = () => {
 
         const data = await response.json();
 
-        const flattenAdGroupCriterionKeywords = data.adGroupCriterion?.map(
-          (keywords: NegativeKeywordView) => {
-            return {
-              ...keywords.ad_group_criterion,
-              ...keywords,
-            };
-          }
-        );
+        if (data?.keywordLevel && data?.keywordLevel === "AD_GROUP") {
+          const flattenAdGroupCriterionKeywords = data.adGroupCriterion?.map(
+            (keywords: NegativeKeywordView) => {
+              return {
+                ...keywords.ad_group_criterion,
+                ...keywords,
+              };
+            }
+          );
 
-        const flattenCampaignCriterionKeywords = data.campaignCriterion?.map(
-          (keywords: NegativeCampaignCriterionKeywordView) => {
-            return {
-              ...keywords.campaign_criterion,
-              ...keywords,
-            };
-          }
-        );
-
-        return {
-          flattenAdGroupCriterionKeywords,
-          flattenCampaignCriterionKeywords,
-        };
+          return {
+            flattenAdGroupCriterionKeywords,
+          };
+        } else if (data?.keywordLevel && data.keywordLevel === "CAMPAIGN") {
+          const flattenCampaignCriterionKeywords = data.campaignCriterion?.map(
+            (keywords: NegativeCampaignCriterionKeywordView) => {
+              return {
+                ...keywords.campaign_criterion,
+                ...keywords,
+              };
+            }
+          );
+          return {
+            flattenCampaignCriterionKeywords,
+          };
+        }
       } catch (err) {
         console.log(err);
       }
