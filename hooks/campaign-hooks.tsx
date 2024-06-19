@@ -388,7 +388,7 @@ export const useUpdateCampaign = () => {
           throw new Error("There was an error updating the campaign");
         }
         setupdatedDetailsSuccess(response.ok);
-        console.log("API RESPONSE:", response.ok);
+
         setMessage(response.message);
       } catch (err) {}
     },

@@ -44,7 +44,7 @@ export const LocalInventory = ({ inputHandler, formState }: LocalInventory) => {
                   }
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     inputHandler(
-                      "enableLocalInventory",
+                      "enableLocalInventory", //enableLocalInventory
                       event.target.checked as boolean,
                       true
                     );

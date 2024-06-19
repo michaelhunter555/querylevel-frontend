@@ -48,7 +48,7 @@ export const initialCampaignState = {
     isValid: false,
   },
   enableLocalInventory: {
-    value: "",
+    value: false,
     isValid: false,
   },
   salesCountry: {

@@ -34,6 +34,7 @@ export const createUpdateCampaignShoppingSettings = (formState: State) => ({
 export const createUpdateCampaignBiddingStrategyType = (formState: State) => ({
   bidding_strategy_type: formState?.inputs?.biddingStrategyType?.value, // number
   bidding_strategy: formState?.inputs?.biddingStrategy?.value, // string
+  enhanced_click: formState?.inputs?.enhancedClick?.value,
   ...(formState?.inputs?.newPortfolioStrategyName?.value
     ? {
         strategy_name: formState?.inputs?.newPortfolioStrategyName?.value,
@@ -42,11 +43,6 @@ export const createUpdateCampaignBiddingStrategyType = (formState: State) => ({
   ...(formState?.inputs?.targetRoasValue?.value
     ? {
         target_roas: formState?.inputs?.targetRoasValue?.value,
-      }
-    : {}),
-  ...(formState?.inputs?.enhancedClick?.value
-    ? {
-        enhanced_click: formState?.inputs?.enhancedClick?.value,
       }
     : {}),
 });

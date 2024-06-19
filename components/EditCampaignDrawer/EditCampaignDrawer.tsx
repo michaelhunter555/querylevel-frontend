@@ -139,9 +139,9 @@ const EditCampaignDrawer = ({
 
   const updateCampaignSettingsHandler = async () => {
     const updatedCampaignSettings = createUpdateCampaignSettings(formState);
-    if (campaignData && typeof campaignData[0]?.id === "number") {
+    if (campaignData && typeof campaignId === "number") {
       await updateCampaignSettings(
-        campaignData[0]?.id as number,
+        campaignId as number,
         updatedCampaignSettings
       ).then(() => invalidateQuery("editableCampaign"));
     }
@@ -150,9 +150,9 @@ const EditCampaignDrawer = ({
 
   const updateNetworkSettingsHandler = async () => {
     const updatedNetworkSettings = createUpdateNetworkSettings(formState);
-    if (campaignData && typeof campaignData[0]?.id === "number") {
+    if (campaignData && typeof campaignId === "number") {
       updateCampaignNetworkSettings(
-        campaignData[0]?.id as number,
+        campaignId as number,
         updatedNetworkSettings
       ).then(() => invalidateQuery("editableCampaign"));
     }
@@ -170,7 +170,7 @@ const EditCampaignDrawer = ({
       };
 
       await updateCampaignBudgetSettings(
-        campaignData[0]?.id,
+        campaignId,
         updatedCampaignBudget,
         currentCampaignBudget
       ).then(() => invalidateQuery("editableCampaign"));
@@ -181,14 +181,14 @@ const EditCampaignDrawer = ({
   const updateCampaignGeoTargetHandler = async () => {
     const updatedCampaignGeoTarget =
       createUpdateCampaignGeoTargetType(formState);
-    if (campaignData && typeof campaignData[0]?.id === "number") {
+    if (campaignData && typeof campaignId === "number") {
       // console.log(
-      //   campaignData[0]?.id,
+      //   campaignId,
       //   updatedCampaignGeoTarget,
       //   campaignData[0]?.geo_target_type_setting?.positive_geo_target_type
       // );
       await updateCampaignGeoTargeting(
-        campaignData[0]?.id as number,
+        campaignId as number,
         updatedCampaignGeoTarget
       ).then(() => invalidateQuery("editableCampaign"));
     }
@@ -198,9 +198,9 @@ const EditCampaignDrawer = ({
   const updateShoppingsSettingsHandler = async () => {
     const updatedCampaignShoppingSettings =
       createUpdateCampaignShoppingSettings(formState);
-    if (campaignData && typeof campaignData[0]?.id === "number") {
+    if (campaignData && typeof campaignId === "number") {
       updateCampaignShoppingSettings(
-        campaignData[0]?.id as number,
+        campaignId as number,
         updatedCampaignShoppingSettings
       ).then(() => invalidateQuery("editableCampaign"));
     }
@@ -210,10 +210,10 @@ const EditCampaignDrawer = ({
   const updateCampaignBiddingStrategyType = async () => {
     const updateBiddingStrategy =
       createUpdateCampaignBiddingStrategyType(formState);
-    // console.log(updateBiddingStrategy);
-    if (campaignData && typeof campaignData?.[0]?.id === "number") {
+
+    if (campaignData && typeof campaignId === "number") {
       updateBiddingStrategyType(
-        campaignData?.[0]?.id as number,
+        campaignId as number,
         updateBiddingStrategy as UpdateBiddingStrategy
       ).then(() => invalidateQuery("editableCampaign"));
     }
@@ -222,10 +222,10 @@ const EditCampaignDrawer = ({
 
   const updateCampaignEnableLocalInvetory = async () => {
     //const localInventoryStatus = createUpdateLocalInventory(formState);
-    if (campaignData && typeof campaignData[0]?.id === "number") {
+    if (campaignData && typeof campaignId === "number") {
       //console.log("jacked?", formState?.inputs.enableLocalInventory?.value);
       await updateLocalInventory(
-        campaignData[0]?.id,
+        campaignId,
         formState?.inputs?.enableLocalInventory?.value as boolean
       ).then(() => invalidateQuery("editableCampaign"));
     }
