@@ -43,7 +43,7 @@ type SharedBudgetResources = {
   };
 };
 
-export const BudgetType = ({
+const BudgetType = ({
   onGetSharedBudgetList,
   openSharedBudgets,
   formState,
@@ -159,3 +159,5 @@ export const BudgetType = ({
     </>
   );
 };
+
+export default BudgetType;

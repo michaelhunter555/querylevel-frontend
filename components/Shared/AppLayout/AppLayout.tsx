@@ -42,6 +42,12 @@ const AppLayout = ({ children }: LayoutProps) => {
   const checkUserStatus = status !== "loading" && status === "unauthenticated";
 
   useEffect(() => {
+    if (session?.user?._id && !session?.user?.googleAccountId) {
+      router.push("/no-account-id-found");
+    }
+  }, [session?.user?._id, session?.user?.googleAccountId]);
+
+  useEffect(() => {
     if (checkUserStatus && !routerIsHome && !routerIsAuthPage) {
       router.push("/user-dashboard");
     }

@@ -59,7 +59,11 @@ const SidebarMenu: React.FC<{
             <Link
               prefetch={false}
               key={i}
-              href={session?.user?._id ? `${menuText?.route}` : "#"}
+              href={
+                session?.user?._id && session?.user?.googleAccountId
+                  ? `${menuText?.route}`
+                  : "#"
+              }
               style={{ textDecoration: "none", color: "inherit" }}
             >
               <ListItem>

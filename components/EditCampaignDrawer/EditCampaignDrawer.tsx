@@ -35,7 +35,7 @@ import BiddingStrategy from "../CampaignsView/BiddingStrategy";
 import { LocalInventory } from "../LocalInventory/LocalInventory";
 ////import BiddingStrategy from "../CampaignsView/BiddingStrategy";
 import { accordionState } from "./accordionState";
-import { BudgetType } from "./EditCampaignComponents/BudgetType";
+import BudgetType from "./EditCampaignComponents/BudgetType";
 import { formStateHelper } from "./EditCampaignComponents/formStateHelper";
 import { InputableText } from "./EditCampaignComponents/InputableText";
 import { EditNetworkSettings } from "./EditCampaignComponents/NetworkSettings";

@@ -10,18 +10,23 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import { useQuery } from "@tanstack/react-query";
 
 const SearchTerms = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const [campaignId, setCampaignId] = useState<string>("");
   const [segment, setSegment] = useState("LAST_7_DAYS");
-  const sessionIsValid = session?.user._id && session?.user?.googleAccountId;
+  const sessionIsValid = session?.user._id;
+  const noAccountId =
+    status === "authenticated" && !session?.user?.googleAccountId;
+
   const { getShoppingCampaignNames } = useGetCampaigns();
 
   useEffect(() => {
-    if (!sessionIsValid) {
+    if (status === "unauthenticated") {
       router.push("/user-dashboard");
+    } else if (noAccountId) {
+      router.push("/no-account-id-found");
     }
-  }, [sessionIsValid]);
+  }, [status, noAccountId]);
 
   const handleCampaignChange = (campaignId: string) => {
     setCampaignId(campaignId);
