@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 
+import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import { useCampaign, useInventoryFilter } from "@/hooks/campaign-hooks";
 import { useGetPortfolioStrategy } from "@/hooks/portfolio-strategies";
@@ -56,6 +58,8 @@ const campaignSteps = [
 ];
 
 const CreateNewCampaign = () => {
+  const { data: session } = useSession();
+  const router = useRouter();
   const [targetedLocation, setTargetedLocation] = useState<string[]>([]);
   const [excludedLocation, setExcludedLocation] = useState<string[]>([]);
   const [activeStep, setActiveStep] = useState<number>(0);
@@ -90,6 +94,13 @@ const CreateNewCampaign = () => {
     portfolioStrategies,
     getPortfolioStrategy,
   } = useGetPortfolioStrategy();
+  const sessionIsValid = session?.user?._id && session?.user?.googleAccountId;
+
+  useEffect(() => {
+    if (!sessionIsValid) {
+      router.push("/user-dashboard");
+    }
+  }, [sessionIsValid]);
 
   const { data: resourceNames, isLoading } = useQuery({
     queryKey: ["MerchantCenterId"],

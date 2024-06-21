@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { NestedProps, UserCampaign } from "@/types";
 import { campaignView } from "@/util/helpers/campaignView";
@@ -35,10 +36,18 @@ interface CampaignView {
 
 const CampaignView = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const [segment, setSegment] = useState("LAST_7_DAYS");
   const [status, setStatus] = useState<string>("ENABLED");
   const [updatedCampaign, setUpdateCampaign] = useState(0);
   const [isNewCampaign, setIsNewCampaign] = useState(false);
+  const sessionIsValid = session?.user?._id && session?.user?.googleAccountId;
+
+  useEffect(() => {
+    if (!sessionIsValid) {
+      router.push("/user-dashboard");
+    }
+  }, [sessionIsValid]);
 
   const getCampaignData = async () => {
     try {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import { useRouter } from "next/router";
 
 import { useGetGoogleAdAccountId } from "@/hooks/accountId-hook";
 import { useGetAppAnalytics } from "@/hooks/customer-hooks";
@@ -78,9 +79,11 @@ const ProductPerformance = dynamic(() => import("./ProductPerformance"), {
 // });
 
 const GoogleAuthButton = () => {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
   const [segment, setSegment] = useState("LAST_7_DAYS");
-  const { isLoading, getResourceNamesHandler } = useGetGoogleAdAccountId();
+  const { isLoading, getResourceNamesHandler, accountIdError } =
+    useGetGoogleAdAccountId();
   const [processedData, setProcessedData] = useState<{
     dateData: any[];
     productData: ProductPerformanceData[];
@@ -94,6 +97,12 @@ const GoogleAuthButton = () => {
       getResourceNamesHandler();
     }
   }, [session?.user?._id]);
+
+  useEffect(() => {
+    if (status === "authenticated" && !isLoading && accountIdError) {
+      router.push("/no-account-id-found");
+    }
+  }, [accountIdError, isLoading, status]);
 
   //const worker = new Worker("worker.ts")
 

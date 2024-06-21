@@ -42,14 +42,8 @@ const AppLayout = ({ children }: LayoutProps) => {
   const checkUserStatus = status !== "loading" && status === "unauthenticated";
 
   useEffect(() => {
-    if (session?.user?._id && !session?.user?.googleAccountId) {
-      router.push("/no-account-id-found");
-    }
-  }, [session?.user?._id, session?.user?.googleAccountId]);
-
-  useEffect(() => {
     if (checkUserStatus && !routerIsHome && !routerIsAuthPage) {
-      router.push("/user-dashboard");
+      router.push("/");
     }
   }, [session?.user?._id, router]);
 
@@ -70,10 +64,6 @@ const AppLayout = ({ children }: LayoutProps) => {
       router.push("/manage-subscription"); //instead route to billing page
     }
   }, [source]);
-
-  // const handleMenuItemClick = (componentName: string) => {
-  //   setComponent(componentName);
-  // };
 
   const handlePrivacyPolicyModal = () => setOpenPrivacyPolicy((prev) => !prev);
   const handleTermsModal = () => setOpenTerms((prev) => !prev);

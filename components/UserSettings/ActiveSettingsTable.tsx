@@ -29,6 +29,7 @@ type UserDataProps = {
 };
 
 const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
+  console.log(user, "user");
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -46,7 +47,11 @@ const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
         <TableBody>
           <TableRow>
             <TableCell>
-              <Typography>{user?.stripeCustomerId ?? user?.userId}</Typography>
+              <Typography>
+                {!user?.stripeCustomerId
+                  ? user?.userId?.substring(0, 10) + " ..."
+                  : user?.stripeCustomerId}
+              </Typography>
             </TableCell>
             <TableCell>
               <Typography color="text.secondary" variant="h4">

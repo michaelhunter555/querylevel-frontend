@@ -1,14 +1,13 @@
 import { useCallback, useState } from "react";
 
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 
 import useHttp from "./http-hook";
 
 export const useGetGoogleAdAccountId = () => {
-  const router = useRouter();
   const { data: session, update } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [accountIdError, setAccountIdError] = useState<boolean>(false);
   const [resourceNamesArray, setResourceNamesArray] = useState<string[]>([]);
   const { sendRequest, isPostLoading } = useHttp();
 
@@ -23,10 +22,7 @@ export const useGetGoogleAdAccountId = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        // if (data.noAccountId) {
-        //   router.push("/no-account-id-found");
-        // } else {
-        // }
+        setAccountIdError(data.noAccountId);
         throw new Error(
           "There was an error with the request to get resource names."
         );
@@ -82,6 +78,7 @@ export const useGetGoogleAdAccountId = () => {
   );
 
   return {
+    accountIdError,
     isLoading,
     getResourceNamesHandler,
     resourceNamesArray,

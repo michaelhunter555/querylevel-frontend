@@ -19,7 +19,7 @@ const AppErrorPage = () => {
     <Paper elevation={2}>
       <Stack spacing={3} sx={{ padding: "2rem" }}>
         <Typography variant="h2">
-          There appears to be an issue with finding your google account Id
+          There appears to be an issue with finding your Google Ads account Id
         </Typography>
         <Typography gutterBottom>Below are 2 possible reasons.</Typography>
         <Typography color="text.secondary">
@@ -48,11 +48,11 @@ const AppErrorPage = () => {
           alignItems="center"
         >
           <Typography color="text.secondary">
-            2. The first image next to this text shows two key scopes that must
-            be granted in order for the app to be able to work properly. The
-            second image shows what your permissions should look like after
-            authorizing Query Level. If you did not authorize all scopes, the{" "}
-            <code> Google Scopes </code>
+            2. <code>ACCESS_TOKEN_SCOPE_INSUFFICIENT</code> - The first image
+            next to this text shows two key scopes that must be granted in order
+            for the app to be able to work properly. The second image shows what
+            your permissions should look like after authorizing Query Level. If
+            you did not authorize all scopes, the <code> Google Scopes </code>
             requested by <code>QueryLevel</code> were either partially granted
             or not granted at all. The type of authorization granted does not
             grant QueryLevel access to retrieve and aggregate your{" "}
