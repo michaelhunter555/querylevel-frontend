@@ -133,7 +133,7 @@ const UserSettings = () => {
           )}
 
           {!isLoading && userSettings?.planType === "free" && (
-            <Alert action={<Button>Close</Button>} severity="info">
+            <Alert severity="info">
               Your plan will end on{" "}
               {userSettings?.nextBillingDate?.split("T")[0]} Get $10 off your
               first month when selecting a plan before the expiry date.
@@ -158,21 +158,16 @@ const UserSettings = () => {
         )}
         {userSettings?.stripeCustomerId &&
           userSettings?.planType === "canceled" && (
-            <Alert
-              severity="warning"
-              variant="outlined"
-              action={<code>code: oneMoreTry</code>}
-            >
+            <Alert severity="warning" variant="outlined">
               After your plan expires you won't be able to access app features.
-              Give us another try and get $5 off your next month.
             </Alert>
           )}
         {!isLoading && userSettings && !togglePlan && (
           <Stack>
             <ActiveSettingsTable user={userSettings} />
 
-            {userSettings?.charges?.data?.length > 0 ? (
-              <BillingHistoryTable charges={userSettings?.charges?.data} />
+            {userSettings?.charges?.length > 0 ? (
+              <BillingHistoryTable charges={userSettings?.charges} />
             ) : (
               <Typography color="text.secondary">
                 No billing history available yet.

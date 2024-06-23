@@ -59,12 +59,6 @@ const AppLayout = ({ children }: LayoutProps) => {
     }
   }, [session?.user?._id]);
 
-  useEffect(() => {
-    if (source === "stripe") {
-      router.push("/manage-subscription"); //instead route to billing page
-    }
-  }, [source]);
-
   const handlePrivacyPolicyModal = () => setOpenPrivacyPolicy((prev) => !prev);
   const handleTermsModal = () => setOpenTerms((prev) => !prev);
 

@@ -15,13 +15,14 @@ interface BillingHistoryProps {
 }
 
 type ChargeProps = {
-  id: string;
-  amount: number;
-  currency: string;
-  description: string;
-  object: string;
-  receipt_url: string;
-  created: number;
+  stripeCustomerId: string;
+  amountPaid: number;
+  billingReason: string;
+  chargeId: string;
+  periodEnd: number;
+  periodStart: number;
+  invoiceUrl?: string;
+  currency?: string;
 };
 
 const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
@@ -45,7 +46,7 @@ const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
 
   const chargeCreatedDate = (charge: number) => {
     if (!charge) return "";
-    const date = new Date(charge * 1000);
+    const date = new Date(charge);
     return date.toLocaleString();
   };
 
@@ -54,12 +55,21 @@ const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
       <Table size="small">
         <TableHead>
           <TableRow>
-            <TableCell>Action</TableCell>
-            <TableCell>Amount</TableCell>
-            <TableCell>currency</TableCell>
-            <TableCell>Type</TableCell>
-            <TableCell> Date </TableCell>
-            <TableCell>Invoice Link</TableCell>
+            <TableCell>
+              <b>Action</b>
+            </TableCell>
+            <TableCell>
+              <b>Amount</b>
+            </TableCell>
+            <TableCell>
+              <b>Currency</b>
+            </TableCell>
+            <TableCell>
+              <b>Date</b>
+            </TableCell>
+            <TableCell>
+              <b>Invoice Link</b>
+            </TableCell>
             <TableCell></TableCell>
           </TableRow>
         </TableHead>
@@ -68,19 +78,31 @@ const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
             charges
               ?.slice(indexOfFirstPage, indexOfLastPage)
               ?.map((charge, i) => (
-                <TableRow key={charge.id}>
-                  <TableCell>{charge.description}</TableCell>
-                  <TableCell>${(charge.amount / 100).toFixed(2)}</TableCell>
+                <TableRow key={charge.chargeId}>
+                  <TableCell>{charge.billingReason}</TableCell>
+                  <TableCell>${(charge.amountPaid / 100).toFixed(2)}</TableCell>
                   <TableCell>{charge.currency}</TableCell>
-                  <TableCell>{charge.object}</TableCell>
-                  <TableCell>{chargeCreatedDate(charge.created)}</TableCell>
+
+                  <TableCell>{chargeCreatedDate(charge.periodStart)}</TableCell>
                   <TableCell>
-                    <Link href={charge.receipt_url} target="_blank">
+                    <Link href={charge.invoiceUrl} target="_blank">
                       View Invoice
                     </Link>
                   </TableCell>
                 </TableRow>
               ))}
+          <TableRow>
+            <TableCell>
+              <b>Total Spent</b>
+            </TableCell>
+            <TableCell>
+              $
+              {(
+                charges?.reduce((acc, curr) => (acc += curr.amountPaid), 0) /
+                100
+              ).toFixed(2)}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
       <TablePagination

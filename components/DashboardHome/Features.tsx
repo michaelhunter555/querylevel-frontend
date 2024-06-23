@@ -30,7 +30,7 @@ const items = [
     imageLight: (
       <CardMedia
         component="img"
-        src="/home-dash-light.png"
+        src="/home-dash-light.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />
@@ -38,7 +38,7 @@ const items = [
     imageDark: (
       <CardMedia
         component="img"
-        src="/home-dash-dark.png"
+        src="/home-dash-dark.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />
@@ -52,7 +52,7 @@ const items = [
     imageLight: (
       <CardMedia
         component="img"
-        src="/use-campaign-light.png"
+        src="/use-campaign-light.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />
@@ -60,7 +60,7 @@ const items = [
     imageDark: (
       <CardMedia
         component="img"
-        src="/use-campaign-dark.png"
+        src="/use-campaign-dark.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />
@@ -74,7 +74,7 @@ const items = [
     imageLight: (
       <CardMedia
         component="img"
-        src="/search-terms-light.png"
+        src="/search-terms-light.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />
@@ -82,7 +82,7 @@ const items = [
     imageDark: (
       <CardMedia
         component="img"
-        src="/search-terms-dark.png"
+        src="/search-terms-dark.svg"
         alt={`Features`}
         sx={{ ...imgStyles, objectFit: "contain" }}
       />

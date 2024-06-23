@@ -125,7 +125,7 @@ export default function Home() {
           >
             <CardMedia
               component="img"
-              src={`/create-tiers-${mode}.png`}
+              src={`/create-tiers-${mode}.svg`}
               alt="tiered-campaigns"
               sx={{
                 ...imgStyle,

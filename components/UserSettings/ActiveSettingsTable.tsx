@@ -29,7 +29,6 @@ type UserDataProps = {
 };
 
 const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
-  console.log(user, "user");
   return (
     <TableContainer component={Paper}>
       <Table>

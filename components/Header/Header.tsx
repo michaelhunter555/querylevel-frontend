@@ -25,6 +25,7 @@ const Header = () => {
           mb: 2,
           backgroundColor: "fff",
           gap: "5px",
+          pointerEvents: "none",
         }}
       >
         <img src={img} style={logoStyle} />

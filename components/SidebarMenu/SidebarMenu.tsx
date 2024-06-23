@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
@@ -39,7 +40,7 @@ const SidebarMenu: React.FC<{
       {session?.user?.googleAccountId && (
         <Stack
           direction="row"
-          alignItems="cener"
+          alignItems="center"
           justifyContent="center"
           spacing={1}
         >
@@ -51,6 +52,17 @@ const SidebarMenu: React.FC<{
           <Typography variant="subtitle2" color="text.secondary">
             Account Id: {session?.user?.googleAccountId}
           </Typography>
+          <Divider orientation="vertical" />
+          <Link
+            prefetch={false}
+            href="/"
+            style={{
+              textDecoration: "none",
+              color: session?.user?.theme === "light" ? "#444" : "#f4f4f4",
+            }}
+          >
+            <HomeIcon />
+          </Link>
         </Stack>
       )}
       <Paper elevation={0} sx={{ borderRadius: "15px" }}>

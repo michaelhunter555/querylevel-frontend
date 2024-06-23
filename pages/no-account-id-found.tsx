@@ -25,7 +25,10 @@ const AppErrorPage = () => {
         <Typography color="text.secondary">
           1. The authorized google account does not have a{" "}
           <code>Google Ads </code> or <code>Google Merchant Center </code>
-          account associated with it.
+          account associated with it. Make sure the email you authorized is the
+          direct owner of a Google Ads & Merchant Center account. If not, you
+          can create both of these accounts, then revoke the app permissions
+          (myaccount.google.com), and re-authenticate with Query Level.
         </Typography>
         <Stack direction="row" spacing={3} alignItems="center">
           <Button
@@ -90,8 +93,8 @@ const AppErrorPage = () => {
             />
           }
         >
-          If you suspect #2 may be the issue, it is suggested to remove the app
-          from your permissions and re-authenticate.
+          In both events it is suggested to remove the app from your permissions
+          and re-authenticate.
         </Alert>
         <Typography color="text.secondary">
           If you are certain issues 1 & 2 are not the case, please contact us at

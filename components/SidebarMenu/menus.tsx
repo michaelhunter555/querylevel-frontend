@@ -2,10 +2,10 @@ import React from "react";
 
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
-import OtherHousesTwoToneIcon from "@mui/icons-material/OtherHousesTwoTone";
 import PsychologyTwoToneIcon from "@mui/icons-material/PsychologyTwoTone";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
+import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 
 import {
@@ -28,7 +28,7 @@ export const menuItems: MenuItem[] = [
     text: MenuText.HOME,
     secondary: MenuSecondText.HOME,
     component: MenuComponent.AUTHENTICATE,
-    icon: <OtherHousesTwoToneIcon />,
+    icon: <SpaceDashboardIcon />,
     route: PageRoutes.USER_DASHBOARD,
   },
   {

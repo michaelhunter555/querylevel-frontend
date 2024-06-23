@@ -1,5 +1,5 @@
 export enum MenuText {
-  HOME = "Home",
+  HOME = "Home Dashboard",
   AUTHENTICATE = "Sign-In/Sign-Out",
   MY_CAMPAIGNS = "My Campaigns",
   CREATE_NEW_CAMPAIGN = "Create Tiered Campaigns",

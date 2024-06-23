@@ -108,26 +108,12 @@ const UserPlans = ({
     growing: false,
     pro: false,
   });
-  // const [buttonIsLoading, setButtonIsLoading] = useState<{ [key: string]: boolean }>({
-  //   growing: false,
-  //   pro: false,
-  // })
 
   const handleSelectPaymentPlan = async (priceId: string, planName: string) => {
-    // setButtonIsLoading((prev) => ({
-    //   ...prev,
-    //   [planName]: isPostLoading
-    // }))
     const checkoutUrl = await selectPaymentPlan(priceId, planName);
-    console.log("CheckoutUrl", checkoutUrl);
-
     if (checkoutUrl) {
       setUrl(checkoutUrl);
     }
-    // setButtonIsLoading((prev) => ({
-    //   ...prev,
-    //   [planName]: false
-    // }))
   };
 
   const handleSubscriptionChange = async (
