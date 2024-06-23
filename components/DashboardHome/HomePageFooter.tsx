@@ -4,7 +4,7 @@ import Link from "next/link";
 
 import { useForm } from "@/hooks/useForm";
 import emailjs from "@emailjs/browser";
-import TwitterIcon from "@mui/icons-material/Twitter";
+import XIcon from "@mui/icons-material/X";
 import { Link as MuiLink } from "@mui/material/";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -311,7 +311,7 @@ export default function HomePageFooter({ mode }: HomeFooter) {
             aria-label="GitHub"
             sx={{ alignSelf: "center" }}
           >
-            <TwitterIcon />
+            <XIcon />
           </IconButton>
           |
           <Typography color="text.secondary">support@QueryLevel.com</Typography>
