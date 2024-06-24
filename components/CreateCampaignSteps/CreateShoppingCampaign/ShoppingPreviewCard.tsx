@@ -65,6 +65,7 @@ const ShoppingProductPreview: React.FC<{
     errorMessage,
     error,
     success,
+    clearError,
   } = useCampaign();
   const brandKeyword = keywords.find(
     (keyword) => keyword.brand === product?.brand
@@ -228,6 +229,13 @@ const ShoppingProductPreview: React.FC<{
     setShowOriginalKeywords((prev) => !prev);
   };
 
+  const closeSuccessModal = () => {
+    if (error) {
+      clearError();
+    }
+    setOpenModal(false);
+  };
+
   const title = "Campaign Filtering";
   const text =
     "We remove all non-alphanumeric values as well as brand and sku from title. We handle brand and sku keywords separately. This is important for how your ads are triggered based on search query & priority.";
@@ -239,7 +247,7 @@ const ShoppingProductPreview: React.FC<{
     <>
       <SuccessModal
         open={openModal}
-        onClose={() => setOpenModal(false)}
+        onClose={closeSuccessModal}
         message={message}
         error={error}
         errorMessage={errorMessage}

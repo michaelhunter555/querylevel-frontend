@@ -16,6 +16,7 @@ import {
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -64,7 +65,14 @@ const CreateNewCampaign = () => {
   const [excludedLocation, setExcludedLocation] = useState<string[]>([]);
   const [activeStep, setActiveStep] = useState<number>(0);
   const [keywords, setKeyword] = useState<string[]>([]);
-  const { isPostLoading, createShoppingCampaign, message } = useCampaign();
+  const {
+    isPostLoading,
+    createShoppingCampaign,
+    message,
+    error,
+    errorMessage,
+    clearError,
+  } = useCampaign();
   const [isTargetRoas, setIsTargetRoas] = useState<boolean>(false);
   const [isAccordionExpanded, setIsAccordionExpanded] = useState(false);
   const [selectedInventoryFilter, setSelectedInventoryFilter] = useState("");
@@ -423,6 +431,20 @@ const CreateNewCampaign = () => {
             </Stack>
           )}
         </Grid>
+      )}
+      {error && (
+        <Stack sx={{ margin: "0 auto" }}>
+          <Typography color="error" fontWeight={700}>
+            ERROR:
+          </Typography>
+          <Typography color="text.secondary">{errorMessage}</Typography>
+          <Chip
+            label="Close Error"
+            component={Button}
+            variant="outlined"
+            onClick={clearError}
+          />
+        </Stack>
       )}
 
       {activeStep === 2 && isPostLoading && (
