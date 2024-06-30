@@ -25,7 +25,7 @@ const items = [
     icon: <BookIcon />,
     title: "Backed by Scholarly Research",
     description:
-      "The strategies we offer have been tried and tested through scholarly academic research. source (Raffinot & Riviere, 2014) - Query Level Matching",
+      "The strategies we offer are based on scholarly academic research. source (Raffinot & Riviere, 2014) - Query Level Matching",
     link: (
       <Link href="https://arxiv.org/pdf/1708.04586" target="_blank">
         View Article
@@ -48,7 +48,7 @@ const items = [
     icon: <SupportAgentRoundedIcon />,
     title: "Reliable support",
     description:
-      "Our goal is to help you build successful campaigns that imrpove ad quality and cpa. Our team is always here to answer your questions and guide you.",
+      "Our goal is to help you build successful campaigns that improve ad quality and cpa. Our team is always here to answer your questions and guide you.",
   },
   {
     icon: <QueryStatsRoundedIcon />,

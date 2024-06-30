@@ -114,6 +114,8 @@ export default function BillingFaqs() {
             <Alert severity="warning">
               When you cancel your plan, your tier campaign creating quota will
               become 0 and plan type updated to <code>'canceled'</code> plan.
+              The campaigns and work you've create will remain as it belongs to
+              your Google Ads Account.
             </Alert>
             <Typography gutterBottom variant="h6">
               What happens if I did not upgrade or downgrade before canceling in
@@ -138,14 +140,13 @@ export default function BillingFaqs() {
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
               When a plan is canceled, the plan status is updated to 'canceled'.
-              There will be no further charges when your plan expires. However,
-              any pending balances will be charged. For example, if you started
-              on a 'growing' and then upgraded to 'pro' and then canceled, the
-              difference would be settled based on the amount of time passed
-              since the original plan, the amount remaining on the new plan and
-              the difference in total due. The same is for the opposite case
-              (pro to growing). Please note that the prorations apply for the
-              following billing period.Your first month is charged in full.
+              There will be no further charges when your plan expires. If you
+              upgrade from growing to pro and agreed to the new fee, you will
+              may be charged an additional amount as an outstanding balance for
+              the next billing period. The difference would be settled based on
+              the amount of time passed since the currently selected plan, the
+              would be amount of time remaining on the new plan and the
+              calculated difference in total due.
             </Typography>
             <Typography variant="h6">
               I downgraded and canceled, what's next?
@@ -155,15 +156,13 @@ export default function BillingFaqs() {
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              In the event where you downgrade from 'pro' to 'growing' and then
-              cancel, the difference is applied to your account. The difference
-              will be credited/charged. Note, all credits applied to your
-              balance are applied for future invoices. We do not issue refunds
-              for downgrades. If you wish to cancel your plan and not be charged
-              for an additional month, you must cancel before the plan expiry
-              date. Please make sure to review our privacy policy and terms of
-              service. Please note that the prorations apply for the following
-              billing period. Your first month is charged in full.
+              The same applies but in reverse. However, note that your first
+              month is charged in full and is not prorated. For subsequent
+              months, if you downgraded, then the difference would be settled
+              based on the amount of time passed since the currently selected
+              plan, the would be amount of time remaining on the new plan and
+              the calculated difference in total due. This may result in a
+              credit that can be used in the future.
             </Typography>
           </AccordionDetails>
         </Accordion>
@@ -273,15 +272,81 @@ export default function BillingFaqs() {
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              Suppose you have a user switching from a $50 plan to a $30 plan on
-              day 15 of a 30-day billing cycle: Unused Time on Current Plan: $50
-              plan for 15 days = $25 (credited). Time Remaining on New Plan: $30
-              plan for 15 days = $15 (charged). Charge for Next Billing Date:
-              $30 plan for the next full 30-day cycle. These calculations ensure
-              that the user is fairly charged only for the actual time they use
-              each plan. This is how Stripe's proration logic works and why the
-              values in the proration preview should match what you see in your
-              billing dashboard.
+              When a subscription is upgraded, Stripe will automatically
+              calculate the prorated amount owed. For instance, if you moved
+              from a $10.00/mo subscription price to a $100.00/mo subscription
+              price in the middle of a billing cycle, you would be owed a $5.00
+              credit for the first price and then owe $50.00 for the new price.
+              This means that you owe a total of $45.00 for the subscription
+              upgrade. This amount is charged at the end of the billing cycle.
+            </Typography>
+            <Typography
+              variant="body2"
+              gutterBottom
+              sx={{ maxWidth: { sm: "100%", md: "70%" } }}
+            >
+              When you downgraded or cancel a subscription, you might be owed a
+              credit. For example, If you move from a $100.00/mo subscription
+              price to a $10.00/mo subscription price in the middle of the
+              billing cycle, you would be owed $50.00 for the first price and
+              owe $5.00 for the new price. A total of $45.00 is now owed to you
+              for the subscription downgrade and that credit ends up being added
+              to your credit balance to be applied to future invoices.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel8"}
+          onChange={handleChange("panel8")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel8d-content"
+            id="panel8d-header"
+          >
+            <Typography component="h3" variant="subtitle2">
+              How does Pay as you go work?
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography
+              variant="body2"
+              gutterBottom
+              sx={{ maxWidth: { sm: "100%", md: "70%" } }}
+            >
+              The <code>Pay as you go</code> feature serves two key purposes. 1.
+              Allow users to only access Query Level's core feature and create
+              tiered Google Shopping ad campaigns. 2. Allow users on
+              subscriptions to individually increase their quota as needed if
+              they don't want to upgrade.
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
+        <Accordion
+          expanded={expanded === "panel9"}
+          onChange={handleChange("panel9")}
+        >
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel9d-content"
+            id="panel9d-header"
+          >
+            <Typography component="h3" variant="subtitle2">
+              Does Query Level store any campaign related information about my
+              account?
+            </Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography
+              variant="body2"
+              gutterBottom
+              sx={{ maxWidth: { sm: "100%", md: "70%" } }}
+            >
+              No. We only encrypt and store your Google Ads account Id and
+              neccessary credentials issued to Query Level by Google after
+              successful app authorization. This is to retrieve specific Google
+              Shopping Ads data when you're using the app. The app can only
+              retrieve and perform operations at your request.
             </Typography>
           </AccordionDetails>
         </Accordion>

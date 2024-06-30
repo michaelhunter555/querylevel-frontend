@@ -8,6 +8,7 @@ import Header from "@/components/Header/Header";
 import PrivacyPolicyModal from "@/components/Modal/PrivacyPolicyModal";
 import TermsOfServiceModal from "@/components/Modal/TermsOfServiceModal";
 import SidebarMenu from "@/components/SidebarMenu/SidebarMenu";
+import { PlanTypes } from "@/components/UserSettings/enums.plans";
 import { AuthContext } from "@/context/auth-context";
 import { AuthActionTypes } from "@/context/authActions";
 import { userCanAccessApp } from "@/util/helpers/confirmUserPrivelages";
@@ -23,11 +24,16 @@ import { GlobalStyles } from "../../../styles/GlobalStyles";
 interface LayoutProps {
   children: ReactNode;
 }
-
+const acceptableRoutes = [
+  "/user-dashboard",
+  "/manage-subscription",
+  "/create-tiered-campaigns",
+  "/contact-us",
+  "/",
+];
 const AppLayout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const { source } = router.query;
   const themePreference = session?.user?.theme || "dark";
   const defaultTheme = selectPalette(themePreference);
   const themeModeSwitch = createTheme(defaultTheme);
@@ -46,6 +52,15 @@ const AppLayout = ({ children }: LayoutProps) => {
       router.push("/");
     }
   }, [session?.user?._id, router]);
+
+  useEffect(() => {
+    if (
+      session?.user?.planType === PlanTypes.PAY_AS_YOU_GO &&
+      !acceptableRoutes.includes(router.pathname)
+    ) {
+      router.back();
+    }
+  }, []);
 
   useEffect(() => {
     if (!session?.user?._id && authContext?.state.accountId) {

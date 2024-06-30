@@ -40,7 +40,7 @@ const campaignStructFeatures = [
     title: "Campaigns",
     items: [
       "Creates 2 to 3 campaigns per operation",
-      "Priority settings of high & Low, or high, medium, low",
+      "Priority settings of High & Low, or High, Medium, Low",
       "Negative keywords added at campaign level",
     ],
   },
@@ -99,9 +99,9 @@ export const StructuredCampaignFeatures = ({
                 understandable if you're new, but also mistaken. While Shopping
                 ads have certain constraints, there are ways for us to leverage
                 certain settings to optimize our campaigns. Marketing agencies
-                charge +$1000 to manaully implement these campaign stratagies on
+                charge a hefty sum to implement these campaign stratagies on
                 accounts. This is because the process itself can be very long
-                when you consider all the steps required. Are list below details
+                when you consider all the steps required. The list below details
                 all the steps we perform for you when creating an alpha-beta or
                 3-tiered campaign.
               </Typography>
@@ -120,7 +120,7 @@ const features = [
   { feature: "Shared Budget", alphaBeta: true, threeTiered: true },
   { feature: "CpC Bid Separation", alphaBeta: true, threeTiered: true },
   {
-    feature: "High, Medium & Low negative Keywords Allocation",
+    feature: "High, Medium & Low Negative Keywords Allocation",
     alphaBeta: false,
     threeTiered: true,
   },

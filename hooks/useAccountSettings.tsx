@@ -24,25 +24,85 @@ export const useAccountSettings = () => {
 
       const data = await response.json();
 
+      if (data?.user?.planType !== session?.user?.planType) {
+        const updateUser = {
+          ...session,
+          user: {
+            ...session?.user,
+            //userSettings.planType
+            planType: data?.user?.planType,
+          },
+        };
+        update(updateUser);
+      }
+
       return {
         ...data.user,
         amountDue: data.amountDue,
-        charges: data.charges,
       };
     } catch (err) {
       console.log(err);
     }
   }, []);
 
+  const getUserBillingDataTable = useCallback(
+    async (stripeCustomerId: string, page: number, limit: number) => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/plans/get-user-billing-data?stripeCustomerId=${stripeCustomerId}&page=${page}&limit=${limit}`
+        );
+        const data = await response.json();
+        if (!response.ok) {
+          return data.message;
+        }
+
+        return {
+          charges: data.charges,
+          currentChargePage: data.currentChargePage,
+          totalChargesPages: data.totalChargesPages,
+          totalCharges: data.totalCharges,
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    []
+  );
+
   const selectPaymentPlan = useCallback(
-    async (userPricePlan: string, planName: string) => {
+    async (userPricePlan: string, planName: string, prevPlan: string) => {
       try {
         const response = await sendRequest(
-          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/plans/selectNewPlan?id=${userId}`,
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/plans/selectNewPlan?id=${userId}&prevPlan=${prevPlan}`,
           "POST",
           JSON.stringify({
             selectedPricePlan: userPricePlan,
             selectedPlan: planName,
+          }),
+          { "Content-Type": "application/json" }
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            "There was an error with the request to select a plan."
+          );
+        }
+        return response.url;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    [userId, sendRequest]
+  );
+
+  const singleQuotaPurchase = useCallback(
+    async (quantity: number) => {
+      try {
+        const response = await sendRequest(
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/plans/buy-as-you-need-tiers?id=${userId}`,
+          "POST",
+          JSON.stringify({
+            quantity: quantity,
           }),
           { "Content-Type": "application/json" }
         );
@@ -136,6 +196,8 @@ export const useAccountSettings = () => {
   );
 
   return {
+    getUserBillingDataTable,
+    singleQuotaPurchase,
     viewProrationUpgrade,
     upgradeSubscription,
     deleteUserSubscription,

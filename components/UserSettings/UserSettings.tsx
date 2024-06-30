@@ -16,6 +16,9 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import { PlanTypes } from "./enums.plans";
+import PayAsYouGoOption from "./PayAsYouGo";
+
 const DeletePlanModal = dynamic(() => import("../Modal/DeletePlanModal"), {
   ssr: false,
 });
@@ -36,6 +39,7 @@ const UserSettings = () => {
   const { data: session } = useSession();
   const userId = session?.user?._id;
 
+  //fetches account settings
   const {
     data: userSettings,
     isLoading,
@@ -70,14 +74,20 @@ const UserSettings = () => {
     localStorage.removeItem("campaign");
   };
 
+  //don't free plan option
   const shouldDisableFreePlan =
-    userSettings?.planType === "free" ||
-    userSettings?.planType === "growing" ||
-    userSettings?.planType === "pro" ||
-    userSettings?.planType === "canceled";
+    userSettings?.planType === PlanTypes.FREE ||
+    userSettings?.planType === PlanTypes.GROWING ||
+    userSettings?.planType === PlanTypes.PRO ||
+    userSettings?.planType === PlanTypes.CANCELED ||
+    userSettings?.planType === PlanTypes.PAY_AS_YOU_GO;
 
+  //display cancel button if subscribed
   const canCancel =
-    userSettings?.planType === "growing" || userSettings?.planType === "pro";
+    userSettings?.planType === PlanTypes.GROWING ||
+    userSettings?.planType === PlanTypes.PRO;
+
+  const invalidateBilling = userSettings?.planType === PlanTypes.PAY_AS_YOU_GO;
 
   return (
     <Box sx={{ width: "100%", marginTop: "3rem" }}>
@@ -100,10 +110,13 @@ const UserSettings = () => {
           {togglePlan && (
             <Typography color="text.secondary" variant="subtitle2">
               Your{" "}
-              {userSettings?.planType === "canceled"
+              {userSettings?.planType === PlanTypes.CANCELED
                 ? "account access end"
                 : "next billing"}{" "}
-              date will be {userSettings?.nextBillingDate?.split("T")[0]}
+              date will be:{" "}
+              {invalidateBilling
+                ? "No Billing"
+                : userSettings?.nextBillingDate?.split("T")[0]}
             </Typography>
           )}
           <Chip
@@ -132,11 +145,12 @@ const UserSettings = () => {
             </>
           )}
 
-          {!isLoading && userSettings?.planType === "free" && (
+          {!isLoading && userSettings?.planType === PlanTypes.FREE && (
             <Alert severity="info">
               Your plan will end on{" "}
               {userSettings?.nextBillingDate?.split("T")[0]} Get $10 off your
-              first month when selecting a plan before the expiry date.
+              first month when selecting a plan before the expiry date. *applies
+              for subscriptions
             </Alert>
           )}
         </Stack>
@@ -166,27 +180,49 @@ const UserSettings = () => {
           <Stack>
             <ActiveSettingsTable user={userSettings} />
 
-            {userSettings?.charges?.length > 0 ? (
-              <BillingHistoryTable charges={userSettings?.charges} />
-            ) : (
-              <Typography color="text.secondary">
-                No billing history available yet.
-              </Typography>
-            )}
+            <BillingHistoryTable
+              stripeCustomerId={userSettings?.stripeCustomerId}
+            />
           </Stack>
         )}
         {isLoading && <CircularProgress />}
-        {/* userSettings.charges.data */}
-        {togglePlan && (
-          <UserPlans
-            userSettings={userSettings}
-            hideButton={false}
-            userIsLoggedIn={Boolean(userId)}
-            disableFree={shouldDisableFreePlan}
-            planType={userSettings?.planType}
-            handleTogglePlan={handleTogglePlan}
-          />
-        )}
+        <Stack
+          sx={{ display: "flex", flexDirection: { xs: "column", md: "row" } }}
+        >
+          {togglePlan && (
+            <Box sx={{ maxWidth: { xs: "100%", md: "30%" } }}>
+              <Typography align="center" variant="h4" color="text.secondary">
+                One Time Purchase
+              </Typography>
+              <Typography align="center" color="text.secondary" gutterBottom>
+                Only create tiered Campaigns or add monthly quota
+              </Typography>
+              <PayAsYouGoOption />
+            </Box>
+          )}
+          {togglePlan && (
+            <Divider orientation="vertical" flexItem sx={{ margin: "1rem" }} />
+          )}
+
+          {togglePlan && (
+            <Stack>
+              <Typography align="center" variant="h4" color="text.secondary">
+                Subscription Models
+              </Typography>
+              <Typography align="center" color="text.secondary" gutterBottom>
+                Access Full App Features
+              </Typography>
+              <UserPlans
+                userSettings={userSettings}
+                hideButton={false}
+                userIsLoggedIn={Boolean(userId)}
+                disableFree={shouldDisableFreePlan}
+                planType={userSettings?.planType}
+                handleTogglePlan={handleTogglePlan}
+              />
+            </Stack>
+          )}
+        </Stack>
       </Box>
     </Box>
   );

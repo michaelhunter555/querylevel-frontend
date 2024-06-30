@@ -5,29 +5,29 @@ import Card from "@mui/material/Card";
 import Divider from "@mui/material/Divider";
 import Typography from "@mui/material/Typography";
 
+const features = [
+  {
+    id: 1,
+    name: "Tiered Campaigns",
+    description:
+      "Create alpha/beta and tiered campaigns to improve CPA and quality score",
+    icon: "",
+  },
+  {
+    id: 2,
+    name: "Shopping Ads Management",
+    description: "Manage keywords, campaigns, ad groups and product groups",
+    icon: "",
+  },
+  {
+    id: 3,
+    name: "Dedicated Support Group",
+    description:
+      "Contact us @appName.com or get instant support by joining our discord.",
+    icon: "",
+  },
+];
 export const AppFeatures = () => {
-  const features = [
-    {
-      id: 1,
-      name: "Tiered Campaigns",
-      description:
-        "Create alpha/beta and tiered campaigns to improve CPA and quality score",
-      icon: "",
-    },
-    {
-      id: 2,
-      name: "Shopping Ads Management",
-      description: "Manage keywords, campaigns, ad groups and product groups",
-      icon: "",
-    },
-    {
-      id: 3,
-      name: "Dedicated Support Group",
-      description:
-        "Contact us @appName.com or get instant support by joining our discord.",
-      icon: "",
-    },
-  ];
   return (
     <Box
       sx={{

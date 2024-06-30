@@ -8,6 +8,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
+import { PlanTypes } from "./enums.plans";
+
 interface ActiveSettingsProps {
   user: UserDataProps;
 }
@@ -29,6 +31,10 @@ type UserDataProps = {
 };
 
 const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
+  const endDate =
+    user?.planType === PlanTypes.PAY_AS_YOU_GO
+      ? "No Billing"
+      : user?.nextBillingDate?.split("T")[0];
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -70,7 +76,7 @@ const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
               <Typography>{user?.lastBillingDate?.split("T")[0]}</Typography>
             </TableCell>
             <TableCell>
-              <Typography>{user?.nextBillingDate?.split("T")[0]}</Typography>
+              <Typography>{endDate}</Typography>
             </TableCell>
             <TableCell>
               {user?.accountActive ? (

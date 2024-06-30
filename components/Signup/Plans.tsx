@@ -42,10 +42,10 @@ const tiers = [
     buttonVariant: "outlined",
   },
   {
-    id: "price_1PI3zHP3CMhEecSy4RwaEBsy",
+    id: "price_1PW8noP3CMhEecSyXbslSjWX",
     title: "Growing",
     subheader: "Recommended",
-    price: "19",
+    price: "69",
     description: [
       "Centralized Shopping ads Experience",
       "10 alpha/beta or three-tiered campaigns per month",
@@ -62,12 +62,12 @@ const tiers = [
     buttonVariant: "contained",
   },
   {
-    id: "price_1PI40dP3CMhEecSyYsklBH1v",
+    id: "price_1PW8bfP3CMhEecSytNuKJkJp",
     title: "Pro",
-    price: "39",
+    price: "89",
     description: [
       "All features of Growing",
-      "25 alpha/beta or 3-tiered campaigns per month",
+      "15 alpha/beta or 3-tiered campaigns per month",
     ],
     buttonText: "Get started",
     buttonVariant: "outlined",
@@ -110,7 +110,11 @@ const UserPlans = ({
   });
 
   const handleSelectPaymentPlan = async (priceId: string, planName: string) => {
-    const checkoutUrl = await selectPaymentPlan(priceId, planName);
+    const checkoutUrl = await selectPaymentPlan(
+      priceId,
+      planName,
+      String(planType)
+    );
     if (checkoutUrl) {
       setUrl(checkoutUrl);
     }
@@ -303,10 +307,12 @@ const UserPlans = ({
                     onClick={() => {
                       setSelectedButton(i);
                       if (
-                        userSettings?.stripeCustomerId &&
-                        userSettings?.stripeSubscriptionId &&
-                        planType !== "canceled"
+                        userSettings?.stripeCustomerId && //has customer id already
+                        userSettings?.stripeSubscriptionId && //has subscription id already
+                        planType !== "canceled" && // not planType canceled or payAsYouGo
+                        planType !== "payAsYouGo"
                       ) {
+                        //pro or growing
                         handleUpdateModal(tier?.title?.toLowerCase());
                       } else {
                         handleSelectPaymentPlan(
@@ -322,7 +328,9 @@ const UserPlans = ({
                       ? "Loading..."
                       : tier?.title?.toLowerCase() === planType
                       ? "SELECTED"
-                      : planType === "canceled" || planType === "free"
+                      : planType === "canceled" ||
+                        planType === "free" ||
+                        planType === "payAsYouGo"
                       ? tier?.buttonText
                       : planType !== tier?.title?.toLowerCase() &&
                         "Update Plan"}

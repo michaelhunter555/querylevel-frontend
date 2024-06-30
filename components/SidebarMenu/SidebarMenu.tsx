@@ -16,6 +16,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import { PlanTypes } from "../UserSettings/enums.plans";
 import { menuItems } from "./menus";
 import { ToggleTheme } from "./ToggleTheme";
 
@@ -25,10 +26,24 @@ const SidebarMenu: React.FC<{
   const router = useRouter();
   const { data: session } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const acceptableRoutes = [
+    "/user-dashboard",
+    "/manage-subscription",
+    "/create-tiered-campaigns",
+    "/contact-us",
+  ];
+
+  const payAsGoUser = session?.user?.planType === PlanTypes.PAY_AS_YOU_GO; //payAsYouGo
+  const filterMenuItems = menuItems.filter((item) => {
+    if (payAsGoUser) {
+      return acceptableRoutes?.includes(item.route);
+    }
+    return true;
+  });
 
   useEffect(() => {
     if (router.pathname) {
-      const index = menuItems?.findIndex(
+      const index = filterMenuItems?.findIndex(
         (value) => value?.route === router.pathname
       );
       setSelectedIndex(index !== -1 ? index : 0);
@@ -67,7 +82,7 @@ const SidebarMenu: React.FC<{
       )}
       <Paper elevation={0} sx={{ borderRadius: "15px" }}>
         <List>
-          {menuItems.map((menuText, i) => (
+          {filterMenuItems?.map((menuText, i) => (
             <Link
               prefetch={false}
               key={i}

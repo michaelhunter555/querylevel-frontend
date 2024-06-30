@@ -15,7 +15,9 @@ interface IConversionSnippet {
 export const ConversionCode = ({ data }: IConversionSnippet) => {
   return (
     <Stack spacing={2}>
-      {data?.tag_snippets?.length && (
+      {data?.tag_snippets?.filter(
+        ({ page_format, type }) => type === 2 && page_format === 2
+      ).length === 0 && (
         <>
           <Typography color="text.secondary" variant="subtitle2">
             There are no available code snippets for this conversion segment.

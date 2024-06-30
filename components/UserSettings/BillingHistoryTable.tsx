@@ -1,17 +1,25 @@
 import React, { useState } from "react";
 
+import { useAccountSettings } from "@/hooks/useAccountSettings";
 import Link from "@mui/material/Link";
+import Pagination from "@mui/material/Pagination";
+import Skeleton from "@mui/material/Skeleton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import { useQuery } from "@tanstack/react-query";
 
 //userSettings.charges.data []
 interface BillingHistoryProps {
-  charges: ChargeProps[];
+  stripeCustomerId: string;
+  // charges: ChargeProps[];
+  // currentChargePage: number;
+  // totalChargesPages: number;
+  // totalCharges: number;
+  // onPageChange: (num: number) => void;
 }
 
 type ChargeProps = {
@@ -25,23 +33,23 @@ type ChargeProps = {
   currency?: string;
 };
 
-const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
-  const [rowsPerPage, setRowsPerPage] = useState<number>(10);
-  const [pages, setPages] = useState<number>(0);
+const BillingHistoryTable = ({ stripeCustomerId }: BillingHistoryProps) => {
+  const { getUserBillingDataTable } = useAccountSettings();
+  const [limit, setLimit] = useState<number>(10);
+  const [page, setPage] = useState<number>(1);
 
-  const indexOfFirstPage = pages * rowsPerPage;
-  const indexOfLastPage = indexOfFirstPage + rowsPerPage;
+  const { data: billingData, isLoading: billingDataIsLoading } = useQuery({
+    queryKey: ["billingTable", page, limit],
+    queryFn: () => getUserBillingDataTable(stripeCustomerId, page, limit),
+    enabled: Boolean(stripeCustomerId),
+    staleTime: Infinity,
+  });
+
   const handlePageChange = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
+    event: React.ChangeEvent<unknown> | null,
     newPage: number
   ) => {
-    setPages(newPage);
-  };
-  const handleRowsChange = (
-    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    setRowsPerPage(parseInt(event.target.value, 10));
-    setPages(0);
+    setPage(newPage);
   };
 
   const chargeCreatedDate = (charge: number) => {
@@ -74,44 +82,55 @@ const BillingHistoryTable = ({ charges }: BillingHistoryProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {charges &&
-            charges
-              ?.slice(indexOfFirstPage, indexOfLastPage)
-              ?.map((charge, i) => (
-                <TableRow key={charge.chargeId}>
-                  <TableCell>{charge.billingReason}</TableCell>
-                  <TableCell>${(charge.amountPaid / 100).toFixed(2)}</TableCell>
-                  <TableCell>{charge.currency}</TableCell>
+          {billingData &&
+            !billingDataIsLoading &&
+            billingData?.charges?.map((charge: ChargeProps, i: number) => (
+              <TableRow key={charge.chargeId}>
+                <TableCell>
+                  {charge.billingReason ? charge.billingReason : "pay as go"}
+                </TableCell>
+                <TableCell>${(charge.amountPaid / 100).toFixed(2)}</TableCell>
+                <TableCell>{charge.currency}</TableCell>
 
-                  <TableCell>{chargeCreatedDate(charge.periodStart)}</TableCell>
-                  <TableCell>
+                <TableCell>{chargeCreatedDate(charge.periodStart)}</TableCell>
+                <TableCell>
+                  {charge.invoiceUrl ? (
                     <Link href={charge.invoiceUrl} target="_blank">
                       View Invoice
                     </Link>
-                  </TableCell>
-                </TableRow>
-              ))}
-          <TableRow>
-            <TableCell>
-              <b>Total Spent</b>
-            </TableCell>
-            <TableCell>
-              $
-              {(
-                charges?.reduce((acc, curr) => (acc += curr.amountPaid), 0) /
-                100
-              ).toFixed(2)}
-            </TableCell>
-          </TableRow>
+                  ) : (
+                    "-"
+                  )}
+                </TableCell>
+              </TableRow>
+            ))}
+          {billingDataIsLoading &&
+            Array.from({ length: 4 }).map((_, i) => (
+              <TableRow key={i}>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
-      <TablePagination
-        component="div"
-        count={charges?.length ?? 0}
-        rowsPerPage={rowsPerPage}
-        page={pages}
-        onPageChange={handlePageChange}
-        onRowsPerPageChange={handleRowsChange}
+      <Pagination
+        count={Number(billingData?.totalChargesPages) || 0}
+        page={Number(billingData?.currentChargePage) || 0}
+        onChange={handlePageChange}
       />
     </TableContainer>
   );
