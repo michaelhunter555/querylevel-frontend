@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
+import { StyledFadeIn } from "@/components/Shared/FadeInComponent";
 import { useCampaign, useInventoryFilter } from "@/hooks/campaign-hooks";
 import { useGetPortfolioStrategy } from "@/hooks/portfolio-strategies";
 import { useForm } from "@/hooks/useForm";
@@ -276,7 +277,9 @@ const CreateNewCampaign = () => {
                 <StepLabel
                   sx={{ fontWeight: activeStep === index ? "bold" : "" }}
                 >
-                  {label}
+                  <StyledFadeIn visible={true} delay={index * 0.1}>
+                    {label}
+                  </StyledFadeIn>
                 </StepLabel>
               </Step>
             );
@@ -337,27 +340,31 @@ const CreateNewCampaign = () => {
           justifyContent="center"
           sx={{ margin: "0 auto", width: "100%" }}
         >
+          <StyledFadeIn visible={true} delay={0.1}></StyledFadeIn>
           <Grid item xs={11}>
-            <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
-              <BiddingStrategy
-                formState={formState}
-                inputHandler={inputHandler}
-                isTargetRoas={isTargetRoas}
-                setIsTargetRoas={handleTargetRoas}
-                isManualCpc={isManualCpc}
-                onManualCpc={manualCpcHandler}
-                openPortfolio={openPortfolioStrategy}
-                onOpenPortfolio={portfolioStrategyHandler}
-                newPortfolioStrategy={newPortfolioStrategy}
-                onNewPortfolioStrategy={() =>
-                  setNewPortfolioStrategy((prev) => !prev)
-                }
-                onGetBidStrategies={biddingStrategyHandler}
-                existingPortfolios={portfolioStrategies}
-                loadingPortfolio={loadingPortfolio}
-              />
-            </Paper>
+            <StyledFadeIn visible={true} delay={0.1}>
+              <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
+                <BiddingStrategy
+                  formState={formState}
+                  inputHandler={inputHandler}
+                  isTargetRoas={isTargetRoas}
+                  setIsTargetRoas={handleTargetRoas}
+                  isManualCpc={isManualCpc}
+                  onManualCpc={manualCpcHandler}
+                  openPortfolio={openPortfolioStrategy}
+                  onOpenPortfolio={portfolioStrategyHandler}
+                  newPortfolioStrategy={newPortfolioStrategy}
+                  onNewPortfolioStrategy={() =>
+                    setNewPortfolioStrategy((prev) => !prev)
+                  }
+                  onGetBidStrategies={biddingStrategyHandler}
+                  existingPortfolios={portfolioStrategies}
+                  loadingPortfolio={loadingPortfolio}
+                />
+              </Paper>
+            </StyledFadeIn>
           </Grid>
+          <StyledFadeIn visible={true} delay={0.1}></StyledFadeIn>
           <CreateCampaignStepTwo
             localInventoryIsExpanded={localInventoryIsExpanded}
             onToggleLocalInventory={() =>
@@ -388,18 +395,20 @@ const CreateNewCampaign = () => {
           />
 
           <Grid item xs={11}>
-            <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
-              <InputLabel>Add Negative keywords</InputLabel>
-              <Alert severity="warning" sx={{ margin: "0.5rem 0 0.5rem" }}>
-                Add "phrase", [exact], and broad negative keywords. Negative
-                keywords should have a max length: 80 characters, or 10 words
-                (whichever comes first).
-              </Alert>
-              <NegativeKeywords
-                keywords={keywords}
-                onSetKeyword={(keyword: string[]) => setKeyword(keyword)}
-              />
-            </Paper>
+            <StyledFadeIn visible={true} delay={0.1}>
+              <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
+                <InputLabel>Add Negative keywords</InputLabel>
+                <Alert severity="warning" sx={{ margin: "0.5rem 0 0.5rem" }}>
+                  Add "phrase", [exact], and broad negative keywords. Negative
+                  keywords should have a max length: 80 characters, or 10 words
+                  (whichever comes first).
+                </Alert>
+                <NegativeKeywords
+                  keywords={keywords}
+                  onSetKeyword={(keyword: string[]) => setKeyword(keyword)}
+                />
+              </Paper>
+            </StyledFadeIn>
           </Grid>
         </Grid>
       )}
@@ -415,12 +424,14 @@ const CreateNewCampaign = () => {
           sx={{ margin: "0 auto", width: "100%" }}
         >
           {!message && (
-            <CreateCampaignStepThree
-              formState={formState}
-              onCreateCampaign={createCampaignHandler}
-              inputHandler={inputHandler}
-              //onClose={onClose}
-            />
+            <StyledFadeIn visible={true} delay={0.1}>
+              <CreateCampaignStepThree
+                formState={formState}
+                onCreateCampaign={createCampaignHandler}
+                inputHandler={inputHandler}
+                //onClose={onClose}
+              />
+            </StyledFadeIn>
           )}
           {message && (
             <Stack>

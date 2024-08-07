@@ -24,6 +24,7 @@ interface ManageKeywordLayoutProps {
     campaignId: string,
     keywordLevel: "AD_GROUP" | "CAMPAIGN"
   ) => Promise<any>;
+  //component
   ManageNegativeKeywordsComponent: React.ComponentType<{
     keywordLevel: "AD_GROUP" | "CAMPAIGN";
     campaignId: string;
@@ -58,7 +59,7 @@ const ManageKeywordsLayout = ({
     queryKey: ["getCampaignNames"],
     queryFn: getCampaignNames,
     enabled: Boolean(session?.user?._id),
-    staleTime: 30 * 60 * 1000,
+    staleTime: Infinity,
   });
 
   useEffect(() => {
@@ -74,7 +75,7 @@ const ManageKeywordsLayout = ({
       queryFn: () =>
         getNegativeKeywords(campaignId?.split(":")[1], keywordLevel),
       enabled: Boolean(campaignId?.split(":")[1] && session?.user?._id),
-      staleTime: Infinity,
+      staleTime: 10 * 60 * 60 * 1000,
     });
 
   return (

@@ -1,25 +1,25 @@
-import React from "react";
+import React from 'react';
 
-import { LoadingTable } from "@/components/DataTable/LoadingTable";
-import { StyledBoxContainer } from "@/components/Modal/ModalStyles";
-import { State } from "@/types";
-import EditIcon from "@mui/icons-material/Edit";
-import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
-import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormLabel from "@mui/material/FormLabel";
-import Modal from "@mui/material/Modal";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import Stack from "@mui/material/Stack";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Typography from "@mui/material/Typography";
+import { LoadingTable } from '@/components/DataTable/LoadingTable';
+import { StyledBoxContainer } from '@/components/Modal/ModalStyles';
+import { State } from '@/types';
+import EditIcon from '@mui/icons-material/Edit';
+import Alert from '@mui/material/Alert';
+import Button from '@mui/material/Button';
+import FormControl from '@mui/material/FormControl';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormLabel from '@mui/material/FormLabel';
+import Modal from '@mui/material/Modal';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import Stack from '@mui/material/Stack';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Typography from '@mui/material/Typography';
 
 interface EditBudgetType {
   formState: State;
@@ -66,6 +66,7 @@ const BudgetType = ({
                   <TableCell>Budget Name</TableCell>
                   <TableCell>Total Campaigns</TableCell>
                   <TableCell>Budget Amount</TableCell>
+                  <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -105,7 +106,7 @@ const BudgetType = ({
                       </TableCell>
                     </TableRow>
                   ))}
-                {isLoading && <LoadingTable length={3} isHome={true} />}
+                {isLoading && <LoadingTable length={3} numCells={4} />}
               </TableBody>
             </Table>
           </TableContainer>

@@ -1,25 +1,35 @@
-import React, { ReactNode, useContext, useEffect, useState } from "react";
+import React, {
+  ReactNode,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
 
-import { Content, PageContainer } from "@/components/Footer/FooterStyles";
-import Header from "@/components/Header/Header";
-import PrivacyPolicyModal from "@/components/Modal/PrivacyPolicyModal";
-import TermsOfServiceModal from "@/components/Modal/TermsOfServiceModal";
-import SidebarMenu from "@/components/SidebarMenu/SidebarMenu";
-import { PlanTypes } from "@/components/UserSettings/enums.plans";
-import { AuthContext } from "@/context/auth-context";
-import { AuthActionTypes } from "@/context/authActions";
-import { userCanAccessApp } from "@/util/helpers/confirmUserPrivelages";
-import { selectPalette } from "@/util/siteTheme/selectPalette";
-import { createTheme, ThemeProvider } from "@mui/material";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Stack from "@mui/material/Stack";
+import {
+  Content,
+  PageContainer,
+} from '@/components/Footer/FooterStyles';
+import PrivacyPolicyModal from '@/components/Modal/PrivacyPolicyModal';
+import TermsOfServiceModal from '@/components/Modal/TermsOfServiceModal';
+import SidebarMenu from '@/components/SidebarMenu/SidebarMenu';
+import { PlanTypes } from '@/components/UserSettings/enums.plans';
+import { AuthContext } from '@/context/auth-context';
+import { AuthActionTypes } from '@/context/authActions';
+import { userCanAccessApp } from '@/util/helpers/confirmUserPrivelages';
+import { selectPalette } from '@/util/siteTheme/selectPalette';
+import {
+  createTheme,
+  ThemeProvider,
+} from '@mui/material';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Stack from '@mui/material/Stack';
 
-import { GlobalStyles } from "../../../styles/GlobalStyles";
+import { GlobalStyles } from '../../../styles/GlobalStyles';
 
 interface LayoutProps {
   children: ReactNode;
@@ -77,6 +87,8 @@ const AppLayout = ({ children }: LayoutProps) => {
   const handlePrivacyPolicyModal = () => setOpenPrivacyPolicy((prev) => !prev);
   const handleTermsModal = () => setOpenTerms((prev) => !prev);
 
+  const shouldLogin = !session?.user?._id && routerIsAuthPage;
+
   return (
     <ThemeProvider theme={themeModeSwitch}>
       <PageContainer>
@@ -94,7 +106,6 @@ const AppLayout = ({ children }: LayoutProps) => {
           >
             {!routerIsHome && (
               <Grid item xs={12} md={2}>
-                <Header />
                 <SidebarMenu hasAppAccess={canAccess} />
               </Grid>
             )}
@@ -102,7 +113,7 @@ const AppLayout = ({ children }: LayoutProps) => {
               orientation="vertical"
               sx={{ margin: "0 0.5rem", maxWidth: "90%" }}
             />
-            {status !== "loading" && (
+            {(session?.user?._id || shouldLogin) && (
               <Grid item xs={12} md={routerIsHome ? 12 : 9.5}>
                 {children}
               </Grid>

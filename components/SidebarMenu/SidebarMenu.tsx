@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import HomeIcon from "@mui/icons-material/Home";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
@@ -16,16 +17,21 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import Header from "../Header/Header";
 import { PlanTypes } from "../UserSettings/enums.plans";
 import { menuItems } from "./menus";
+import MobileSidebar from "./MobileSideBar";
 import { ToggleTheme } from "./ToggleTheme";
 
 const SidebarMenu: React.FC<{
   hasAppAccess: boolean;
 }> = ({ hasAppAccess }): JSX.Element => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const router = useRouter();
   const { data: session } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [mobileMenu, setMobileMenu] = useState<boolean>(false);
   const acceptableRoutes = [
     "/user-dashboard",
     "/manage-subscription",
@@ -50,8 +56,13 @@ const SidebarMenu: React.FC<{
     }
   }, [router.pathname]);
 
+  const handleMobileMenuToggle = () => {
+    setMobileMenu((prev) => !prev);
+  };
+
   return (
     <>
+      <Header onMobileMenuClick={handleMobileMenuToggle} />
       {session?.user?.googleAccountId && (
         <Stack
           direction="row"
@@ -80,7 +91,10 @@ const SidebarMenu: React.FC<{
           </Link>
         </Stack>
       )}
-      <Paper elevation={0} sx={{ borderRadius: "15px" }}>
+      <Paper
+        elevation={0}
+        sx={{ borderRadius: "15px", ...(isMobile && { display: "none" }) }}
+      >
         <List>
           {filterMenuItems?.map((menuText, i) => (
             <Link
@@ -119,6 +133,13 @@ const SidebarMenu: React.FC<{
           </Stack>
         </List>
       </Paper>
+      <MobileSidebar
+        open={mobileMenu}
+        onClose={handleMobileMenuToggle}
+        selectedIndex={selectedIndex}
+        filteredMenu={filterMenuItems}
+        hasAppAccess={hasAppAccess}
+      />
     </>
   );
 };

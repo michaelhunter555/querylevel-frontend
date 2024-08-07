@@ -1,24 +1,32 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, {
+  useEffect,
+  useMemo,
+  useState,
+} from 'react';
 
-import { useSession } from "next-auth/react";
-import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { useSession } from 'next-auth/react';
+import dynamic from 'next/dynamic';
+import { useRouter } from 'next/router';
 
-import { NestedProps, UserCampaign } from "@/types";
-import { campaignView } from "@/util/helpers/campaignView";
-import Alert from "@mui/material/Alert";
-import LinearProgress from "@mui/material/LinearProgress";
-import { SelectChangeEvent } from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { useQuery } from "@tanstack/react-query";
+import {
+  NestedProps,
+  UserCampaign,
+} from '@/types';
+import { campaignView } from '@/util/helpers/campaignView';
+import Alert from '@mui/material/Alert';
+import LinearProgress from '@mui/material/LinearProgress';
+import { SelectChangeEvent } from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { useQuery } from '@tanstack/react-query';
 
-import CampaignOptionsBar from "../CampaignOptionsBar/CampaignOptionsBar";
+import CampaignOptionsBar from '../CampaignOptionsBar/CampaignOptionsBar';
+import { StyledFadeIn } from '../Shared/FadeInComponent';
 //import CampaignViewCards from "../CampaignViewCards/CampaignViewCards";
 //import DynamicCampaignTable from "../DataTable/DynamicCampaignTable";
-import { StatusSelector } from "../StatusSelector/StatusSelector";
+import { StatusSelector } from '../StatusSelector/StatusSelector';
 //import CreateNewCampaign from "./CreateCampaignForm";
-import SelectDate from "./SelectDate";
+import SelectDate from './SelectDate';
 
 const DynamicCampaignTable = dynamic(
   () => import("../DataTable/DynamicCampaignTable"),
@@ -150,15 +158,17 @@ const CampaignView = () => {
 
         <CampaignOptionsBar />
       </Stack>
-      <DynamicCampaignTable
-        isLoading={campaignIsLoading}
-        data={campaignData}
-        chartData={campaign as UserCampaign[]}
-        updatedCampaign={updatedCampaignHandler}
-        segment={segment}
-        status={status}
-        refetchCampaigns={refetchCampaigns}
-      />
+      <StyledFadeIn delay={0.3} visible={true}>
+        <DynamicCampaignTable
+          isLoading={campaignIsLoading}
+          data={campaignData}
+          chartData={campaign as UserCampaign[]}
+          updatedCampaign={updatedCampaignHandler}
+          segment={segment}
+          status={status}
+          refetchCampaigns={refetchCampaigns}
+        />
+      </StyledFadeIn>
     </>
   );
 };

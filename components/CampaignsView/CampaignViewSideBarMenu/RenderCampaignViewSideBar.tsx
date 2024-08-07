@@ -2,6 +2,7 @@ import React from "react";
 
 import dynamic from "next/dynamic";
 
+import { StyledFadeIn } from "@/components/Shared/FadeInComponent";
 //import ProductPartitionTable from "@/components/ProductPartitionTable/ProductPartitionTable";
 import { AdGroupCriterionResource, CriterionData, UserCampaign } from "@/types";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -97,40 +98,49 @@ const RenderCampaignViewSideBar = ({
       return (
         <>
           {!toggle && (
-            <AdGroupsTable
-              adGroupData={adGroupData}
-              adGroupsLoading={adGroupsLoading}
-              setCurrentAdGroup={setCurrentAdGroup}
-              setCurrentAdGroupName={setCurrentAdGroupName}
-              adGroupPostIsLoading={adGroupPostIsLoading}
-              createAdGroup={createAdGroup}
-              getProductPartitions={getProductPartitions}
-            />
+            <StyledFadeIn delay={0.1} visible={true}>
+              <AdGroupsTable
+                adGroupData={adGroupData}
+                adGroupsLoading={adGroupsLoading}
+                setCurrentAdGroup={setCurrentAdGroup}
+                setCurrentAdGroupName={setCurrentAdGroupName}
+                adGroupPostIsLoading={adGroupPostIsLoading}
+                createAdGroup={createAdGroup}
+                getProductPartitions={getProductPartitions}
+              />
+            </StyledFadeIn>
           )}
 
           {toggle && (
-            <ProductPartitionTable
-              partitionIsLoading={partitionIsLoading}
-              productGroups={productGroups}
-              handleToggle={handleToggle}
-              open={open}
-              //setOperationComplete={handlePartitionOperationComplete}
-              currentAdGroupId={currentAdGroupId ? currentAdGroupId : null}
-              currentAdGroupName={currentAdGroupName}
-              createRootNode={createRootNode}
-              editPartitionIsLoading={editPartitionIsLoading}
-              editPartitionTree={editPartitionTree}
-              updateNegativeStatus={updateNegativeStatus}
-              negativeStatusLoading={negativeStatusLoading}
-              bidsAreUpdating={bidsAreUpdating}
-              updateCostPerClick={updateCostPerClick}
-              createRootNodeIsLoading={createRootNodeIsLoading}
-            />
+            <StyledFadeIn delay={0.1} visible={true}>
+              <ProductPartitionTable
+                partitionIsLoading={partitionIsLoading}
+                productGroups={productGroups}
+                handleToggle={handleToggle}
+                open={open}
+                //setOperationComplete={handlePartitionOperationComplete}
+                currentAdGroupId={currentAdGroupId ? currentAdGroupId : null}
+                currentAdGroupName={currentAdGroupName}
+                createRootNode={createRootNode}
+                editPartitionIsLoading={editPartitionIsLoading}
+                editPartitionTree={editPartitionTree}
+                updateNegativeStatus={updateNegativeStatus}
+                negativeStatusLoading={negativeStatusLoading}
+                bidsAreUpdating={bidsAreUpdating}
+                updateCostPerClick={updateCostPerClick}
+                createRootNodeIsLoading={createRootNodeIsLoading}
+              />
+            </StyledFadeIn>
           )}
         </>
       );
     case CampaignMenuItemComponent.CAMPAIGN_CHART_DATA:
-      return <MiniLineChart campaignData={campaignData} />;
+      return (
+        <StyledFadeIn delay={0.1} visible={true}>
+          <MiniLineChart campaignData={campaignData} />
+        </StyledFadeIn>
+      );
+
     default:
       return <MiniLineChart campaignData={campaignData} />;
   }

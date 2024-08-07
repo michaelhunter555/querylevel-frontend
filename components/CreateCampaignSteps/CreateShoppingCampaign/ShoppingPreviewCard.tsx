@@ -1,35 +1,45 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 
-import { AdScheduleSelector } from "@/components/AdSchedule/AdScheduleSelector";
-import SuccessModal from "@/components/Modal/SuccessModal";
-import { TooltipMessage } from "@/components/TooltipMessage/TooltipMessage";
-import { ShoppingCampaign, useCampaign } from "@/hooks/campaign-hooks";
-import { useForm } from "@/hooks/useForm";
-import { Keywords, SalePrice, ScheduleState } from "@/types";
-import { adjustLongTitle } from "@/util/helpers/adjustLongTitle";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import CardMedia from "@mui/material/CardMedia";
-import Checkbox from "@mui/material/Checkbox";
-import Divider from "@mui/material/Divider";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
-import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import { SelectChangeEvent } from "@mui/material/Select";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { AdScheduleSelector } from '@/components/AdSchedule/AdScheduleSelector';
+import SuccessModal from '@/components/Modal/SuccessModal';
+import { TooltipMessage } from '@/components/TooltipMessage/TooltipMessage';
+import {
+  ShoppingCampaign,
+  useCampaign,
+} from '@/hooks/campaign-hooks';
+import { useForm } from '@/hooks/useForm';
+import {
+  Keywords,
+  SalePrice,
+  ScheduleState,
+} from '@/types';
+import { adjustLongTitle } from '@/util/helpers/adjustLongTitle';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import CardMedia from '@mui/material/CardMedia';
+import Checkbox from '@mui/material/Checkbox';
+import Divider from '@mui/material/Divider';
+import Fade from '@mui/material/Fade';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormGroup from '@mui/material/FormGroup';
+import Grid from '@mui/material/Grid';
+import Link from '@mui/material/Link';
+import Paper from '@mui/material/Paper';
+import { SelectChangeEvent } from '@mui/material/Select';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import { BidSeparation } from "./BidSeparation";
-import { BidSeparationTableExample } from "./BidSeparationTableExample";
-import { LocationSelect } from "./LocationSelect";
-import { ShoppingCampaignTypes } from "./shoppingCampaign.enums";
-import { ShoppingCampaignStrategy } from "./ShoppingCampaignStrategy";
-import { ShoppingInputsLoading } from "./ShoppingInputsLoading";
-import { TextFieldInput } from "./TextFieldInputs";
+import { StyledStack } from '../../Shared/FadeInComponent';
+import { createTierCampaignFields } from '../createTierCampaignFields';
+import { BidSeparation } from './BidSeparation';
+import { BidSeparationTableExample } from './BidSeparationTableExample';
+import { LocationSelect } from './LocationSelect';
+import { ShoppingCampaignTypes } from './shoppingCampaign.enums';
+import { ShoppingCampaignStrategy } from './ShoppingCampaignStrategy';
+import { ShoppingInputsLoading } from './ShoppingInputsLoading';
+import { TextFieldInput } from './TextFieldInputs';
 
 interface DemoProduct {
   title: string;
@@ -43,7 +53,8 @@ interface DemoProduct {
 const ShoppingProductPreview: React.FC<{
   product: DemoProduct | null;
   keywords: Keywords[];
-}> = ({ product, keywords }): JSX.Element => {
+  productIsLoading: boolean;
+}> = ({ product, keywords, productIsLoading }): JSX.Element => {
   const { data: session } = useSession();
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [showOriginalKeywords, setShowOriginalKeywords] =
@@ -67,44 +78,13 @@ const ShoppingProductPreview: React.FC<{
     success,
     clearError,
   } = useCampaign();
-  const brandKeyword = keywords.find(
-    (keyword) => keyword.brand === product?.brand
+  const brandKeyword = keywords?.find(
+    (keyword) => keyword?.brand === product?.brand
   );
   const [formState, inputHandler, setFormData] = useForm(
-    {
-      vendor: {
-        value: brandKeyword?.brand || "",
-        isValid: true,
-      },
-      budget: {
-        value: 15,
-        isValid: true,
-      },
-      cpc: {
-        value: 0.15,
-        isValid: true,
-      },
-      campaignType: {
-        value: "",
-        isValid: false,
-      },
-      bidSeparation: {
-        value: 0.1,
-        isValid: true,
-      },
-      enabled: {
-        value: false,
-        isValid: true,
-      },
-      enhancedClick: {
-        value: false,
-        isValid: true,
-      },
-    },
+    createTierCampaignFields,
     false
   );
-
-  const campaignTypeIsNotSet = campaignType === "";
 
   const submitFormHandler = async (event: any) => {
     event.preventDefault();
@@ -152,43 +132,7 @@ const ShoppingProductPreview: React.FC<{
     setExcludedLocation([]);
     setTargetedLocation([]);
     setAdSchedule({});
-    setFormData(
-      {
-        vendor: {
-          value: "",
-          isValid: false,
-        },
-        budget: {
-          value: "",
-          isValid: false,
-        },
-        campaignType: {
-          value: "",
-          isValid: false,
-        },
-        bidSeparation: {
-          value: "",
-          isValid: false,
-        },
-        enabled: {
-          value: false,
-          isValid: true,
-        },
-        productTitle: {
-          value: "",
-          isValid: false,
-        },
-        sku: {
-          value: "",
-          isValid: true,
-        },
-        enhancedClick: {
-          value: false,
-          isValid: true,
-        },
-      },
-      false
-    );
+    setFormData(createTierCampaignFields, false);
   };
 
   const bidSeparationHandler = (val: number) => {
@@ -198,7 +142,7 @@ const ShoppingProductPreview: React.FC<{
 
   const campaignTypeHandler = (val: ShoppingCampaignTypes) => {
     setCampaignType(val);
-    inputHandler(val, val, true);
+    inputHandler("campaignType", val, true);
   };
 
   const excludeLocationHandler = (
@@ -220,9 +164,9 @@ const ShoppingProductPreview: React.FC<{
     setTargetedLocation(typeof value === "string" ? value.split(",") : value);
   };
 
-  const titles = keywords.map((val) => val?.title).flat();
-  const skus = keywords.map((val) => val?.sku).flat();
-  const brand = keywords[0].brand;
+  const titles = keywords?.map((val) => val?.title).flat();
+  const skus = keywords?.map((val) => val?.sku).flat();
+  const brand = keywords?.[0]?.brand;
   const titlePreview = adjustLongTitle(titles, brand, skus);
 
   const showOriginalKeyWordsHandler = () => {
@@ -235,6 +179,8 @@ const ShoppingProductPreview: React.FC<{
     }
     setOpenModal(false);
   };
+
+  console.log("formState: ", formState?.inputs, formState);
 
   const title = "Campaign Filtering";
   const text =
@@ -253,306 +199,327 @@ const ShoppingProductPreview: React.FC<{
         errorMessage={errorMessage}
         success={success}
       />
-      {!isPostLoading && (
-        <Paper elevation={1} sx={{ borderRadius: "15px", width: "100%" }}>
-          <Grid
-            container
-            direction="row"
-            sx={{ margin: "0 0 2rem 0" }}
-            spacing={3}
-          >
-            {product && (
-              <Grid item xs={12} md={4}>
-                <Stack alignItems="center" sx={{ margin: "2rem 0" }}>
-                  <CardMedia
-                    component="img"
-                    image={product?.imageLink}
-                    alt={`${product?.title}-${product?.brand}`}
-                    sx={{
-                      width: "50%",
-                      transition: "ease-in 2s",
-                      borderRadius: "15px",
-                    }}
-                  />
-                </Stack>
-
-                <Box
-                  sx={{
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: "5px",
-                  }}
-                >
-                  <Stack>
-                    <Typography variant="h5">Keyword Preview</Typography>
-                  </Stack>
-                  <Stack>
-                    <TooltipMessage title={title} text={text} />
-                  </Stack>
-
-                  <Stack>
-                    <Link
-                      component="button"
-                      onClick={showOriginalKeyWordsHandler}
-                    >
-                      {!showOriginalKeywords ? "See original" : "See modified"}
-                    </Link>
-                  </Stack>
-                </Box>
-
-                <Divider />
-
-                <Stack>
-                  <Grid container spacing={1}>
-                    {!showOriginalKeywords && (
-                      <Grid item xs={12}>
-                        <Typography> Product Titles:</Typography>
-                        {keywords &&
-                          titlePreview?.slice(0, 5)?.map((val, i) => (
-                            <Box key={i}>
-                              <Typography
-                                variant="subtitle2"
-                                color="text.secondary"
-                              >
-                                {i + 1}. {val}
-                              </Typography>
-                            </Box>
-                          ))}
-                      </Grid>
-                    )}
-
-                    {showOriginalKeywords && (
-                      <Grid item xs={12}>
-                        <Typography> Product Titles:</Typography>
-                        {keywords &&
-                          keywords?.slice(0, 5)?.map((val, i) => (
-                            <Box key={i}>
-                              <Typography
-                                variant="subtitle2"
-                                color="text.secondary"
-                              >
-                                {i + 1}. {val.title}
-                              </Typography>
-                            </Box>
-                          ))}
-                      </Grid>
-                    )}
-
-                    <Grid item xs={12}>
-                      <Typography>Product Skus:</Typography>
-                      {keywords &&
-                        keywords?.slice(0, 5)?.map((val, i) => (
-                          <Box key={i}>
-                            <Typography
-                              variant="subtitle2"
-                              color="text.secondary"
-                            >
-                              {i + 1}. {val?.sku}
-                            </Typography>
-                          </Box>
-                        ))}
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography>
-                        We will create keywords for all {keywords.length}{" "}
-                        product titles.
-                      </Typography>
-                    </Grid>
-                  </Grid>
-                </Stack>
-              </Grid>
-            )}
-            <Divider
-              orientation="vertical"
-              flexItem
-              sx={{ margin: "0 1rem" }}
-            />
-
-            <Grid item xs={12} md={7}>
-              <form onSubmit={submitFormHandler}>
-                <Grid container direction="row" alignItems="center" spacing={2}>
-                  <Grid item>
-                    <Box
+      {!isPostLoading && !productIsLoading && (
+        <StyledStack delay={0.1} visible={!productIsLoading}>
+          <Paper elevation={1} sx={{ borderRadius: "15px", width: "100%" }}>
+            <Grid
+              container
+              direction="row"
+              sx={{ margin: "0 0 2rem 0" }}
+              spacing={3}
+            >
+              {product && (
+                <Grid item xs={12} md={4}>
+                  <StyledStack
+                    delay={0.2}
+                    visible={!productIsLoading}
+                    yAxis={5}
+                    alignItems="center"
+                    sx={{ margin: "2rem 0" }}
+                  >
+                    <CardMedia
+                      component="img"
+                      image={product?.imageLink}
+                      alt={`${product?.title}-${product?.brand}`}
                       sx={{
-                        display: "flex",
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: "5px",
+                        width: "50%",
+                        transition: "ease-in 2s",
+                        borderRadius: "15px",
                       }}
-                    >
-                      <Stack>
-                        <Typography>Campaign Structure</Typography>
-                      </Stack>
-                      <Stack>
-                        <TooltipMessage title={title2} text={text2} />
-                      </Stack>
-                    </Box>
-
-                    <ShoppingCampaignStrategy
-                      onClick={campaignTypeHandler}
-                      selectStrategy={campaignType}
                     />
-                    <Divider sx={{ margin: "1rem auto" }} />
-                  </Grid>
-                  {/**Brand Name: string */}
-                  <Grid item xs={12}>
-                    <Typography>Brand Name</Typography>
-                    <Typography variant="h5" color="text.secondary">
-                      {keywords && keywords[0]?.brand}
-                    </Typography>
-                    <Stack direction="row">
-                      <FormGroup
-                        sx={{
-                          display: "flex",
-                          flexDirection: "row",
-                          alignItems: "center",
-                          width: "50%",
-                          margin: "1rem",
-                        }}
-                      >
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              id="enabled"
-                              name="enabled"
-                              checked={
-                                formState?.inputs?.enabled?.value as boolean
-                              }
-                              onChange={(event) =>
-                                inputHandler(
-                                  "enabled",
-                                  event.target.checked,
-                                  true
-                                )
-                              }
-                            />
-                          }
-                          label="Enable Campaigns"
-                        />
-                        <Divider
-                          orientation="vertical"
-                          flexItem
-                          sx={{ margin: "0 1rem" }}
-                        />
-                        <FormControlLabel
-                          control={
-                            <Checkbox
-                              id="enhancedClick"
-                              name="enhancedClick"
-                              checked={
-                                formState?.inputs?.enhancedClick
-                                  ?.value as boolean
-                              }
-                              onChange={(event) =>
-                                inputHandler(
-                                  "enhancedClick",
-                                  event.target.checked,
-                                  true
-                                )
-                              }
-                            />
-                          }
-                          label="Enhance CpC?"
-                        />
-                      </FormGroup>
+                  </StyledStack>
+
+                  <StyledStack
+                    visible={!productIsLoading}
+                    delay={0.3}
+                    sx={{
+                      display: "flex",
+                      flexDirection: "row",
+                      alignItems: "center",
+                      gap: "5px",
+                    }}
+                  >
+                    <Stack>
+                      <Typography variant="h5">Keyword Preview</Typography>
                     </Stack>
-                  </Grid>
-                  {/**Ad Schedule: [{},] */}
-                  <Grid item xs={12}>
-                    <AdScheduleSelector onSelectAdDate={setAdSchedule} />
-                  </Grid>
+                    <Stack>
+                      <TooltipMessage title={title} text={text} />
+                    </Stack>
 
-                  {/**targeted locations: string[] */}
-                  <Grid item xs={5}>
-                    <LocationSelect
-                      id="target-location"
-                      outlinedInputId="target-location-input"
-                      inputLabel="Target location(s)"
-                      onTargetLocation={targetLocationHandler}
-                      targetLocation={targetedLocation}
-                    />
-                  </Grid>
+                    <Stack>
+                      <Link
+                        component="button"
+                        onClick={showOriginalKeyWordsHandler}
+                      >
+                        {!showOriginalKeywords
+                          ? "See original"
+                          : "See modified"}
+                      </Link>
+                    </Stack>
+                  </StyledStack>
+                  <Fade in={!productIsLoading}>
+                    <Divider />
+                  </Fade>
+                  <Fade in={!productIsLoading}>
+                    <Stack>
+                      <Grid container spacing={1}>
+                        {!showOriginalKeywords && (
+                          <Grid item xs={12}>
+                            <Typography> Product Titles:</Typography>
+                            {keywords &&
+                              titlePreview?.slice(0, 5)?.map((val, i) => (
+                                <Box key={i}>
+                                  <Typography
+                                    variant="subtitle2"
+                                    color="text.secondary"
+                                  >
+                                    {i + 1}. {val}
+                                  </Typography>
+                                </Box>
+                              ))}
+                          </Grid>
+                        )}
 
-                  {/**excluded locations: string[]*/}
-                  <Grid item xs={5}>
-                    <LocationSelect
-                      id="exclude-location"
-                      outlinedInputId="exclude-location-input"
-                      inputLabel="Exclude location(s)"
-                      onTargetLocation={excludeLocationHandler}
-                      targetLocation={excludedLocation}
-                      isExcluded={true}
-                    />
-                  </Grid>
+                        {showOriginalKeywords && (
+                          <Grid item xs={12}>
+                            <Typography> Product Titles:</Typography>
+                            {keywords &&
+                              keywords?.slice(0, 5)?.map((val, i) => (
+                                <Box key={i}>
+                                  <Typography
+                                    variant="subtitle2"
+                                    color="text.secondary"
+                                  >
+                                    {i + 1}. {val.title}
+                                  </Typography>
+                                </Box>
+                              ))}
+                          </Grid>
+                        )}
 
-                  {/** shared budget:number */}
-                  <Grid item xs={12} lg={5}>
-                    <TextFieldInput
-                      id="budget"
-                      name="budget"
-                      type="number"
-                      title="Set Shared Budget"
-                      defaultValue={formState?.inputs?.budget?.value as number}
-                      inputHandler={inputHandler}
-                      hasAdornment={true}
-                    />
-                  </Grid>
+                        <Grid item xs={12}>
+                          <Typography>Product Skus:</Typography>
+                          {keywords &&
+                            keywords?.slice(0, 5)?.map((val, i) => (
+                              <Box key={i}>
+                                <Typography
+                                  variant="subtitle2"
+                                  color="text.secondary"
+                                >
+                                  {i + 1}. {val?.sku}
+                                </Typography>
+                              </Box>
+                            ))}
+                        </Grid>
 
-                  {/*CPC bids: number */}
-                  <Grid item xs={12} lg={5}>
-                    <TextFieldInput
-                      id="cpc"
-                      name="cpc"
-                      type="number"
-                      title="Set CpC Bids"
-                      defaultValue={formState?.inputs?.cpc?.value as number}
-                      inputHandler={inputHandler}
-                      hasAdornment={true}
-                    />
-                  </Grid>
-
-                  {/**Bid separation: number */}
-                  <Grid item xs={12} lg={5}>
-                    <BidSeparation
-                      onBidSeparationSelect={bidSeparationHandler}
-                      inputHandler={inputHandler}
-                      selectedBid={selectedBidSeparation}
-                    />
-                  </Grid>
-
-                  <Grid
-                    item
-                    xs={12}
-                    lg={5}
-                    sx={{ display: "flex", alignItems: "center" }}
-                  >
-                    <BidSeparationTableExample
-                      bidSeparation={Number(selectedBidSeparation)}
-                      costPerClick={Number(formState?.inputs?.cpc?.value)}
-                      campaignType={campaignType}
-                    />
-                  </Grid>
+                        <Grid item xs={12}>
+                          <Typography>
+                            We will create keywords for all {keywords.length}{" "}
+                            product titles.
+                          </Typography>
+                        </Grid>
+                      </Grid>
+                    </Stack>
+                  </Fade>
                 </Grid>
-                <Divider sx={{ margin: "1rem auto" }} />
-                <Stack sx={{ margin: "1rem auto" }}>
-                  <Button
-                    variant="outlined"
-                    type="submit"
-                    disabled={
-                      campaignTypeIsNotSet || !session?.user?.accountActive
-                    }
-                  >
-                    Create Campaigns
-                  </Button>
-                </Stack>
-              </form>
+              )}
+              <Divider
+                orientation="vertical"
+                flexItem
+                sx={{ margin: "0 1rem" }}
+              />
+              <Fade in={!productIsLoading}>
+                <Grid item xs={12} md={7}>
+                  <form onSubmit={submitFormHandler}>
+                    <Grid
+                      container
+                      direction="row"
+                      alignItems="center"
+                      spacing={2}
+                    >
+                      <Grid item>
+                        <Box
+                          sx={{
+                            display: "flex",
+                            flexDirection: "row",
+                            alignItems: "center",
+                            gap: "5px",
+                          }}
+                        >
+                          <Stack>
+                            <Typography>Campaign Structure</Typography>
+                          </Stack>
+                          <Stack>
+                            <TooltipMessage title={title2} text={text2} />
+                          </Stack>
+                        </Box>
+
+                        <ShoppingCampaignStrategy
+                          onClick={campaignTypeHandler}
+                        />
+                        <Divider sx={{ margin: "1rem auto" }} />
+                      </Grid>
+                      {/**Brand Name: string */}
+                      <Grid item xs={12}>
+                        <Typography>Brand Name</Typography>
+                        <Typography variant="h5" color="text.secondary">
+                          {keywords && keywords[0]?.brand}
+                        </Typography>
+                        <Stack direction="row">
+                          <FormGroup
+                            sx={{
+                              display: "flex",
+                              flexDirection: "row",
+                              alignItems: "center",
+                              width: "50%",
+                              margin: "1rem",
+                            }}
+                          >
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  id="enabled"
+                                  name="enabled"
+                                  checked={
+                                    formState?.inputs?.enabled?.value as boolean
+                                  }
+                                  onChange={(event) =>
+                                    inputHandler(
+                                      "enabled",
+                                      event.target.checked,
+                                      true
+                                    )
+                                  }
+                                />
+                              }
+                              label="Enable Campaigns"
+                            />
+                            <Divider
+                              orientation="vertical"
+                              flexItem
+                              sx={{ margin: "0 1rem" }}
+                            />
+                            <FormControlLabel
+                              control={
+                                <Checkbox
+                                  id="enhancedClick"
+                                  name="enhancedClick"
+                                  checked={
+                                    formState?.inputs?.enhancedClick
+                                      ?.value as boolean
+                                  }
+                                  onChange={(event) =>
+                                    inputHandler(
+                                      "enhancedClick",
+                                      event.target.checked,
+                                      true
+                                    )
+                                  }
+                                />
+                              }
+                              label="Enhance CpC?"
+                            />
+                          </FormGroup>
+                        </Stack>
+                      </Grid>
+                      {/**Ad Schedule: [{},] */}
+                      <Grid item xs={12}>
+                        <AdScheduleSelector onSelectAdDate={setAdSchedule} />
+                      </Grid>
+
+                      {/**targeted locations: string[] */}
+                      <Grid item xs={5}>
+                        <LocationSelect
+                          id="target-location"
+                          outlinedInputId="target-location-input"
+                          inputLabel="Target location(s)"
+                          onTargetLocation={targetLocationHandler}
+                          targetLocation={targetedLocation}
+                        />
+                      </Grid>
+
+                      {/**excluded locations: string[]*/}
+                      <Grid item xs={5}>
+                        <LocationSelect
+                          id="exclude-location"
+                          outlinedInputId="exclude-location-input"
+                          inputLabel="Exclude location(s)"
+                          onTargetLocation={excludeLocationHandler}
+                          targetLocation={excludedLocation}
+                          isExcluded={true}
+                        />
+                      </Grid>
+
+                      {/** shared budget:number */}
+                      <Grid item xs={12} lg={5}>
+                        <TextFieldInput
+                          id="budget"
+                          name="budget"
+                          type="number"
+                          title="Set Shared Budget"
+                          defaultValue={
+                            formState?.inputs?.budget?.value as number
+                          }
+                          inputHandler={inputHandler}
+                          hasAdornment={true}
+                        />
+                      </Grid>
+
+                      {/*CPC bids: number */}
+                      <Grid item xs={12} lg={5}>
+                        <TextFieldInput
+                          id="cpc"
+                          name="cpc"
+                          type="number"
+                          title="Set CpC Bids"
+                          defaultValue={formState?.inputs?.cpc?.value as number}
+                          inputHandler={inputHandler}
+                          hasAdornment={true}
+                        />
+                      </Grid>
+
+                      {/**Bid separation: number */}
+                      <Grid item xs={12} lg={5}>
+                        <BidSeparation
+                          onBidSeparationSelect={bidSeparationHandler}
+                          inputHandler={inputHandler}
+                          selectedBid={selectedBidSeparation}
+                        />
+                      </Grid>
+
+                      <Grid
+                        item
+                        xs={12}
+                        lg={5}
+                        sx={{ display: "flex", alignItems: "center" }}
+                      >
+                        <BidSeparationTableExample
+                          bidSeparation={Number(selectedBidSeparation)}
+                          costPerClick={Number(formState?.inputs?.cpc?.value)}
+                          campaignType={campaignType}
+                        />
+                      </Grid>
+                    </Grid>
+                    <Divider sx={{ margin: "1rem auto" }} />
+                    <Stack sx={{ margin: "1rem auto" }}>
+                      <Button
+                        variant="outlined"
+                        type="submit"
+                        disabled={
+                          !formState?.isValid || !session?.user?.accountActive
+                        }
+                      >
+                        Create Campaigns
+                      </Button>
+                    </Stack>
+                  </form>
+                </Grid>
+              </Fade>
             </Grid>
-          </Grid>
-        </Paper>
+          </Paper>
+        </StyledStack>
       )}
-      {isPostLoading && <ShoppingInputsLoading />}
+      {(isPostLoading || productIsLoading) && <ShoppingInputsLoading />}
     </>
   );
 };

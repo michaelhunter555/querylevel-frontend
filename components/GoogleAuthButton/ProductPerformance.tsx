@@ -55,7 +55,7 @@ const ProductPerformance = ({
                   <TableCell>{product?.conversions}</TableCell>
                 </TableRow>
               ))}
-            {isLoading && <LoadingTable isHome={false} length={3} />}
+            {isLoading && <LoadingTable numCells={6} length={3} />}
           </TableBody>
         </Table>
       </TableContainer>

@@ -633,9 +633,7 @@ const AdGroupsTable = ({
                       <TableCell>{adGroup?.conversions}</TableCell>
                     </TableRow>
                   ))}
-              {adGroupsLoading && (
-                <LoadingTable isHome={true} length={3} isDashboard={true} />
-              )}
+              {adGroupsLoading && <LoadingTable numCells={8} length={3} />}
             </TableBody>
           </Table>
           <TablePagination

@@ -1,9 +1,10 @@
 import React, { useMemo } from "react";
 
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent } from "@mui/material";
+import { keyframes, SelectChangeEvent } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import { styled } from "@mui/material/styles";
 
 import SelectDate from "../CampaignsView/SelectDate";
 import { AnalyticsTableData } from "./AnalyticsTableData";
@@ -15,6 +16,31 @@ interface AccountCard {
   segment: string;
   onSegmentChange: (val: SelectChangeEvent) => void;
 }
+
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`;
+interface CardProps {
+  visible: boolean;
+  delay?: number;
+}
+const StyledCard = styled("div", {
+  shouldForwardProp: (prop) => prop !== "visible" && prop !== "delay",
+})<CardProps>(({ visible, delay }) => ({
+  opacity: 0,
+  transform: "translateY(20px)",
+  transition: `opacity 0.5s ease-in-out ${delay}s, transform 0.5s ease-in-out ${delay}s`,
+  ...(visible && {
+    animation: `${fadeIn} 0.5s ${delay}s forwards`,
+  }),
+}));
 
 const AccountDataCards = ({
   shoppingPerformance,
@@ -105,24 +131,38 @@ const AccountDataCards = ({
   return (
     <Grid
       container
-      direction="row"
       spacing={1}
       alignItems="center"
       justifyContent="start"
-      sx={{ display: "flex", gap: "10px" }}
+      sx={{
+        display: "flex",
+        gap: "10px",
+        flexDirection: { xs: "column", md: "row" },
+      }}
     >
       {isLoading && <TempLoadingCard />}
 
       {!isLoading &&
         shoppingPerformance &&
         homeAppAnalytics?.map((data, index) => (
-          <AnalyticsTableData
+          <StyledCard
             key={index}
-            text={data?.text}
-            value={data?.value as number}
-            isLoading={isLoading}
-            sparkLineData={data?.chartSegment as number[]}
-          />
+            visible={Boolean(!isLoading)}
+            delay={0.1}
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            <AnalyticsTableData
+              key={index}
+              text={data?.text}
+              value={data?.value as number}
+              isLoading={isLoading}
+              sparkLineData={data?.chartSegment as number[]}
+            />
+          </StyledCard>
         ))}
       <Divider flexItem sx={{ marginTop: "1rem" }} />
 

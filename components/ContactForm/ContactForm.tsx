@@ -16,6 +16,8 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
+import { StyledFadeIn } from "../Shared/FadeInComponent";
+
 const ContactForm = () => {
   const { data: session } = useSession();
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -105,7 +107,7 @@ const ContactForm = () => {
 
   return (
     <>
-      <>
+      <StyledFadeIn visible={true} delay={0.1}>
         <Paper
           sx={{
             borderRadius: "15px",
@@ -216,7 +218,7 @@ const ContactForm = () => {
             </Grid>
           </form>
         )}
-      </>
+      </StyledFadeIn>
       {isLoading && (
         <Stack sx={{ width: "70%", margin: "1rem auto" }}>
           <Skeleton width="100%" />

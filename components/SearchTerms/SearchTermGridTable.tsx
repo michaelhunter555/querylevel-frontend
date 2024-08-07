@@ -25,6 +25,8 @@ import { SelectChangeEvent } from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
+import { StyledFadeIn } from "../Shared/FadeInComponent";
+
 interface DynamicSearchTermTable {
   data: TSearchTerms[];
   isLoading: boolean;
@@ -274,7 +276,11 @@ const DynamicSearchTermTable = ({
     },
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <StyledFadeIn visible={!isLoading} delay={0.1}>
+      <MaterialReactTable table={table} />
+    </StyledFadeIn>
+  );
 };
 
 export default DynamicSearchTermTable;

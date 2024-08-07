@@ -1,13 +1,16 @@
-import React from "react";
+import React from 'react';
 
-import { Content, PageContainer } from "@/components/Footer/FooterStyles";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import Modal from "@mui/material/Modal";
-import Typography from "@mui/material/Typography";
+import {
+  Content,
+  PageContainer,
+} from '@/components/Footer/FooterStyles';
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import Modal from '@mui/material/Modal';
+import Typography from '@mui/material/Typography';
 
-import { StyledBoxContainer } from "./ModalStyles";
+import { StyledBoxContainer } from './ModalStyles';
 
 interface FirstTimeConnectProps {
   open: boolean;
@@ -32,8 +35,7 @@ const FirstTimeConnectModal = ({ open, onClose }: FirstTimeConnectProps) => {
               account associated with your Google gmail. This also enables you
               to create, view, update and delete according the features
               available. These permission can be easily revoked at anytime via
-              your account settings (3rd party app permission)
-              {String.fromCodePoint(0x1f60a)}.
+              your account settings (3rd party app permission).
             </Typography>
           </Content>
           <Divider flexItem sx={{ margin: "0.5rem 0" }} />

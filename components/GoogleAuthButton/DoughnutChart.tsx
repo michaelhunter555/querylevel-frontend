@@ -1,16 +1,26 @@
-import React, { useMemo, useState } from "react";
+import React, {
+  useMemo,
+  useState,
+} from 'react';
 
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from "chart.js";
+import {
+  ArcElement,
+  Chart as ChartJS,
+  Legend,
+  Tooltip,
+} from 'chart.js';
 
-import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent } from "@mui/material";
-import Box from "@mui/material/Box";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { PieChart } from "@mui/x-charts/PieChart";
+import { ProductPerformanceData } from '@/types';
+import { SelectChangeEvent } from '@mui/material';
+import Box from '@mui/material/Box';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
+import { PieChart } from '@mui/x-charts/PieChart';
+
+import { StyledFadeIn } from '../Shared/FadeInComponent';
 
 // Doughnut for now will just be dummy data
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -26,7 +36,7 @@ type PieData = {
 };
 
 const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
-  const [dataCase, setDataCase] = useState<string>("Clicks");
+  const [dataCase, setDataCase] = useState<string>("Impressions");
 
   const transformDataForPieChart = useMemo(() => {
     const keyMap: { [key: string]: keyof ProductPerformanceData } = {
@@ -36,7 +46,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
     };
 
     // Get the correct key for the data
-    const dataKey = keyMap[dataCase] || "clicks"; // Defaul
+    const dataKey = keyMap[dataCase] || "impressions"; // Defaul
 
     const sortData = productsData?.sort(
       (a, b) => (b[dataKey] as number) - (a[dataKey] as number)
@@ -106,35 +116,37 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
               </Typography>
             </Stack>
           ) : (
-            <PieChart
-              slotProps={{
-                legend: {
-                  labelStyle: {
-                    fontSize: 10,
+            <StyledFadeIn visible={!isLoading} delay={0.1}>
+              <PieChart
+                slotProps={{
+                  legend: {
+                    labelStyle: {
+                      fontSize: 10,
+                    },
+                    position: {
+                      horizontal: "right",
+                      vertical: "top",
+                    },
                   },
-                  position: {
-                    horizontal: "right",
-                    vertical: "top",
+                }}
+                series={[
+                  {
+                    data: transformDataForPieChart as PieData[],
+                    outerRadius: 100,
+                    highlightScope: { faded: "global", highlighted: "item" },
+                    faded: {
+                      innerRadius: 30,
+                      additionalRadius: -30,
+                      color: "gray",
+                    },
+                    cx: "50%",
+                    cy: "50%",
                   },
-                },
-              }}
-              series={[
-                {
-                  data: transformDataForPieChart as PieData[],
-                  outerRadius: 100,
-                  highlightScope: { faded: "global", highlighted: "item" },
-                  faded: {
-                    innerRadius: 30,
-                    additionalRadius: -30,
-                    color: "gray",
-                  },
-                  cx: "50%",
-                  cy: "50%",
-                },
-              ]}
-              height={300}
-              margin={{ right: 250 }}
-            />
+                ]}
+                height={300}
+                margin={{ right: 250 }}
+              />
+            </StyledFadeIn>
           )}
         </>
       )}

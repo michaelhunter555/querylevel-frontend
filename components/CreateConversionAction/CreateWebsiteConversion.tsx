@@ -22,6 +22,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import { StyledFadeIn } from "../Shared/FadeInComponent";
 import { createConversionFields } from "./conversionCreationFields";
 import { ConversionLoadingSkeleton } from "./ConversionLoadingSkeleton";
 
@@ -124,10 +125,12 @@ const CreateWebsiteConversion = () => {
             <Divider orientation="vertical" />
             {isPostLoading && <ConversionLoadingSkeleton />}
             {!isPostLoading && (
-              <ConversionFormFields
-                formState={formState}
-                inputHandler={inputHandler}
-              />
+              <StyledFadeIn delay={0.1} visible={!isPostLoading}>
+                <ConversionFormFields
+                  formState={formState}
+                  inputHandler={inputHandler}
+                />
+              </StyledFadeIn>
             )}
 
             <Divider sx={{ margin: "0.5rem auto" }} />

@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useSession } from "next-auth/react";
+import { useSession } from 'next-auth/react';
 
-import TableRowsTwoToneIcon from "@mui/icons-material/TableRowsTwoTone";
-import ViewStreamTwoToneIcon from "@mui/icons-material/ViewStreamTwoTone";
-import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import TableRowsTwoToneIcon from '@mui/icons-material/TableRowsTwoTone';
+import ViewStreamTwoToneIcon from '@mui/icons-material/ViewStreamTwoTone';
+import Divider from '@mui/material/Divider';
+import Grid from '@mui/material/Grid';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import { ShoppingCampaignTypes } from "./shoppingCampaign.enums";
+import { ShoppingCampaignTypes } from './shoppingCampaign.enums';
 
 const threeTiered = ShoppingCampaignTypes.THREE_TIERED;
 const alphaBeta = ShoppingCampaignTypes.ALPHA_BETA;
@@ -17,7 +17,6 @@ const LIGHT = "light";
 
 export const ShoppingCampaignStrategy: React.FC<{
   onClick: (val: ShoppingCampaignTypes) => void;
-  selectStrategy: ShoppingCampaignTypes | "";
 }> = ({ onClick }): JSX.Element => {
   const { data: session } = useSession();
   const [campaignType, setCampaignType] = useState<ShoppingCampaignTypes | "">(

@@ -12,33 +12,33 @@ export const adjustLongTitle = (
   skuList: string[]
 ) => {
   // Prepare a case-insensitive regex pattern for the brand
-  const brandRegex = new RegExp(brand.split(" ").join("\\s+"), "gi");
+  const brandRegex = new RegExp(brand?.split(" ")?.join("\\s+"), "gi");
 
-  return titles.map((title) => {
+  return titles?.map((title) => {
     // Replace all sequences of non-word characters or underscores with a single space
-    title = title.replace(/[\W_]+/gi, " ");
+    title = title?.replace(/[\W_]+/gi, " ");
 
     // Collapse multiple spaces into one
-    title = title.replace(/\s+/g, " ");
+    title = title?.replace(/\s+/g, " ");
 
     // Remove the brand by regex, regardless of case and spacing variations
-    title = title.replace(brandRegex, " ");
+    title = title?.replace(brandRegex, " ");
 
     // Split the title into words
-    const words = title.split(" ");
+    const words = title?.split(" ");
 
     // Filter out the SKUs
-    let filteredWords = words.filter((word) => !skuList.includes(word));
+    let filteredWords = words?.filter((word) => !skuList?.includes(word));
 
-    if (filteredWords.length > 10) {
-      filteredWords = filteredWords.slice(0, 10);
+    if (filteredWords?.length > 10) {
+      filteredWords = filteredWords?.slice(0, 10);
     }
     // Join the words back into a string
-    let newTitle = filteredWords.join(" ").trim();
+    let newTitle = filteredWords?.join(" ")?.trim();
 
     // If the new title is too long, cut down to 78 characters
-    if (newTitle.length > 78) {
-      newTitle = newTitle.slice(0, 78).trim();
+    if (newTitle?.length > 78) {
+      newTitle = newTitle?.slice(0, 78)?.trim();
     }
 
     return newTitle;

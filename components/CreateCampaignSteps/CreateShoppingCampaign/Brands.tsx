@@ -1,16 +1,17 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import LightbulbTwoToneIcon from "@mui/icons-material/LightbulbTwoTone";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Divider from "@mui/material/Divider";
-import LinearProgress from "@mui/material/LinearProgress";
-import Paper from "@mui/material/Paper";
-import Stack from "@mui/material/Stack";
-import { styled } from "@mui/material/styles";
-import Typography from "@mui/material/Typography";
+import { StyledFadeIn } from '@/components/Shared/FadeInComponent';
+import LightbulbTwoToneIcon from '@mui/icons-material/LightbulbTwoTone';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Divider from '@mui/material/Divider';
+import LinearProgress from '@mui/material/LinearProgress';
+import Paper from '@mui/material/Paper';
+import Stack from '@mui/material/Stack';
+import { styled } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 
-import { StrategyModal } from "./Modal";
+import { StrategyModal } from './Modal';
 
 interface BrandsProps {
   isLoading: boolean;
@@ -51,20 +52,22 @@ const Brands: React.FC<BrandsProps> = ({
           {!isLoading &&
             brands?.map((brand, i) => {
               return (
-                <Chip
-                  key={i}
-                  label={brand}
-                  clickable={true}
-                  variant="outlined"
-                  component={Button}
-                  onClick={() => {
-                    if (selectedBrand !== brand) {
-                      onBrandChange(brand);
-                      //onGetProducts(brand);
-                    }
-                  }}
-                  color={selectedBrand === brand ? "primary" : "default"}
-                />
+                <StyledFadeIn key={i} delay={i * 0.1} visible={!isLoading}>
+                  <Chip
+                    sx={{ marginBottom: { xs: "0.5rem", md: "0rem" } }}
+                    label={brand}
+                    clickable={true}
+                    variant="outlined"
+                    component={Button}
+                    onClick={() => {
+                      if (selectedBrand !== brand) {
+                        onBrandChange(brand);
+                        //onGetProducts(brand);
+                      }
+                    }}
+                    color={selectedBrand === brand ? "primary" : "default"}
+                  />
+                </StyledFadeIn>
               );
             })}
         </Stack>
@@ -81,6 +84,7 @@ const Brands: React.FC<BrandsProps> = ({
               label="Learn More"
               onClick={handleInfoClick}
             />
+
             <StrategyModal open={open} onClose={handleInfoClick} />
           </Stack>
         </>

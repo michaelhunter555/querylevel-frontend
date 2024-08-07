@@ -13,11 +13,11 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import TableCell from "@mui/material/TableCell";
-import TableRow from "@mui/material/TableRow";
 import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import { StyledTableRowFadeIn } from "../Shared/FadeInComponent";
 import { StatusDot } from "../Shared/StatusDot";
 import { determineNextNode } from "./determineNextNode";
 import { EditNodeButton } from "./EditPartitionType/EditNodeButton";
@@ -168,7 +168,9 @@ const RenderRow: React.FC<RenderRowProps> = ({
           editPartitionTreeIsLoading={editPartitionTreeIsLoading}
           //setOperationComplete={setOperationComplete}
         />
-        <TableRow
+        <StyledTableRowFadeIn
+          visible={true}
+          delay={0.1}
           key={node?.criterion_id}
           onMouseEnter={() => setHoveredNode(node?.criterion_id)}
           onMouseLeave={() => setHoveredNode(null)}
@@ -287,24 +289,7 @@ const RenderRow: React.FC<RenderRowProps> = ({
           </TableCell>
           <TableCell>{node?.impressions}</TableCell>
           <TableCell>{(node?.cost_micros / 1000000).toFixed(2)}</TableCell>
-        </TableRow>
-        {/* {hasChildren &&
-          isRowOpen &&
-          node.children.map((childNode) => (
-            <RenderRow
-              key={childNode.criterion_id}
-              node={childNode}
-              open={open}
-              level={level + 1}
-              handleToggle={handleToggle}
-              handleEditPartitionTree={handleEditPartitionTree}
-              updateNegativeStatus={updateNegativeStatus}
-              negativeStatusLoading={negativeStatusLoading}
-              bidsAreUpdating={bidsAreUpdating}
-              updateCostPerClick={updateCostPerClick}
-              editPartitionTreeIsLoading={editPartitionTreeIsLoading}
-            />
-          ))} */}
+        </StyledTableRowFadeIn>
       </>
     );
   };
