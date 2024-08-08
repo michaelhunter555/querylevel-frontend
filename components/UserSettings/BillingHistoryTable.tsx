@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
+import { LoadingTable } from "@/components/DataTable/LoadingTable";
 import { useAccountSettings } from "@/hooks/useAccountSettings";
 import Link from "@mui/material/Link";
 import Pagination from "@mui/material/Pagination";
-import Skeleton from "@mui/material/Skeleton";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -104,27 +104,7 @@ const BillingHistoryTable = ({ stripeCustomerId }: BillingHistoryProps) => {
                 </TableCell>
               </TableRow>
             ))}
-          {billingDataIsLoading &&
-            Array.from({ length: 4 }).map((_, i) => (
-              <TableRow key={i}>
-                <TableCell>
-                  <Skeleton width="100%" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton width="100%" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton width="100%" />
-                </TableCell>
-
-                <TableCell>
-                  <Skeleton width="100%" />
-                </TableCell>
-                <TableCell>
-                  <Skeleton width="100%" />
-                </TableCell>
-              </TableRow>
-            ))}
+          {billingDataIsLoading && <LoadingTable length={4} numCells={5} />}
         </TableBody>
       </Table>
       <Pagination

@@ -177,7 +177,7 @@ const ProductPartitionTable = ({
           </TableHead>
           <TableBody>
             {partitionIsLoading ? (
-              <LoadingTable isHome={true} length={3} isDashboard={true} />
+              <LoadingTable length={3} numCells={7} />
             ) : (
               flattenedHierarchyTable
                 ?.slice(indexOfFirstPage, indexOfLastPage)

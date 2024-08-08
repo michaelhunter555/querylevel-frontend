@@ -152,12 +152,8 @@ const ConversionsTable = ({
                   isChecked={rowSelection[resource?.id] ?? false}
                 />
               ))}
-          {tableIsLoading && (
-            <LoadingTable isHome={true} length={6} isDashboard={true} />
-          )}
-          {isRemovingConversion && (
-            <LoadingTable isHome={true} length={6} isDashboard={true} />
-          )}
+          {tableIsLoading && <LoadingTable length={6} numCells={7} />}
+          {isRemovingConversion && <LoadingTable length={6} numCells={7} />}
         </TableBody>
       </Table>
       {!tableIsLoading && conversionData && (
