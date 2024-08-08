@@ -105,7 +105,7 @@ const BudgetType = ({
                       </TableCell>
                     </TableRow>
                   ))}
-                {isLoading && <LoadingTable length={3} isHome={true} />}
+                {isLoading && <LoadingTable length={3} numCells={4} />}
               </TableBody>
             </Table>
           </TableContainer>

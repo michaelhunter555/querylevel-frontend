@@ -32,8 +32,7 @@ const FirstTimeConnectModal = ({ open, onClose }: FirstTimeConnectProps) => {
               account associated with your Google gmail. This also enables you
               to create, view, update and delete according the features
               available. These permission can be easily revoked at anytime via
-              your account settings (3rd party app permission)
-              {String.fromCodePoint(0x1f60a)}.
+              your account settings (3rd party app permission) .
             </Typography>
           </Content>
           <Divider flexItem sx={{ margin: "0.5rem 0" }} />

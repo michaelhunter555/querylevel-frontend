@@ -16,6 +16,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 
 import PricePreviewModal from "../Modal/PricePreviewModal";
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 
 interface SelectPlan {
   onSelectPlan: (val: PlanData) => void;
@@ -162,7 +163,7 @@ const UserPlans = ({
         }}
       >
         {!userIsLoggedIn && (
-          <>
+          <StyledFadeIn delay={0.1} visible={true}>
             <Typography component="h2" variant="h4" color="text.primary">
               Pricing
             </Typography>
@@ -171,7 +172,7 @@ const UserPlans = ({
               Create, edit and manage your Shopping performance in all in one
               centralized experience.
             </Typography>
-          </>
+          </StyledFadeIn>
         )}
       </Box>
       <Grid
@@ -188,169 +189,172 @@ const UserPlans = ({
             sm={tier.title === "Enterprise" ? 12 : 6}
             md={4}
           >
-            <PricePreviewModal
-              open={previewModal[tier?.title?.toLowerCase()] === true}
-              onClose={() => handleUpdateModal(tier?.title?.toLowerCase())}
-              planName={tier?.title?.toLowerCase()}
-              priceId={tier.id}
-              isPostLoading={isPostLoading}
-              handleUpgradeSubscription={handleSubscriptionChange}
-              userSettings={userSettings as UserSettingsProps}
-              handleTogglePlan={handleTogglePlan as () => void}
-            />
-            <Card
-              sx={{
-                p: 2,
-                display: "flex",
-                flexDirection: "column",
-                gap: 4,
-                border: tier.title === "Professional" ? "1px solid" : undefined,
-                borderColor:
-                  tier.title === "Professional" ? "primary.main" : undefined,
-                background:
-                  tier.title === "Professional"
-                    ? "linear-gradient(#6c2d65, #02283b)"
-                    : undefined,
-              }}
-            >
-              <CardContent>
-                <Box
-                  sx={{
-                    mb: 1,
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    color: tier.title === "Professional" ? "grey.100" : "",
-                  }}
-                >
-                  <Typography component="h3" variant="h6">
-                    {tier.title}
-                  </Typography>
-                  {tier.title === "Professional" && (
-                    <Chip
-                      icon={<AutoAwesomeIcon />}
-                      label={tier.subheader}
-                      size="small"
-                      sx={{
-                        background: (theme) =>
-                          theme.palette.mode === "light" ? "" : "none",
-                        backgroundColor: "primary.contrastText",
-                        "& .MuiChip-label": {
-                          color: "primary.dark",
-                        },
-                        "& .MuiChip-icon": {
-                          color: "primary.dark",
-                        },
-                      }}
-                    />
-                  )}
-                </Box>
-                <Box
-                  sx={{
-                    display: "flex",
-                    alignItems: "baseline",
-                    color:
-                      tier.title === "Professional" ? "grey.50" : undefined,
-                  }}
-                >
-                  <Typography component="h3" variant="h2">
-                    ${tier.price}
-                  </Typography>
-                  <Typography component="h3" variant="h6">
-                    &nbsp; per Month
-                  </Typography>
-                </Box>
-                <Divider
-                  sx={{
-                    my: 2,
-                    opacity: 0.2,
-                    borderColor: "grey.500",
-                  }}
-                />
-                {tier.description.map((line) => (
+            <StyledFadeIn visible={true} delay={i * 0.1}>
+              <PricePreviewModal
+                open={previewModal[tier?.title?.toLowerCase()] === true}
+                onClose={() => handleUpdateModal(tier?.title?.toLowerCase())}
+                planName={tier?.title?.toLowerCase()}
+                priceId={tier.id}
+                isPostLoading={isPostLoading}
+                handleUpgradeSubscription={handleSubscriptionChange}
+                userSettings={userSettings as UserSettingsProps}
+                handleTogglePlan={handleTogglePlan as () => void}
+              />
+              <Card
+                sx={{
+                  p: 2,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 4,
+                  border:
+                    tier.title === "Professional" ? "1px solid" : undefined,
+                  borderColor:
+                    tier.title === "Professional" ? "primary.main" : undefined,
+                  background:
+                    tier.title === "Professional"
+                      ? "linear-gradient(#6c2d65, #02283b)"
+                      : undefined,
+                }}
+              >
+                <CardContent>
                   <Box
-                    key={line}
                     sx={{
-                      py: 1,
+                      mb: 1,
                       display: "flex",
-                      gap: 1.5,
+                      justifyContent: "space-between",
                       alignItems: "center",
+                      color: tier.title === "Professional" ? "grey.100" : "",
                     }}
                   >
-                    <CheckCircleRoundedIcon
-                      sx={{
-                        width: 20,
-                        color:
-                          tier.title === "Professional"
-                            ? "primary.light"
-                            : "primary.main",
-                      }}
-                    />
-                    <Typography
-                      variant="subtitle2"
-                      sx={{
-                        color:
-                          tier.title === "Professional"
-                            ? "grey.200"
-                            : undefined,
-                      }}
-                    >
-                      {line}
+                    <Typography component="h3" variant="h6">
+                      {tier.title}
+                    </Typography>
+                    {tier.title === "Professional" && (
+                      <Chip
+                        icon={<AutoAwesomeIcon />}
+                        label={tier.subheader}
+                        size="small"
+                        sx={{
+                          background: (theme) =>
+                            theme.palette.mode === "light" ? "" : "none",
+                          backgroundColor: "primary.contrastText",
+                          "& .MuiChip-label": {
+                            color: "primary.dark",
+                          },
+                          "& .MuiChip-icon": {
+                            color: "primary.dark",
+                          },
+                        }}
+                      />
+                    )}
+                  </Box>
+                  <Box
+                    sx={{
+                      display: "flex",
+                      alignItems: "baseline",
+                      color:
+                        tier.title === "Professional" ? "grey.50" : undefined,
+                    }}
+                  >
+                    <Typography component="h3" variant="h2">
+                      ${tier.price}
+                    </Typography>
+                    <Typography component="h3" variant="h6">
+                      &nbsp; per Month
                     </Typography>
                   </Box>
-                ))}
-              </CardContent>
-              {!hideButton && !url ? (
-                <CardActions>
-                  <Button
-                    disabled={tier?.title?.toLowerCase() === planType}
-                    onClick={() => {
-                      setSelectedButton(i);
-                      if (
-                        userSettings?.stripeCustomerId && //has customer id already
-                        userSettings?.stripeSubscriptionId && //has subscription id already
-                        planType !== "canceled" && // not planType canceled or payAsYouGo
-                        planType !== "payAsYouGo"
-                      ) {
-                        //pro or growing
-                        handleUpdateModal(tier?.title?.toLowerCase());
-                      } else {
-                        handleSelectPaymentPlan(
-                          tier?.id,
-                          tier?.title?.toLowerCase()
-                        );
-                      }
+                  <Divider
+                    sx={{
+                      my: 2,
+                      opacity: 0.2,
+                      borderColor: "grey.500",
                     }}
-                    fullWidth
-                    variant={tier.buttonVariant as "outlined" | "contained"}
-                  >
-                    {selectedButton === i && isPostLoading
-                      ? "Loading..."
-                      : tier?.title?.toLowerCase() === planType
-                      ? "SELECTED"
-                      : planType === "canceled" ||
-                        planType === "free" ||
-                        planType === "payAsYouGo"
-                      ? tier?.buttonText
-                      : planType !== tier?.title?.toLowerCase() &&
-                        "Update Plan"}
-                  </Button>
-                </CardActions>
-              ) : (
-                ""
-              )}
+                  />
+                  {tier.description.map((line) => (
+                    <Box
+                      key={line}
+                      sx={{
+                        py: 1,
+                        display: "flex",
+                        gap: 1.5,
+                        alignItems: "center",
+                      }}
+                    >
+                      <CheckCircleRoundedIcon
+                        sx={{
+                          width: 20,
+                          color:
+                            tier.title === "Professional"
+                              ? "primary.light"
+                              : "primary.main",
+                        }}
+                      />
+                      <Typography
+                        variant="subtitle2"
+                        sx={{
+                          color:
+                            tier.title === "Professional"
+                              ? "grey.200"
+                              : undefined,
+                        }}
+                      >
+                        {line}
+                      </Typography>
+                    </Box>
+                  ))}
+                </CardContent>
+                {!hideButton && !url ? (
+                  <CardActions>
+                    <Button
+                      disabled={tier?.title?.toLowerCase() === planType}
+                      onClick={() => {
+                        setSelectedButton(i);
+                        if (
+                          userSettings?.stripeCustomerId && //has customer id already
+                          userSettings?.stripeSubscriptionId && //has subscription id already
+                          planType !== "canceled" && // not planType canceled or payAsYouGo
+                          planType !== "payAsYouGo"
+                        ) {
+                          //pro or growing
+                          handleUpdateModal(tier?.title?.toLowerCase());
+                        } else {
+                          handleSelectPaymentPlan(
+                            tier?.id,
+                            tier?.title?.toLowerCase()
+                          );
+                        }
+                      }}
+                      fullWidth
+                      variant={tier.buttonVariant as "outlined" | "contained"}
+                    >
+                      {selectedButton === i && isPostLoading
+                        ? "Loading..."
+                        : tier?.title?.toLowerCase() === planType
+                        ? "SELECTED"
+                        : planType === "canceled" ||
+                          planType === "free" ||
+                          planType === "payAsYouGo"
+                        ? tier?.buttonText
+                        : planType !== tier?.title?.toLowerCase() &&
+                          "Update Plan"}
+                    </Button>
+                  </CardActions>
+                ) : (
+                  ""
+                )}
 
-              {selectedButton === i && url && !hideButton && (
-                <Button
-                  href={url}
-                  fullWidth
-                  variant="contained"
-                  color="primary"
-                >
-                  Go to Checkout
-                </Button>
-              )}
-            </Card>
+                {selectedButton === i && url && !hideButton && (
+                  <Button
+                    href={url}
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                  >
+                    Go to Checkout
+                  </Button>
+                )}
+              </Card>
+            </StyledFadeIn>
           </Grid>
         ))}
       </Grid>

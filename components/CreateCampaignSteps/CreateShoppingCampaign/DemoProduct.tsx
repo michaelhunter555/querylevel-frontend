@@ -3,8 +3,6 @@ import React from "react";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-import { ShoppingInputsLoading } from "./ShoppingInputsLoading";
-
 interface DemoProductStepTwo {
   countIsLoading: boolean;
   selectedBrand: string;
@@ -37,7 +35,7 @@ const DemoProductData: React.FC<DemoProductStepTwo> = ({
             </Typography>
           )}
         </Stack>
-        {countIsLoading && <ShoppingInputsLoading />}
+        {/* {countIsLoading && <ShoppingInputsLoading />} */}
 
         {/* {countIsLoading && <CircularProgress sx={{ fontSize: 8 }} />} */}
       </Stack>

@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 
+import { StyledFadeIn } from "@/components/Shared/StyledFadeInComponents";
 import { ProductPerformanceData } from "@/types";
 import { SelectChangeEvent } from "@mui/material";
 import Divider from "@mui/material/Divider";
@@ -105,24 +106,38 @@ const AccountDataCards = ({
   return (
     <Grid
       container
-      direction="row"
       spacing={1}
       alignItems="center"
       justifyContent="start"
-      sx={{ display: "flex", gap: "10px" }}
+      sx={{
+        display: "flex",
+        gap: "10px",
+        flexDirection: { xs: "column", md: "row" },
+      }}
     >
       {isLoading && <TempLoadingCard />}
 
       {!isLoading &&
         shoppingPerformance &&
         homeAppAnalytics?.map((data, index) => (
-          <AnalyticsTableData
+          <StyledFadeIn
             key={index}
-            text={data?.text}
-            value={data?.value as number}
-            isLoading={isLoading}
-            sparkLineData={data?.chartSegment as number[]}
-          />
+            visible={Boolean(!isLoading)}
+            delay={0.1}
+            sx={{
+              width: { xs: "100%", md: "auto" },
+              display: "flex",
+              flexDirection: { xs: "column", md: "row" },
+            }}
+          >
+            <AnalyticsTableData
+              key={index}
+              text={data?.text}
+              value={data?.value as number}
+              isLoading={isLoading}
+              sparkLineData={data?.chartSegment as number[]}
+            />
+          </StyledFadeIn>
         ))}
       <Divider flexItem sx={{ marginTop: "1rem" }} />
 

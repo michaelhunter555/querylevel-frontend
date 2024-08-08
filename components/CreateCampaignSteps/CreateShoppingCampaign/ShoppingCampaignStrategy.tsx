@@ -17,7 +17,6 @@ const LIGHT = "light";
 
 export const ShoppingCampaignStrategy: React.FC<{
   onClick: (val: ShoppingCampaignTypes) => void;
-  selectStrategy: ShoppingCampaignTypes | "";
 }> = ({ onClick }): JSX.Element => {
   const { data: session } = useSession();
   const [campaignType, setCampaignType] = useState<ShoppingCampaignTypes | "">(

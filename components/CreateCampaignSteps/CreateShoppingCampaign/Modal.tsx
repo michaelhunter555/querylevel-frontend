@@ -4,10 +4,12 @@ import { useSession } from "next-auth/react";
 import Image from "next/image";
 
 import { styledScroll } from "@/components/GoogleAuthButton/AuthStyles";
+import { StyledFadeIn } from "@/components/Shared/StyledFadeInComponents";
 import CircleIcon from "@mui/icons-material/Circle";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
+import Fade from "@mui/material/Fade";
 import Grid from "@mui/material/Grid";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -61,89 +63,99 @@ export const StrategyModal: React.FC<{
   return (
     <>
       <Modal open={open} onClose={modalHandler}>
-        <StyledBoxContainer width="70%" sx={{ ...styledScroll }}>
-          <Grid container direction="row">
-            <Grid item xs={12} md={4}>
-              <Stack spacing={3}>
-                <Typography align="center" variant="h3" color="text.secondary">
-                  What's Created
-                </Typography>
-                <Divider />
-                <List>
-                  {campaignDetails?.map((detail, i) => (
-                    <ListItem key={i}>
-                      <ListItemIcon>
-                        <CircleIcon sx={{ fontSize: "10px" }} />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={detail}
-                        sx={(theme) => ({
-                          ...theme.typography.subtitle1,
-                          color: theme.palette.text.secondary,
-                        })}
+        <Fade in={open} timeout={300}>
+          <StyledBoxContainer width="70%" sx={{ ...styledScroll }}>
+            <Grid container direction="row">
+              <Grid item xs={12} md={4}>
+                <Stack spacing={3}>
+                  <Typography
+                    align="center"
+                    variant="h3"
+                    color="text.secondary"
+                  >
+                    What's Created
+                  </Typography>
+                  <Divider />
+                  <List>
+                    {campaignDetails?.map((detail, i) => (
+                      <ListItem key={i}>
+                        <ListItemIcon>
+                          <CircleIcon sx={{ fontSize: "10px" }} />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={detail}
+                          sx={(theme) => ({
+                            ...theme.typography.subtitle1,
+                            color: theme.palette.text.secondary,
+                          })}
+                        />
+                      </ListItem>
+                    ))}
+                  </List>
+                </Stack>
+              </Grid>
+              <Divider flexItem orientation="vertical" />
+              <Grid item xs={12} md={7}>
+                <Stack spacing={3} sx={{ paddingLeft: "1rem" }}>
+                  <Typography variant="h3" color="text.secondary">
+                    Selecting a Strategy
+                  </Typography>
+                  <Divider />
+
+                  <Stack>
+                    <Typography variant="h6" color="text.secondary">
+                      Alpha-Beta Structure
+                    </Typography>
+
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      color="text.secondary"
+                    >
+                      {whyAlphaBeta}
+                    </Typography>
+                    <StyledFadeIn visible={open} delay={0.3}>
+                      <Image
+                        layout="response"
+                        objectFit="contain"
+                        src={alphaBetaImg}
+                        alt="alpha-beta"
                       />
-                    </ListItem>
-                  ))}
-                </List>
-              </Stack>
-            </Grid>
-            <Divider flexItem orientation="vertical" />
-            <Grid item xs={12} md={7}>
-              <Stack spacing={3} sx={{ paddingLeft: "1rem" }}>
-                <Typography variant="h3" color="text.secondary">
-                  Selecting a Strategy
-                </Typography>
-                <Divider />
-
-                <Stack>
-                  <Typography variant="h6" color="text.secondary">
-                    Alpha-Beta Structure
-                  </Typography>
-
-                  <Typography
-                    gutterBottom
-                    variant="subtitle2"
-                    color="text.secondary"
-                  >
-                    {whyAlphaBeta}
-                  </Typography>
-                  <Image
-                    layout="response"
-                    objectFit="contain"
-                    src={alphaBetaImg}
-                    alt="alpha-beta"
-                  />
+                    </StyledFadeIn>
+                  </Stack>
+                  <Divider />
+                  <Stack>
+                    <Typography variant="h6" color="text.secondary">
+                      Three-Tiered Structure
+                    </Typography>
+                    <Typography
+                      gutterBottom
+                      variant="subtitle2"
+                      color="text.secondary"
+                    >
+                      {whyThreeTiered}
+                    </Typography>
+                    <StyledFadeIn visible={open} delay={0.3}>
+                      <Image
+                        layout="response"
+                        objectFit="contain"
+                        src={ThreeTieredImg}
+                        alt="three-tiered"
+                      />
+                    </StyledFadeIn>
+                  </Stack>
+                  <Alert severity="warning">
+                    Campaigns still need to be monitored, managed and adjusted
+                    to find what works best. Pro Plans have the option to manage
+                    keywords with the one-click clean up service.
+                  </Alert>
                 </Stack>
-                <Divider />
-                <Stack>
-                  <Typography variant="h6" color="text.secondary">
-                    Three-Tiered Structure
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="subtitle2"
-                    color="text.secondary"
-                  >
-                    {whyThreeTiered}
-                  </Typography>
-                  <Image
-                    layout="response"
-                    objectFit="contain"
-                    src={ThreeTieredImg}
-                    alt="three-tiered"
-                  />
-                </Stack>
-                <Alert severity="warning">
-                  Campaigns still need to be monitored, managed and adjusted to
-                  find what works best. Pro Plans have the option to manage
-                  keywords with the one-click clean up service.
-                </Alert>
-              </Stack>
+              </Grid>
             </Grid>
-          </Grid>
 
-          <Button onClick={modalHandler}>Close</Button>
-        </StyledBoxContainer>
+            <Button onClick={modalHandler}>Close</Button>
+          </StyledBoxContainer>
+        </Fade>
       </Modal>
     </>
   );

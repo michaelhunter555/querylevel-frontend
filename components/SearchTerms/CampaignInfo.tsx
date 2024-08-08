@@ -8,6 +8,8 @@ import Stack from "@mui/material/Stack";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
+
 const StyledPaper = styled(Paper)(({ theme }) => ({
   display: "flex",
   flexDirection: "row",
@@ -39,25 +41,30 @@ ICampaignInfo) => {
         {isLoading && <LinearProgress />}
         <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
           {!isLoading && campaignNames?.length === 0 && (
-            <Typography>Authenticate your account</Typography>
+            <Typography color="text.secondary">
+              No Active Campaigns Found
+            </Typography>
           )}
           {!isLoading &&
             campaignNames?.map((campaign, i) => {
               return (
-                <Chip
-                  key={i}
-                  label={campaign.split(":")[0]}
-                  clickable={true}
-                  variant="outlined"
-                  component={Button}
-                  onClick={() => {
-                    if (selectedCampaign !== campaign) {
-                      onCampaignChange(campaign);
-                      //onGetCampaignNames(campaign);
+                <StyledFadeIn key={i} delay={i * 0.1} visible={!isLoading}>
+                  <Chip
+                    label={campaign.split(":")[0]}
+                    clickable={true}
+                    variant="outlined"
+                    component={Button}
+                    onClick={() => {
+                      if (selectedCampaign !== campaign) {
+                        onCampaignChange(campaign);
+                        //onGetCampaignNames(campaign);
+                      }
+                    }}
+                    color={
+                      selectedCampaign === campaign ? "primary" : "default"
                     }
-                  }}
-                  color={selectedCampaign === campaign ? "primary" : "default"}
-                />
+                  />
+                </StyledFadeIn>
               );
             })}
         </Stack>

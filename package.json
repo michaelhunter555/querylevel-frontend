@@ -28,7 +28,6 @@
     "chart.js": "^4.4.0",
     "dayjs": "^1.11.9",
     "google-ads-api": "^16.0.0",
-    "googleapis": "^123.0.0",
     "material-react-table": "^2.12.1",
     "mongodb": "^6.1.0",
     "mongoose": "^7.5.2",

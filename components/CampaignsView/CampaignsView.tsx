@@ -14,6 +14,7 @@ import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
 import CampaignOptionsBar from "../CampaignOptionsBar/CampaignOptionsBar";
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 //import CampaignViewCards from "../CampaignViewCards/CampaignViewCards";
 //import DynamicCampaignTable from "../DataTable/DynamicCampaignTable";
 import { StatusSelector } from "../StatusSelector/StatusSelector";
@@ -150,15 +151,17 @@ const CampaignView = () => {
 
         <CampaignOptionsBar />
       </Stack>
-      <DynamicCampaignTable
-        isLoading={campaignIsLoading}
-        data={campaignData}
-        chartData={campaign as UserCampaign[]}
-        updatedCampaign={updatedCampaignHandler}
-        segment={segment}
-        status={status}
-        refetchCampaigns={refetchCampaigns}
-      />
+      <StyledFadeIn delay={0.3} visible={true}>
+        <DynamicCampaignTable
+          isLoading={campaignIsLoading}
+          data={campaignData}
+          chartData={campaign as UserCampaign[]}
+          updatedCampaign={updatedCampaignHandler}
+          segment={segment}
+          status={status}
+          refetchCampaigns={refetchCampaigns}
+        />
+      </StyledFadeIn>
     </>
   );
 };

@@ -9,6 +9,7 @@ import { Accordionize } from "../Accordion/Accordion";
 import { LocationSelect } from "../CreateCampaignSteps/CreateShoppingCampaign/LocationSelect";
 import { InventoryFilter } from "../InventoryFilter/InventoryFilter";
 import { LocalInventory } from "../LocalInventory/LocalInventory";
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 
 type CreateCampaignStepTwo = {
   localInventoryIsExpanded: boolean;
@@ -82,61 +83,63 @@ const CreateCampaignStepTwo = ({
   return (
     <>
       <Grid item xs={11}>
-        <Accordionize
-          details="Set Inventory Filter"
-          isExpanded={isExpanded}
-          toggleAccordion={toggleAccordion}
-        >
-          <InventoryFilter
-            formState={formState}
-            inputHandler={inputHandler}
-            onFilterSelect={onFilterSelect}
-            selectedFilter={selectedFilter}
-            openInventoryFilter={openInventoryFilter}
-            onOpenInventoryFilter={onOpenInventoryFilter}
-            selectedInventoryFilter={selectedInventoryFilter}
-            onInventoryFilterChange={onInventoryFilterChange}
-            filteredData={filteredData}
-            inventoryFilterIsLoading={inventoryFilterIsLoading}
-          />
-        </Accordionize>
+        <StyledFadeIn visible={true} delay={0.1}>
+          <Accordionize
+            details="Set Inventory Filter"
+            isExpanded={isExpanded}
+            toggleAccordion={toggleAccordion}
+          >
+            <InventoryFilter
+              formState={formState}
+              inputHandler={inputHandler}
+              onFilterSelect={onFilterSelect}
+              selectedFilter={selectedFilter}
+              openInventoryFilter={openInventoryFilter}
+              onOpenInventoryFilter={onOpenInventoryFilter}
+              selectedInventoryFilter={selectedInventoryFilter}
+              onInventoryFilterChange={onInventoryFilterChange}
+              filteredData={filteredData}
+              inventoryFilterIsLoading={inventoryFilterIsLoading}
+            />
+          </Accordionize>
 
-        <Accordionize
-          details="Enable Local Inventory"
-          isExpanded={localInventoryIsExpanded}
-          toggleAccordion={onToggleLocalInventory}
-        >
-          <LocalInventory inputHandler={inputHandler} formState={formState} />
-        </Accordionize>
+          <Accordionize
+            details="Enable Local Inventory"
+            isExpanded={localInventoryIsExpanded}
+            toggleAccordion={onToggleLocalInventory}
+          >
+            <LocalInventory inputHandler={inputHandler} formState={formState} />
+          </Accordionize>
 
-        <Accordionize
-          details="Set location Targets"
-          isExpanded={locationIsExpanded}
-          toggleAccordion={toggleLocationAccordion}
-        >
-          <Stack direction="row" alignItems="center" spacing={2}>
-            <Grid item xs={5}>
-              <LocationSelect
-                outlinedInputId="target-locations"
-                targetLocation={targetedLocation}
-                onTargetLocation={targetLocationHandler}
-                inputLabel="Target Locations"
-                id="targetLocations"
-              />
-            </Grid>
+          <Accordionize
+            details="Set location Targets"
+            isExpanded={locationIsExpanded}
+            toggleAccordion={toggleLocationAccordion}
+          >
+            <Stack direction="row" alignItems="center" spacing={2}>
+              <Grid item xs={5}>
+                <LocationSelect
+                  outlinedInputId="target-locations"
+                  targetLocation={targetedLocation}
+                  onTargetLocation={targetLocationHandler}
+                  inputLabel="Target Locations"
+                  id="targetLocations"
+                />
+              </Grid>
 
-            <Grid item xs={5}>
-              <LocationSelect
-                outlinedInputId="exclude-locations"
-                targetLocation={excludedLocation}
-                onTargetLocation={excludeLocationHandler}
-                inputLabel="Exclude Locations"
-                id="excludedLocations"
-                isExcluded={true}
-              />
-            </Grid>
-          </Stack>
-        </Accordionize>
+              <Grid item xs={5}>
+                <LocationSelect
+                  outlinedInputId="exclude-locations"
+                  targetLocation={excludedLocation}
+                  onTargetLocation={excludeLocationHandler}
+                  inputLabel="Exclude Locations"
+                  id="excludedLocations"
+                  isExcluded={true}
+                />
+              </Grid>
+            </Stack>
+          </Accordionize>
+        </StyledFadeIn>
       </Grid>
     </>
   );

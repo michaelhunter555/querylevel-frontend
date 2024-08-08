@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 import { PlanTypes } from "./enums.plans";
 import PayAsYouGoOption from "./PayAsYouGo";
 
@@ -36,7 +37,7 @@ const UserSettings = () => {
   const [togglePlan, setTogglePlan] = useState<boolean>(false);
   const [toggleFaqs, setToggleFaqs] = useState<boolean>(false);
   const { getAccountSettings } = useAccountSettings();
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const userId = session?.user?._id;
 
   //fetches account settings
@@ -47,7 +48,7 @@ const UserSettings = () => {
   } = useQuery({
     queryKey: ["userSettings", userId],
     queryFn: () => getAccountSettings(),
-    enabled: Boolean(userId),
+    enabled: Boolean(userId && status !== "loading"),
     staleTime: Infinity,
   });
 
@@ -178,11 +179,13 @@ const UserSettings = () => {
           )}
         {!isLoading && userSettings && !togglePlan && (
           <Stack>
-            <ActiveSettingsTable user={userSettings} />
+            <StyledFadeIn visible={true} delay={0.1}>
+              <ActiveSettingsTable user={userSettings} />
 
-            <BillingHistoryTable
-              stripeCustomerId={userSettings?.stripeCustomerId}
-            />
+              <BillingHistoryTable
+                stripeCustomerId={userSettings?.stripeCustomerId}
+              />
+            </StyledFadeIn>
           </Stack>
         )}
         {isLoading && <CircularProgress />}
@@ -197,6 +200,7 @@ const UserSettings = () => {
               <Typography align="center" color="text.secondary" gutterBottom>
                 Only create tiered Campaigns or add monthly quota
               </Typography>
+
               <PayAsYouGoOption />
             </Box>
           )}

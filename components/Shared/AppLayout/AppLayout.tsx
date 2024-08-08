@@ -4,7 +4,6 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { Content, PageContainer } from "@/components/Footer/FooterStyles";
-import Header from "@/components/Header/Header";
 import PrivacyPolicyModal from "@/components/Modal/PrivacyPolicyModal";
 import TermsOfServiceModal from "@/components/Modal/TermsOfServiceModal";
 import SidebarMenu from "@/components/SidebarMenu/SidebarMenu";
@@ -95,7 +94,6 @@ const AppLayout = ({ children }: LayoutProps) => {
           >
             {!routerIsHome && (
               <Grid item xs={12} md={2}>
-                <Header />
                 <SidebarMenu hasAppAccess={canAccess} />
               </Grid>
             )}

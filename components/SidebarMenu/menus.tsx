@@ -15,7 +15,7 @@ import {
   PageRoutes,
 } from "./enums.menuItems";
 
-interface MenuItem {
+export interface MenuItem {
   text: string;
   secondary?: string;
   component: string;

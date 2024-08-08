@@ -50,42 +50,40 @@ const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableRow>
-            <TableCell>
-              <Typography>
-                {!user?.stripeCustomerId
-                  ? user?.userId?.substring(0, 10) + " ..."
-                  : user?.stripeCustomerId}
-              </Typography>
-            </TableCell>
-            <TableCell>
-              <Typography color="text.secondary" variant="h4">
-                {user?.totalCampaignsCreated} / {user?.campaignQuota}
-              </Typography>
-            </TableCell>
+          <TableCell>
+            <Typography>
+              {!user?.stripeCustomerId
+                ? user?.userId?.substring(0, 10) + " ..."
+                : user?.stripeCustomerId}
+            </Typography>
+          </TableCell>
+          <TableCell>
+            <Typography color="text.secondary" variant="h4">
+              {user?.totalCampaignsCreated} / {user?.campaignQuota}
+            </Typography>
+          </TableCell>
 
-            <TableCell>
-              <Typography>{user?.planType}</Typography>
-            </TableCell>
+          <TableCell>
+            <Typography>{user?.planType}</Typography>
+          </TableCell>
 
-            <TableCell>
-              <Typography>${user?.amountDue / 100}</Typography>
-            </TableCell>
+          <TableCell>
+            <Typography>${user?.amountDue / 100}</Typography>
+          </TableCell>
 
-            <TableCell>
-              <Typography>{user?.lastBillingDate?.split("T")[0]}</Typography>
-            </TableCell>
-            <TableCell>
-              <Typography>{endDate}</Typography>
-            </TableCell>
-            <TableCell>
-              {user?.accountActive ? (
-                <Chip label="True" color="success" />
-              ) : (
-                <Chip label="False" color="warning" />
-              )}
-            </TableCell>
-          </TableRow>
+          <TableCell>
+            <Typography>{user?.lastBillingDate?.split("T")[0]}</Typography>
+          </TableCell>
+          <TableCell>
+            <Typography>{endDate}</Typography>
+          </TableCell>
+          <TableCell>
+            {user?.accountActive ? (
+              <Chip label="True" color="success" />
+            ) : (
+              <Chip label="False" color="warning" />
+            )}
+          </TableCell>
         </TableBody>
       </Table>
     </TableContainer>

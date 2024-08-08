@@ -16,6 +16,7 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 //import AccountDataCards from "./AccountDataCards";
 import { StyledBoxContainer } from "./AuthStyles";
 //import DeviceData from "./DeviceData";
@@ -63,20 +64,6 @@ const ProductPerformance = dynamic(() => import("./ProductPerformance"), {
   ssr: false,
   loading: () => <LinearProgress />,
 });
-
-// const DeviceData = dynamic(() => import("./DeviceData"), {
-//   ssr: false,
-//   loading: () => {
-//     return (
-//       <Stack direction="column" sx={{ width: "100%" }}>
-//         <Skeleton width="100%" height={20} />
-//         {Array.from({ length: 3 }).map((_, i) => (
-//           <Skeleton key={i} width="85%" height={25} />
-//         ))}
-//       </Stack>
-//     );
-//   },
-// });
 
 const GoogleAuthButton = () => {
   const { data: session, status } = useSession();
@@ -287,12 +274,14 @@ const GoogleAuthButton = () => {
       {session?.user?._id && session?.user?.googleAccountId && (
         <StyledBoxContainer>
           <Grid container direction="row" alignItems="center" spacing={1}>
-            <ProductPerformance
-              isLoading={analyticsLoading}
-              productsData={
-                processedData?.productData as ProductPerformanceData[]
-              }
-            />
+            <StyledFadeIn delay={0.1} visible={true} sx={{ width: "100%" }}>
+              <ProductPerformance
+                isLoading={analyticsLoading}
+                productsData={
+                  processedData?.productData as ProductPerformanceData[]
+                }
+              />
+            </StyledFadeIn>
             <Grid item xs={12} md={6}></Grid>
 
             {/* <Grid

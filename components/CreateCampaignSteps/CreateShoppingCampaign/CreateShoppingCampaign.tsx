@@ -39,6 +39,7 @@ const CreateShoppingCampaign = () => {
     queryKey: ["merchantsBrandsData"],
     queryFn: () => getMerchantsData(),
     enabled: Boolean(session?.user?._id),
+    staleTime: 10 * 60 * 60 * 1000,
   });
 
   useEffect(() => {
@@ -91,19 +92,24 @@ const CreateShoppingCampaign = () => {
           </Stack>
 
           <Stack direction="row">
-            {!productDataIsLoading &&
-              brands &&
-              productData?.preview &&
-              productData?.keywords && (
-                <ShoppingProductPreview
-                  product={productData?.preview}
-                  keywords={productData?.keywords}
-                />
-              )}
+            {brands && (
+              <ShoppingProductPreview
+                productIsLoading={productDataIsLoading}
+                product={productData?.preview}
+                keywords={productData?.keywords}
+              />
+            )}
           </Stack>
         </Grid>
       ) : (
-        ""
+        <Typography
+          align="center"
+          sx={{ marginTop: 7 }}
+          variant="h4"
+          color="text.secondary"
+        >
+          Select a brand to get started.
+        </Typography>
       )}
     </Grid>
   );

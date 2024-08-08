@@ -58,7 +58,7 @@ const SearchTermView = ({
           onCampaignChange={(campaign: string) => onSetCampaignId(campaign)}
         />
       </Grid>
-      {campaignId && (
+      {campaignId ? (
         <>
           <Grid item>
             <Typography color="text.secondary" variant="h5">
@@ -103,6 +103,15 @@ const SearchTermView = ({
             {searchTermsIsLoading && <LinearProgress />}
           </Grid>
         </>
+      ) : (
+        <Typography
+          align="center"
+          sx={{ marginTop: 7 }}
+          variant="h4"
+          color="text.secondary"
+        >
+          Select a campaign to get started.
+        </Typography>
       )}
     </Grid>
   );

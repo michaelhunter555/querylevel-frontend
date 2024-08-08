@@ -15,6 +15,8 @@ import { Line } from "react-chartjs-2";
 import { ProductPerformanceData } from "@/types";
 import Skeleton from "@mui/material/Skeleton";
 
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
+
 ChartJS.register(
   CategoryScale,
   LinearScale,
@@ -104,7 +106,9 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
           ))}
         </>
       ) : (
-        <Line options={options} data={data} />
+        <StyledFadeIn visible={!isLoading} delay={0.1}>
+          <Line options={options} data={data} />
+        </StyledFadeIn>
       )}
     </>
   );

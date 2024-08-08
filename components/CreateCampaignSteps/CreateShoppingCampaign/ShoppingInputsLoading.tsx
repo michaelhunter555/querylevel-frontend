@@ -19,25 +19,35 @@ export const ShoppingInputsLoading = () => {
           spacing={3}
         >
           <Grid item xs={12} md={4}>
-            <Skeleton variant="rectangular" width={140} height={140} />
-            <Skeleton variant="text" width="70%" height={40} />
+            <Skeleton
+              sx={{ margin: "0 auto", borderRadius: 10 }}
+              variant="rectangular"
+              width={250}
+              height={250}
+            />
+            <Skeleton variant="text" width="100%" height={40} />
             <Divider />
+            <Skeleton variant="text" width="100%" />
+            <Skeleton variant="text" width="90%" />
             <Skeleton variant="text" width="80%" />
-            <Skeleton variant="text" width="90%" />
-            <Skeleton variant="text" width="90%" />
-            <Skeleton variant="text" width="90%" />
-            <Skeleton variant="text" width="90%" />
+            <Skeleton variant="text" width="80%" />
+            <Skeleton variant="text" width="80%" />
           </Grid>
 
           <Divider orientation="vertical" flexItem sx={{ margin: "0 1rem" }} />
 
           <Grid item xs={12} md={7}>
-            <Grid container direction="row" spacing={2}>
+            <Grid container direction="row" spacing={1}>
               <Grid item xs={12}>
                 <Typography>Campaign Structure</Typography>
                 <Stack direction="row" alignItems="center" spacing={2}>
                   {Array.from({ length: 2 }).map((_, i) => (
-                    <Skeleton key={i} width="100%" />
+                    <Skeleton
+                      key={i}
+                      width="100%"
+                      height={175}
+                      sx={{ borderRadius: 5 }}
+                    />
                   ))}
                 </Stack>
                 <Divider sx={{ margin: "1rem auto" }} />
@@ -46,7 +56,7 @@ export const ShoppingInputsLoading = () => {
               <Grid item xs={12}>
                 <Typography>Brand Name</Typography>
                 <Typography variant="h5" color="text.secondary">
-                  <Skeleton width="100%" />
+                  <Skeleton width="25%" />
                 </Typography>
               </Grid>
               {/**Ad Schedule: [{},] */}
@@ -56,28 +66,28 @@ export const ShoppingInputsLoading = () => {
 
               {/**targeted locations: string[] */}
               <Grid item xs={5}>
-                <Skeleton width="100%" />
+                <Skeleton width="100%" height={90} />
               </Grid>
 
               {/**excluded locations: string[]*/}
               <Grid item xs={5}>
-                <Skeleton width="100%" />
+                <Skeleton width="100%" height={90} />
               </Grid>
 
               {/** shared budget:number */}
               <Grid item xs={12} lg={5}>
-                <Skeleton width="100%" />
+                <Skeleton width="100%" height={90} />
               </Grid>
 
               {/*CPC bids: number */}
               <Grid item xs={12} lg={5}>
-                <Skeleton width="100%" />
+                <Skeleton width="100%" height={90} />
               </Grid>
 
               {/**Bid separation: number */}
               <Grid item xs={12} sx={{ display: "flex", gap: "5px" }}>
                 {Array.from({ length: 5 }).map((_, i) => (
-                  <Chip key={i} component={Skeleton} />
+                  <Chip key={i} component={Skeleton} label="50%" />
                 ))}
               </Grid>
 

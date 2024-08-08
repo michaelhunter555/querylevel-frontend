@@ -18,6 +18,7 @@ import IconButton from "@mui/material/IconButton";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 
+import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 import { AddNegativeKeywordsModal } from "./AddNegativeKeywords";
 import { BulkMatchTypeModal } from "./BulkMatchTypeModal";
 import { EditNegativeKeywordPopper } from "./EditNegativeKeywordPopper";
@@ -230,7 +231,11 @@ const ManageCampaignCriterionNegativeKeywords = ({
     ),
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <StyledFadeIn visible={true} delay={0.1}>
+      <MaterialReactTable table={table} />
+    </StyledFadeIn>
+  );
 };
 
 export default ManageCampaignCriterionNegativeKeywords;

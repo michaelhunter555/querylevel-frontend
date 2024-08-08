@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-import { LoadingTable } from "@/components/DataTable/LoadingTable";
 import { useAccountSettings } from "@/hooks/useAccountSettings";
+import InfoIcon from "@mui/icons-material/Info";
 import Link from "@mui/material/Link";
 import Pagination from "@mui/material/Pagination";
+import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
 import { useQuery } from "@tanstack/react-query";
 
 //userSettings.charges.data []
@@ -75,8 +78,20 @@ const BillingHistoryTable = ({ stripeCustomerId }: BillingHistoryProps) => {
             <TableCell>
               <b>Date</b>
             </TableCell>
+
             <TableCell>
-              <b>Invoice Link</b>
+              <Stack direction="row" alignItems="center" spacing={1}>
+                <Stack>
+                  <b>Invoice Link</b>
+                </Stack>
+                <Stack>
+                  <Tooltip title="Invoice links are available for subscriptions only. Expires 30 days after creation.">
+                    <span>
+                      <InfoIcon fontSize="inherit" />
+                    </span>
+                  </Tooltip>
+                </Stack>
+              </Stack>
             </TableCell>
             <TableCell></TableCell>
           </TableRow>
@@ -86,13 +101,19 @@ const BillingHistoryTable = ({ stripeCustomerId }: BillingHistoryProps) => {
             !billingDataIsLoading &&
             billingData?.charges?.map((charge: ChargeProps, i: number) => (
               <TableRow key={charge.chargeId}>
+                {/* fix here */}
                 <TableCell>
                   {charge.billingReason ? charge.billingReason : "pay as go"}
                 </TableCell>
                 <TableCell>${(charge.amountPaid / 100).toFixed(2)}</TableCell>
                 <TableCell>{charge.currency}</TableCell>
 
-                <TableCell>{chargeCreatedDate(charge.periodStart)}</TableCell>
+                <TableCell>
+                  {charge.billingReason !== "subscription_cycle"
+                    ? chargeCreatedDate(charge.periodStart)
+                    : chargeCreatedDate(charge.periodEnd)}
+                </TableCell>
+
                 <TableCell>
                   {charge.invoiceUrl ? (
                     <Link href={charge.invoiceUrl} target="_blank">
@@ -104,7 +125,30 @@ const BillingHistoryTable = ({ stripeCustomerId }: BillingHistoryProps) => {
                 </TableCell>
               </TableRow>
             ))}
-          {billingDataIsLoading && <LoadingTable length={4} numCells={5} />}
+          {billingDataIsLoading &&
+            Array.from({ length: 4 }).map((_, i) => (
+              <TableRow key={i}>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+                <TableCell>
+                  <Skeleton width="100%" />
+                </TableCell>
+              </TableRow>
+            ))}
         </TableBody>
       </Table>
       <Pagination

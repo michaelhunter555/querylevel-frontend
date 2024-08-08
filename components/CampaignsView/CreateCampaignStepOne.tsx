@@ -3,6 +3,7 @@ import React from "react";
 import { State } from "@/types";
 import Alert from "@mui/material/Alert";
 import Checkbox from "@mui/material/Checkbox";
+import Fade from "@mui/material/Fade";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
@@ -46,9 +47,11 @@ const CreateCampaignStepOne = ({
       <Grid item xs={11}>
         {isLoading && <LinearProgress />}
         {!isLoading && (
-          <Alert severity="info">
-            <code>Merchant Center Id:</code> {resourceNames}
-          </Alert>
+          <Fade in={!isLoading}>
+            <Alert severity="info">
+              <code>Merchant Center Id:</code> {resourceNames}
+            </Alert>
+          </Fade>
 
           // <SelectAccounts
           //   resource={resource}
