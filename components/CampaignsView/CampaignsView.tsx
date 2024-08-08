@@ -108,7 +108,13 @@ const CampaignView = () => {
         {status === "ENABLED" ? "Enabled" : "Paused"} Campaigns
       </Typography>
 
-      <Stack direction="row" spacing={2} alignItems="center">
+      <Stack
+        sx={{
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "", md: "center" },
+          gap: 2,
+        }}
+      >
         {status !== "PAUSED" && (
           <SelectDate
             segment={segment}

@@ -112,7 +112,7 @@ const AccountDataCards = ({
       sx={{
         display: "flex",
         gap: "10px",
-        flexDirection: { xs: "column", md: "row" },
+        flexDirection: { xs: "column-reverse", md: "row" },
       }}
     >
       {isLoading && <TempLoadingCard />}
@@ -140,13 +140,14 @@ const AccountDataCards = ({
           </StyledFadeIn>
         ))}
       <Divider flexItem sx={{ marginTop: "1rem" }} />
-
-      <SelectDate
-        removeAllTime={true}
-        segment={segment}
-        onSegmentChange={segmentChangeHandler}
-        isLoading={isLoading}
-      />
+      <StyledFadeIn delay={0.1} visible={true}>
+        <SelectDate
+          removeAllTime={true}
+          segment={segment}
+          onSegmentChange={segmentChangeHandler}
+          isLoading={isLoading}
+        />
+      </StyledFadeIn>
     </Grid>
   );
 };

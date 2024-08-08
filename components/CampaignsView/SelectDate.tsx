@@ -26,7 +26,7 @@ const SelectSegment = ({
     <>
       {!removeAllTime && (
         <Select
-          sx={{ minWidth: 150 }}
+          sx={{ minWidth: { xs: "100%", md: 150 } }}
           value={segment}
           onChange={segmentChangeHandler}
           disabled={isLoading}

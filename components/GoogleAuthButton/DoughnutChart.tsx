@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from "react";
 
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -23,6 +23,8 @@ type PieData = {
 };
 
 const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [dataCase, setDataCase] = useState<string>("Impressions");
 
   const transformDataForPieChart = useMemo(() => {
@@ -51,7 +53,13 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
     transformDataForPieChart?.length === 0;
 
   return (
-    <Box sx={{ width: "100%" }}>
+    <Box
+      sx={{
+        width: "100%",
+        // display: { xs: "flex", md: "block" },
+        // justifyContent: { xs: "center", md: "" },
+      }}
+    >
       {isLoading && (
         <Stack
           flexDirection="row"
@@ -111,7 +119,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
                       fontSize: 10,
                     },
                     position: {
-                      horizontal: "right",
+                      horizontal: isMobile ? "middle" : "right",
                       vertical: "top",
                     },
                   },
@@ -131,7 +139,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
                   },
                 ]}
                 height={300}
-                margin={{ right: 250 }}
+                margin={{ top: isMobile ? 105 : 0, right: isMobile ? 0 : 250 }}
               />
             </StyledFadeIn>
           )}

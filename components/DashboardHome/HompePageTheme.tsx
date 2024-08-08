@@ -534,7 +534,7 @@ export default function getLPTheme(mode: PaletteMode): ThemeOptions {
             },
             "& .MuiOutlinedInput-root": {
               boxSizing: "border-box",
-              minWidth: 280,
+              minWidth: "100%",
               minHeight: 40,
               height: "100%",
               borderRadius: "10px",
@@ -558,7 +558,7 @@ export default function getLPTheme(mode: PaletteMode): ThemeOptions {
             ...(theme.palette.mode === "dark" && {
               "& .MuiOutlinedInput-root": {
                 boxSizing: "border-box",
-                minWidth: 280,
+                minWidth: "100%",
                 minHeight: 40,
                 height: "100%",
                 borderRadius: "10px",

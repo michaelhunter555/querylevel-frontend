@@ -93,11 +93,18 @@ CreateCampaignStepThree) => {
         margin: "2rem auto",
       }}
     >
-      <Stack direction="row" alignItems="start" spacing={1}>
+      <Stack
+        sx={{
+          flexDirection: "row",
+          alignItems: "start",
+          gap: 1,
+          flexWrap: "wrap",
+        }}
+      >
         {/* Campaign Name, Budget, Geo Target Type */}
-        <Grid item xs={4}>
-          <Grid item xs={8}>
-            <Stack>
+        <Grid item xs={12} md={4}>
+          <Grid item xs={12} md={8}>
+            <Stack sx={{ width: "100%" }}>
               <Stack>
                 <Typography variant="subtitle2" color="text.secondary">
                   Name:
@@ -109,7 +116,7 @@ CreateCampaignStepThree) => {
             </Stack>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack>
               <Stack>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -122,7 +129,7 @@ CreateCampaignStepThree) => {
             </Stack>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack>
               <Stack>
                 <Typography variant="subtitle2" color="text.secondary">
@@ -135,7 +142,7 @@ CreateCampaignStepThree) => {
             </Stack>
           </Grid>
 
-          <Grid item xs={8}>
+          <Grid item xs={12} md={8}>
             <Stack>
               <Stack>
                 <Typography variant="subtitle2" color="text.secondary">

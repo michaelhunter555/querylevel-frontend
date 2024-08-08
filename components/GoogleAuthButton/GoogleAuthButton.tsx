@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 import { useGetGoogleAdAccountId } from "@/hooks/accountId-hook";
 import { useGetAppAnalytics } from "@/hooks/customer-hooks";
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -66,6 +66,8 @@ const ProductPerformance = dynamic(() => import("./ProductPerformance"), {
 });
 
 const GoogleAuthButton = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { data: session, status } = useSession();
   const router = useRouter();
   const [segment, setSegment] = useState("LAST_7_DAYS");
@@ -216,7 +218,9 @@ const GoogleAuthButton = () => {
             </Typography>
           </Stack>
         )}
-        {session?.user?._id && <UserAccountCard loading={isLoading} />}
+        {!isMobile && session?.user?._id && (
+          <UserAccountCard loading={isLoading} />
+        )}
 
         <Stack direction="column" alignItems="center" spacing={2}>
           <UserNotLoggedIn isLoading={isLoading as boolean} />

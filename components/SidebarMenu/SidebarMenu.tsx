@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { FcGoogle } from "react-icons/fc";
 
 import HomeIcon from "@mui/icons-material/Home";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
@@ -60,6 +62,12 @@ const SidebarMenu: React.FC<{
     setMobileMenu((prev) => !prev);
   };
 
+  const handleMobileSignOut = () => {
+    signOut({ callbackUrl: "/user-dashboard" });
+    localStorage.removeItem("brand");
+    localStorage.removeItem("campaign");
+  };
+
   return (
     <>
       <Header onMobileMenuClick={handleMobileMenuToggle} />
@@ -70,6 +78,16 @@ const SidebarMenu: React.FC<{
           justifyContent="center"
           spacing={1}
         >
+          {isMobile && (
+            <Chip
+              icon={<FcGoogle />}
+              clickable
+              component="button"
+              onClick={handleMobileSignOut}
+              label="sign out"
+              variant="outlined"
+            />
+          )}
           <Avatar
             src={session?.user?.image}
             alt={`${session?.user?.name}-${Math.floor(Math.random() * 1000)}`}
@@ -91,6 +109,13 @@ const SidebarMenu: React.FC<{
           </Link>
         </Stack>
       )}
+      <Divider
+        sx={{
+          display: { xs: "block", md: "none" },
+          margin: "0.5rem auto",
+          width: "100%",
+        }}
+      />
       <Paper
         elevation={0}
         sx={{ borderRadius: "15px", ...(isMobile && { display: "none" }) }}

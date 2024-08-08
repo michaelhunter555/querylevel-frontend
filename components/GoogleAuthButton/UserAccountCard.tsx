@@ -24,6 +24,7 @@ export const UserAccountCard = ({ loading }: { loading: boolean }) => {
         padding: "0.5rem",
         borderRadius: "15px",
         border: "1px solid #bbb",
+        margin: { xs: "2rem auto", md: "" },
       }}
     >
       <Stack direction="row" alignItems="center" spacing={2}>

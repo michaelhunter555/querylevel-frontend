@@ -264,7 +264,7 @@ const CreateNewCampaign = () => {
 
   return (
     <Grid container sx={{ width: "100%", padding: "1rem" }}>
-      <Box sx={{ width: "90%", margin: "0 auto" }}>
+      <Box sx={{ width: { xs: "100%", md: "90%" }, margin: "0 auto" }}>
         <Stepper activeStep={activeStep}>
           {campaignSteps?.map((label, index) => {
             return (
@@ -338,7 +338,12 @@ const CreateNewCampaign = () => {
           direction="row"
           alignItems="center"
           justifyContent="center"
-          sx={{ margin: "0 auto", width: "100%" }}
+          sx={{
+            margin: "0 auto",
+            width: "100%",
+            flexDirection: "row",
+            alginItems: { xs: "", md: "center" },
+          }}
         >
           <StyledFadeIn visible={true} delay={0.1}></StyledFadeIn>
           <Grid item xs={11}>

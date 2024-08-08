@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
 
+import { useMediaQuery, useTheme } from "@mui/material/";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
@@ -15,6 +16,9 @@ import Typography from "@mui/material/Typography";
 import FirstTimeConnectModal from "../Modal/FirstTimeConnectModal";
 
 export const PreLoginInfo = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
   const { status } = useSession();
   const [openInfo, setOpenInfo] = useState<boolean>(false);
 
@@ -28,7 +32,7 @@ export const PreLoginInfo = () => {
         borderRadius: "15px",
         marginTop: "2rem",
         padding: "1rem",
-        width: "60%",
+        width: { xs: "100%", md: "60%" },
       }}
     >
       <FirstTimeConnectModal open={openInfo} onClose={handleModalOpen} />
@@ -43,10 +47,17 @@ export const PreLoginInfo = () => {
             <Divider />
             <Typography variant="subtitle2">Requested Permissions:</Typography>
             <ol>
-              <li>Access to your Google Ads data.</li>
-              <li>Access to your Google Shopping data</li>
+              <li>
+                Permission to communicate with Google Ads to present your ads
+                data
+              </li>
+              <li>
+                Permission to communicate with Google Shopping to create
+                shopping campaigns
+              </li>
             </ol>
             <Alert
+              sx={{ flexDirection: { xs: "column", md: "row" } }}
               severity="info"
               action={
                 <Stack direction="row" alignItems="center" spacing={1}>

@@ -144,14 +144,14 @@ export default function HomePageFooter({ mode }: HomeFooter) {
 
             {emailSent && "You have been successfully subscribed!"}
             <form onSubmit={handleSubscribeUser}>
-              <Stack direction="row" spacing={1} useFlexGap>
+              <Stack direction="row" spacing={1}>
                 <TextField
                   disabled={emailSent}
                   id="subscribeEmail"
                   hiddenLabel
                   size="small"
                   variant="outlined"
-                  sx={{ minWidth: "auto" }}
+                  sx={{ width: "auto" }}
                   aria-label="Enter your email address"
                   placeholder="Your email address"
                   onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
@@ -264,15 +264,18 @@ export default function HomePageFooter({ mode }: HomeFooter) {
       <Box
         sx={{
           display: "flex",
+          flexDirection: { xs: "column", md: "row" },
           justifyContent: "space-between",
+          gap: { xs: "5px", md: "" },
           pt: { xs: 4, sm: 8 },
+          alignItems: "center",
           width: "100%",
           borderTop: "1px solid",
           borderColor: "divider",
         }}
       >
-        <div
-          style={{
+        <Box
+          sx={{
             display: "flex",
             flexDirection: "row",
           }}
@@ -294,7 +297,7 @@ export default function HomePageFooter({ mode }: HomeFooter) {
           >
             Terms of Service
           </MuiLink>
-        </div>
+        </Box>
         <Stack
           direction="row"
           justifyContent="left"
