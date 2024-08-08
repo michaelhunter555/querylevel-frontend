@@ -136,14 +136,17 @@ const ManageKeywordsLayout = ({
             />
           </Box>
         ) : (
-          <Typography
-            align="center"
-            sx={{ marginTop: 7 }}
-            variant="h4"
-            color="text.secondary"
-          >
-            Select a campaign to get started.
-          </Typography>
+          !negativeKeywordsLoading &&
+          !campaignId?.split(":")[1] && (
+            <Typography
+              align="center"
+              sx={{ marginTop: 7 }}
+              variant="h4"
+              color="text.secondary"
+            >
+              Select a campaign to get started.
+            </Typography>
+          )
         )}
         {negativeKeywordsLoading && !negativeKeywordsData && <LinearProgress />}
       </Grid>
