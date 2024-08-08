@@ -46,6 +46,7 @@ const AppLayout = ({ children }: LayoutProps) => {
   const routerIsAuthPage = router.pathname === "/user-dashboard";
 
   const checkUserStatus = status !== "loading" && status === "unauthenticated";
+  const shouldLogin = !session?.user?._id && routerIsAuthPage;
 
   useEffect(() => {
     if (checkUserStatus && !routerIsHome && !routerIsAuthPage) {
@@ -102,7 +103,7 @@ const AppLayout = ({ children }: LayoutProps) => {
               orientation="vertical"
               sx={{ margin: "0 0.5rem", maxWidth: "90%" }}
             />
-            {status !== "loading" && (
+            {(session?.user?._id || shouldLogin) && (
               <Grid item xs={12} md={routerIsHome ? 12 : 9.5}>
                 {children}
               </Grid>
