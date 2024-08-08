@@ -36,7 +36,7 @@ const imgStyle = {
 export default function Home() {
   const { data: session } = useSession();
   const userTheme = session?.user?.theme as PaletteMode;
-  const [mode, setMode] = useState<PaletteMode>(userTheme || "dark");
+  const [mode, setMode] = useState<PaletteMode>(userTheme || "light");
   const customTheme = createTheme(getLPTheme(mode));
   const defaultTheme = createTheme({ palette: { mode } });
   const [plan, setPlan] = useState<PlanData | null>(null);

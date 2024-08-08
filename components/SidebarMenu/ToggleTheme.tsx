@@ -28,10 +28,10 @@ export const ToggleTheme = () => {
   return (
     <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
       <Stack>
-        {session?.user?.theme === "light" ? (
-          <Brightness7Icon />
-        ) : (
+        {session?.user?.theme === "dark" ? (
           <Brightness4Icon />
+        ) : (
+          <Brightness7Icon />
         )}
       </Stack>
       <Stack>
@@ -43,7 +43,7 @@ export const ToggleTheme = () => {
       </Stack>
       <Stack>
         <Typography variant="subtitle2" color="text.secondary">
-          {session?.user?.theme === ThemeColor.LIGHT ? "light" : "dark"} mode
+          {session?.user?.theme === ThemeColor.DARK ? "dark" : "light"} mode
           selected
         </Typography>
       </Stack>

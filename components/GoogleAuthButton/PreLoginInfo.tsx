@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
@@ -8,6 +9,7 @@ import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import FirstTimeConnectModal from "../Modal/FirstTimeConnectModal";
@@ -47,12 +49,20 @@ export const PreLoginInfo = () => {
             <Alert
               severity="info"
               action={
-                <Chip
-                  variant="outlined"
-                  label="Learn More"
-                  component={Button}
-                  onClick={handleModalOpen}
-                />
+                <Stack direction="row" alignItems="center" spacing={1}>
+                  <Chip
+                    variant="outlined"
+                    label="Learn More"
+                    component={Button}
+                    onClick={handleModalOpen}
+                  />
+                  <Chip
+                    variant="outlined"
+                    label="Home"
+                    component={Link}
+                    href="/"
+                  />
+                </Stack>
               }
             >
               What happens when after I authorize the app?

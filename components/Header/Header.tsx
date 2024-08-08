@@ -23,7 +23,12 @@ const Header = ({ onMobileMenuClick }: OpenMenuProps) => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const { data: session } = useSession();
   const userTheme = session?.user?.theme === "light";
-  const img = userTheme ? "/query-level-day.svg" : "query-level-night.svg";
+  const img =
+    session?.user?._id && userTheme
+      ? "/query-level-day.svg"
+      : !session?.user?._id
+      ? "/query-level-day.svg"
+      : "query-level-night.svg";
   return (
     <Container
       sx={{

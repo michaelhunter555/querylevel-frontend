@@ -33,7 +33,7 @@ const acceptableRoutes = [
 const AppLayout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
-  const themePreference = session?.user?.theme || "dark";
+  const themePreference = session?.user?.theme || "light";
   const defaultTheme = selectPalette(themePreference);
   const themeModeSwitch = createTheme(defaultTheme);
   const authContext = useContext(AuthContext);

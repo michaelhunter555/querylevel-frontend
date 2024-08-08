@@ -104,14 +104,17 @@ const SearchTermView = ({
           </Grid>
         </>
       ) : (
-        <Typography
-          align="center"
-          sx={{ marginTop: 7 }}
-          variant="h4"
-          color="text.secondary"
-        >
-          Select a campaign to get started.
-        </Typography>
+        !campaignId &&
+        !searchTermsIsLoading && (
+          <Typography
+            align="center"
+            sx={{ marginTop: 7 }}
+            variant="h4"
+            color="text.secondary"
+          >
+            Select a campaign to get started.
+          </Typography>
+        )
       )}
     </Grid>
   );

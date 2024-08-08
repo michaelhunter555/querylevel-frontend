@@ -10,7 +10,7 @@ export const GlobalStyles = () => {
       styles={css`
         html,
         body {
-          background: ${session?.user?.theme === "light" ? "#f1f3f4" : "#000"};
+          background: ${session?.user?.theme === "dark" ? "#000" : "#f1f3f4"};
         }
       `}
     />
