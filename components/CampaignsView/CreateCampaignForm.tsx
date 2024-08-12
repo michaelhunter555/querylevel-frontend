@@ -345,7 +345,6 @@ const CreateNewCampaign = () => {
             alginItems: { xs: "", md: "center" },
           }}
         >
-          <StyledFadeIn visible={true} delay={0.1}></StyledFadeIn>
           <Grid item xs={11}>
             <StyledFadeIn visible={true} delay={0.1}>
               <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>

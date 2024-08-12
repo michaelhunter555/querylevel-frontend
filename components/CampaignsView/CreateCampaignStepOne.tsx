@@ -106,7 +106,7 @@ const CreateCampaignStepOne = ({
       </Grid>
 
       {/* BudgetDelivery */}
-      <Grid item xs={5}>
+      <Grid item xs={11} md={5}>
         <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
           <InputLabel id="budgetDelivery">Delivery</InputLabel>
           <Select
@@ -133,7 +133,7 @@ const CreateCampaignStepOne = ({
         </Paper>
       </Grid>
       {/* BudgetShared */}
-      <Grid item xs={6}>
+      <Grid item xs={11} md={6}>
         <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
           <FormControl>
             <FormLabel id="budgetShared">Shared Budget?</FormLabel>
@@ -167,7 +167,7 @@ const CreateCampaignStepOne = ({
         </Paper>
       </Grid>
       {/* TargetNetworks */}
-      <Grid item xs={6}>
+      <Grid item xs={11} md={6}>
         <Paper
           elevation={1}
           sx={{
@@ -245,7 +245,7 @@ const CreateCampaignStepOne = ({
         </Paper>
       </Grid>
       {/* CampaignPriority */}
-      <Grid item xs={5}>
+      <Grid item xs={11} md={5}>
         <Paper sx={{ borderRadius: "15px", padding: "1rem" }}>
           <InputLabel id="campaignPriority">Select Priority</InputLabel>
           <Select

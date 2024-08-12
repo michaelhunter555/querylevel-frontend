@@ -31,6 +31,7 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   padding: "2rem",
   [theme.breakpoints.down("sm")]: {
     flexDirection: "column",
+    alignItems: "normal",
   },
 }));
 

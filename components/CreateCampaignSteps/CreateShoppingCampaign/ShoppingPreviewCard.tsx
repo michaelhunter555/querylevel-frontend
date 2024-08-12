@@ -218,7 +218,7 @@ const ShoppingProductPreview: React.FC<{
                       image={product?.imageLink}
                       alt={`${product?.title}-${product?.brand}`}
                       sx={{
-                        width: "75%",
+                        width: { xs: "75%", md: "50%" },
                         transition: "ease-in 2s",
                         borderRadius: "15px",
                       }}

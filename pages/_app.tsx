@@ -7,6 +7,7 @@ import { useRouter } from "next/router";
 
 import AppLayout from "@/components/Shared/AppLayout/AppLayout";
 import LoadingIndicator from "@/components/Shared/AppLayout/LoadingIndicator";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AuthProvider } from "../context/authProvider";
@@ -54,6 +55,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <title>Query Level - Structured Shopping Ads on Click</title>
           </Head>
           <AppLayout>
+            <GoogleTagManager gtmId={`${process.env.NEXT_PUBLIC_GTM_ID}`} />
             <LoadingIndicator loading={loading} />
             <Component {...pageProps} />
           </AppLayout>
