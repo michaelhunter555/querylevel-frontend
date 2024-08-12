@@ -102,8 +102,8 @@ export const AdScheduleSelector: React.FC<SelectAdDateProps> = ({
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
-          alignItems: "center",
+          flexDirection: { xs: "column", md: "row" },
+          alignItems: { xs: "normal", md: "center" },
           gap: "10px",
         }}
       >
@@ -137,6 +137,7 @@ export const AdScheduleSelector: React.FC<SelectAdDateProps> = ({
 
         {!scheduleApplied && (
           <Chip
+            sx={{ width: "100%" }}
             label="Apply Schedule"
             component={Button}
             variant="outlined"
@@ -145,6 +146,7 @@ export const AdScheduleSelector: React.FC<SelectAdDateProps> = ({
         )}
         {scheduleApplied && (
           <Chip
+            sx={{ width: "100%" }}
             label=" Edit Schedule"
             component={Button}
             color="warning"

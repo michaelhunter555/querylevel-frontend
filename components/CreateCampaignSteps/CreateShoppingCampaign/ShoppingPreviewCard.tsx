@@ -173,8 +173,6 @@ const ShoppingProductPreview: React.FC<{
     setOpenModal(false);
   };
 
-  console.log("formState: ", formState?.inputs, formState);
-
   const title = "Campaign Filtering";
   const text =
     "We remove all non-alphanumeric values as well as brand and sku from title. We handle brand and sku keywords separately. This is important for how your ads are triggered based on search query & priority.";
@@ -192,13 +190,18 @@ const ShoppingProductPreview: React.FC<{
         errorMessage={errorMessage}
         success={success}
       />
+
       {!isPostLoading && !productIsLoading && (
-        <StyledStack delay={0.1} visible={!productIsLoading}>
+        <StyledStack
+          delay={0.1}
+          visible={!productIsLoading}
+          sx={{ width: "100%", boxSizing: "border-box" }}
+        >
           <Paper elevation={1} sx={{ borderRadius: "15px", width: "100%" }}>
             <Grid
               container
               direction="row"
-              sx={{ margin: "0 0 2rem 0" }}
+              sx={{ marginBottom: "2rem ", flexWrap: "wrap", padding: "10px" }}
               spacing={3}
             >
               {product && (
@@ -215,7 +218,7 @@ const ShoppingProductPreview: React.FC<{
                       image={product?.imageLink}
                       alt={`${product?.title}-${product?.brand}`}
                       sx={{
-                        width: "50%",
+                        width: "75%",
                         transition: "ease-in 2s",
                         borderRadius: "15px",
                       }}
@@ -251,7 +254,10 @@ const ShoppingProductPreview: React.FC<{
                     </Stack>
                   </StyledStack>
                   <Fade in={!productIsLoading}>
-                    <Divider />
+                    <Divider
+                      sx={{ margin: "0 auto", width: "100%" }}
+                      flexItem
+                    />
                   </Fade>
                   <Fade in={!productIsLoading}>
                     <Stack>
@@ -261,10 +267,22 @@ const ShoppingProductPreview: React.FC<{
                             <Typography> Product Titles:</Typography>
                             {keywords &&
                               titlePreview?.slice(0, 5)?.map((val, i) => (
-                                <Box key={i}>
+                                <Box
+                                  key={i}
+                                  sx={{
+                                    width: "100%",
+                                    display: "flex",
+                                    flexWrap: "wrap",
+                                  }}
+                                >
                                   <Typography
                                     variant="subtitle2"
                                     color="text.secondary"
+                                    sx={{
+                                      overflowWrap: "break-word",
+                                      wordWrap: "break-word",
+                                      hyphens: "auto",
+                                    }}
                                   >
                                     {i + 1}. {val}
                                   </Typography>
@@ -326,15 +344,18 @@ const ShoppingProductPreview: React.FC<{
                   <form onSubmit={submitFormHandler}>
                     <Grid
                       container
-                      direction="row"
-                      alignItems="center"
-                      spacing={2}
+                      sx={{
+                        flexDirection: { xs: "column", md: "row" },
+                        alignItems: { md: "center" },
+                        gap: 2,
+                        width: "100%",
+                      }}
                     >
-                      <Grid item>
+                      <Grid item xs={12}>
                         <Box
                           sx={{
                             display: "flex",
-                            flexDirection: "row",
+                            flexDirection: { xs: "column", md: "row" },
                             alignItems: "center",
                             gap: "5px",
                           }}
@@ -349,8 +370,14 @@ const ShoppingProductPreview: React.FC<{
 
                         <ShoppingCampaignStrategy
                           onClick={campaignTypeHandler}
+                          campaignType={campaignType}
                         />
-                        <Divider sx={{ margin: "1rem auto" }} />
+                        <Divider
+                          sx={{
+                            margin: "1rem auto",
+                            width: "100%",
+                          }}
+                        />
                       </Grid>
                       {/**Brand Name: string */}
                       <Grid item xs={12}>
@@ -361,11 +388,10 @@ const ShoppingProductPreview: React.FC<{
                         <Stack direction="row">
                           <FormGroup
                             sx={{
-                              display: "flex",
-                              flexDirection: "row",
-                              alignItems: "center",
-                              width: "50%",
+                              width: "100%",
                               margin: "1rem",
+                              flexDirection: "row",
+                              flexWrap: "nowrap",
                             }}
                           >
                             <FormControlLabel
@@ -390,7 +416,10 @@ const ShoppingProductPreview: React.FC<{
                             <Divider
                               orientation="vertical"
                               flexItem
-                              sx={{ margin: "0 1rem" }}
+                              sx={{
+                                margin: "0 1rem",
+                                display: { xs: "none", md: "block" },
+                              }}
                             />
                             <FormControlLabel
                               control={
@@ -421,7 +450,7 @@ const ShoppingProductPreview: React.FC<{
                       </Grid>
 
                       {/**targeted locations: string[] */}
-                      <Grid item xs={5}>
+                      <Grid item xs={12} md={5}>
                         <LocationSelect
                           id="target-location"
                           outlinedInputId="target-location-input"
@@ -432,7 +461,7 @@ const ShoppingProductPreview: React.FC<{
                       </Grid>
 
                       {/**excluded locations: string[]*/}
-                      <Grid item xs={5}>
+                      <Grid item xs={12} md={5}>
                         <LocationSelect
                           id="exclude-location"
                           outlinedInputId="exclude-location-input"
@@ -493,8 +522,18 @@ const ShoppingProductPreview: React.FC<{
                         />
                       </Grid>
                     </Grid>
-                    <Divider sx={{ margin: "1rem auto" }} />
-                    <Stack sx={{ margin: "1rem auto" }}>
+                    <Divider
+                      sx={{
+                        margin: "1rem auto",
+                        width: "100%",
+                      }}
+                    />
+                    <Stack
+                      sx={{
+                        margin: "1rem auto",
+                        width: "100%",
+                      }}
+                    >
                       <Button
                         variant="outlined"
                         type="submit"

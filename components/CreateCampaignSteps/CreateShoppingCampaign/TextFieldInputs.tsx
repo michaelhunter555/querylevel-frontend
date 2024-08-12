@@ -38,7 +38,7 @@ export const TextFieldInput: React.FC<{
           <Typography color="text.secondary">{title}</Typography>
           <TextField
             helperText={helperText || ""}
-            sx={{ padding: style ? 0 : "" }}
+            sx={{ padding: style ? 0 : "", width: "100%" }}
             id={id}
             name={name}
             type={type}

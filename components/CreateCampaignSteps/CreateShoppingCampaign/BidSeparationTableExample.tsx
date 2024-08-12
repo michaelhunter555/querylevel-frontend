@@ -46,8 +46,8 @@ export const BidSeparationTableExample = ({
   }
 
   return (
-    <TableContainer>
-      <Table sx={{ maxWidth: "100%" }}>
+    <TableContainer sx={{ width: "100%" }}>
+      <Table sx={{ maxWidth: "100%", xs: "50%" }}>
         <TableHead>
           <TableRow>
             <TableCell>High</TableCell>

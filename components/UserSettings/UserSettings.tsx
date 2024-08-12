@@ -104,6 +104,8 @@ const UserSettings = () => {
         sx={{
           padding: "2rem",
           display: "flex",
+          flexDirection: { xs: "column", md: "row", gap: 5 },
+
           justifyContent: "space-between",
         }}
       >

@@ -37,6 +37,7 @@ export const BidSeparation: React.FC<BidSeparator> = ({
           flexDirection: "row",
           alignItems: "center",
           gap: "5px",
+          width: "100%",
         }}
       >
         <Stack>
@@ -51,6 +52,7 @@ export const BidSeparation: React.FC<BidSeparator> = ({
           display: "flex",
           gap: "5px",
           flexWrap: "wrap",
+          width: "100%",
         }}
       >
         {Object.values(cpcBidSeparation)

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 import { StyledFadeIn } from "@/components/Shared/StyledFadeInComponents";
 import LightbulbTwoToneIcon from "@mui/icons-material/LightbulbTwoTone";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
@@ -28,6 +29,9 @@ const StyledPaper = styled(Paper)(({ theme }) => ({
   gap: "10px",
   borderRadius: "15px",
   padding: "2rem",
+  [theme.breakpoints.down("sm")]: {
+    flexDirection: "column",
+  },
 }));
 
 const Brands: React.FC<BrandsProps> = ({
@@ -37,6 +41,8 @@ const Brands: React.FC<BrandsProps> = ({
   onBrandChange,
   //onGetProducts,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [open, setOpen] = useState(false);
 
   const handleInfoClick = () => {
@@ -48,13 +54,20 @@ const Brands: React.FC<BrandsProps> = ({
       <Stack justifyContent="center">
         <Typography>1. Select available brand</Typography>
         {isLoading && <LinearProgress />}
-        <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+        <Stack
+          direction="row"
+          spacing={1}
+          sx={{
+            flexWrap: "wrap",
+            width: "100%",
+          }}
+        >
           {!isLoading &&
             brands?.map((brand, i) => {
               return (
                 <StyledFadeIn key={i} delay={i * 0.1} visible={!isLoading}>
                   <Chip
-                    sx={{ marginBottom: { xs: "0.5rem", md: "0rem" } }}
+                    sx={{ marginBottom: { xs: "0.5rem", md: "0.5rem" } }}
                     label={brand}
                     clickable={true}
                     variant="outlined"
@@ -74,8 +87,19 @@ const Brands: React.FC<BrandsProps> = ({
       </Stack>
       {!isLoading && (
         <>
-          <Divider orientation="vertical" flexItem />
-          <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
+          <Divider
+            orientation={isMobile ? "horizontal" : "vertical"}
+            flexItem
+          />
+          <Stack
+            direction="row"
+            spacing={1}
+            sx={{
+              flexWrap: "wrap",
+              ...(isMobile && { width: "100%" }),
+              marginBottom: "0.5rem",
+            }}
+          >
             <Chip
               icon={<LightbulbTwoToneIcon color="warning" />}
               component={Button}
@@ -83,6 +107,7 @@ const Brands: React.FC<BrandsProps> = ({
               variant="outlined"
               label="Learn More"
               onClick={handleInfoClick}
+              sx={{ margin: { xs: "0 auto", md: "" } }}
             />
 
             <StrategyModal open={open} onClose={handleInfoClick} />

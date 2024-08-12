@@ -50,7 +50,7 @@ const SearchTermView = ({
 
   return (
     <Grid container direction="column" spacing={2} sx={{ marginBottom: 3 }}>
-      <Grid item>
+      <Grid item xs={12}>
         <CampaignNameAndId
           isLoading={campaignNamesLoading}
           campaignNames={campaignNames}
@@ -60,7 +60,7 @@ const SearchTermView = ({
       </Grid>
       {campaignId ? (
         <>
-          <Grid item>
+          <Grid item xs={12}>
             <Typography color="text.secondary" variant="h5">
               Shopping Search Terms
             </Typography>

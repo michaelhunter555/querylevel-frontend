@@ -64,13 +64,13 @@ const CreateShoppingCampaign = () => {
 
   return (
     <Grid container direction="column" spacing={2} sx={{ marginBottom: 3 }}>
-      <Grid item>
+      <Grid item xs={12}>
         <Typography variant="subtitle1" color="text.secondary">
           Create Tiered Campaigns
         </Typography>
       </Grid>
 
-      <Grid item>
+      <Grid item xs={12}>
         <Brands
           isLoading={brandsIsLoading}
           brands={brands && brands}
@@ -80,7 +80,7 @@ const CreateShoppingCampaign = () => {
       </Grid>
 
       {selectedBrand ? (
-        <Grid item sx={{ marginTop: 3 }}>
+        <Grid item sx={{ marginTop: 3 }} xs={12}>
           <Stack direction="column" spacing={2}>
             {brands && (
               <DemoProductData

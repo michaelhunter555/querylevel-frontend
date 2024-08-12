@@ -229,26 +229,16 @@ function NavAppBar({ mode, toggleColorMode }: NavAppBarProps) {
                     FAQ
                   </MenuItem>
                   <Divider />
-                  <MenuItem>
-                    <Button
-                      color="primary"
-                      variant="contained"
-                      component="a"
-                      href="#"
-                      sx={{ width: "100%" }}
-                    >
-                      Sign up
-                    </Button>
-                  </MenuItem>
+                  <MenuItem></MenuItem>
                   <MenuItem>
                     <Button
                       color="primary"
                       variant="outlined"
-                      component="a"
-                      href="#"
+                      component={Link}
+                      href="/user-dashboard"
                       sx={{ width: "100%" }}
                     >
-                      Sign in
+                      {session?.user?._id ? "Dashboard" : "Sign in"}
                     </Button>
                   </MenuItem>
                 </Box>

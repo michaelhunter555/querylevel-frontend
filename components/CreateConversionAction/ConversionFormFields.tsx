@@ -83,10 +83,12 @@ const ConversionFormFields = ({
 
       {/*ROW 2 DEFAULT VALUE MANAGEMENT */}
       <Stack
-        direction="row"
-        spacing={2}
-        alignItems="center"
-        sx={{ margin: "1rem 0" }}
+        sx={{
+          margin: "1rem 0",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
+          alignItems: "center",
+        }}
       >
         <Grid item xs={11} md={6}>
           <TextFieldInput
@@ -142,10 +144,12 @@ const ConversionFormFields = ({
 
       {/*ROW 3 COUNT & GOAL TYPE */}
       <Stack
-        direction="row"
-        spacing={2}
-        alignItems="center"
-        sx={{ margin: "1rem 0" }}
+        sx={{
+          margin: "1rem 0",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
+          alignItems: "center",
+        }}
       >
         <Grid item xs={11} md={6}>
           <InputLabel>Select Count Type</InputLabel>
@@ -214,10 +218,12 @@ const ConversionFormFields = ({
 
       {/*ROW 4 VIEW THROUGH & LOOKBACK WINDOWS */}
       <Stack
-        direction="row"
-        spacing={2}
-        alignItems="center"
-        sx={{ margin: "1rem 0" }}
+        sx={{
+          margin: "1rem 0",
+          flexDirection: { xs: "column", md: "row" },
+          gap: 2,
+          alignItems: "center",
+        }}
       >
         <Grid item xs={11} md={6}>
           <TextFieldInput

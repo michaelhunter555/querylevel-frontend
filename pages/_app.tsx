@@ -47,6 +47,10 @@ export default function App({ Component, pageProps }: AppProps) {
       <QueryClientProvider client={queryClient}>
         <AuthProvider>
           <Head>
+            <meta
+              name="viewport"
+              content="width=device-width, initial-scale=1"
+            />
             <title>Query Level - Structured Shopping Ads on Click</title>
           </Head>
           <AppLayout>

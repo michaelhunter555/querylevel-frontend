@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useMediaQuery, useTheme } from "@mui/material";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
@@ -26,9 +27,17 @@ export const SelectDays: React.FC<SelectDay> = ({
   handleSelectToDay,
   isDisabled,
 }) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   return (
-    <Stack direction="row" alignItems="center" spacing={1}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      spacing={1}
+      sx={{ width: "100%" }}
+    >
       <Select
+        fullWidth={isMobile ? true : false}
         value={selectFromDays?.toString()}
         onChange={handleSelectFromDay}
         disabled={isDisabled}
@@ -41,6 +50,7 @@ export const SelectDays: React.FC<SelectDay> = ({
       </Select>
 
       <Select
+        fullWidth={isMobile ? true : false}
         value={selectToDay?.toString()}
         onChange={handleSelectToDay}
         disabled={isDisabled}

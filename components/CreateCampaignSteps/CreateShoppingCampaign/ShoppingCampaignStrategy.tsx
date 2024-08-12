@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { useSession } from "next-auth/react";
 
@@ -17,14 +17,14 @@ const LIGHT = "light";
 
 export const ShoppingCampaignStrategy: React.FC<{
   onClick: (val: ShoppingCampaignTypes) => void;
-}> = ({ onClick }): JSX.Element => {
+  campaignType:
+    | ShoppingCampaignTypes.ALPHA_BETA
+    | ShoppingCampaignTypes.THREE_TIERED
+    | "";
+}> = ({ onClick, campaignType }): JSX.Element => {
   const { data: session } = useSession();
-  const [campaignType, setCampaignType] = useState<ShoppingCampaignTypes | "">(
-    ""
-  );
 
   const campaignTypeHandler = (value: ShoppingCampaignTypes) => {
-    setCampaignType(value);
     onClick(value);
   };
 
