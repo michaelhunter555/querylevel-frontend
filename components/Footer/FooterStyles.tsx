@@ -17,13 +17,13 @@ type PageContainer = {
   minHeight?: number | string;
 };
 
-export const PageContainer = styled("div")<PageContainer>(
-  ({ theme, minHeight }) => ({
-    minHeight: minHeight ? minHeight : "100vh",
-    display: "flex",
-    flexDirection: "column",
-  })
-);
+export const PageContainer = styled("div", {
+  shouldForwardProp: (prop) => prop !== "minHeight",
+})<PageContainer>(({ theme, minHeight }) => ({
+  minHeight: minHeight ? minHeight : "100vh",
+  display: "flex",
+  flexDirection: "column",
+}));
 
 export const Content = styled("div")(({ theme }) => ({
   flex: 1,

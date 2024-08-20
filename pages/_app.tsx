@@ -7,7 +7,7 @@ import { useRouter } from "next/router";
 
 import AppLayout from "@/components/Shared/AppLayout/AppLayout";
 import LoadingIndicator from "@/components/Shared/AppLayout/LoadingIndicator";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics, GoogleTagManager } from "@next/third-parties/google";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 import { AuthProvider } from "../context/authProvider";
@@ -56,6 +56,9 @@ export default function App({ Component, pageProps }: AppProps) {
           </Head>
           <AppLayout>
             <GoogleTagManager gtmId={`${process.env.NEXT_PUBLIC_GTM_ID}`} />
+            <GoogleAnalytics
+              gaId={`${process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS}`}
+            />
             <LoadingIndicator loading={loading} />
             <Component {...pageProps} />
           </AppLayout>

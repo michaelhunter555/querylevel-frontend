@@ -43,6 +43,22 @@ enum SearchTermTargetingStatus {
   NONE = 5,
 }
 
+enum KeywordMatchType {
+  UNSPECIFIED = 0, // UNSPECIFIED
+  UNKNOWN = 1, // UNKNOWN
+  EXACT = 2, // EXACT
+  PHRASE = 3, // PHRASE
+  BROAD = 4,
+}
+
+const reverseKeywordMatch: { [key: string]: string } = {
+  [KeywordMatchType.UNSPECIFIED]: "UNSPECIFIED",
+  [KeywordMatchType.UNKNOWN]: "UNKNOWN",
+  [KeywordMatchType.EXACT]: "EXACT",
+  [KeywordMatchType.PHRASE]: "PHRASE",
+  [KeywordMatchType.BROAD]: "BROAD",
+};
+
 const reverseSearchTermTargetingStatusMap: { [key: string]: string } = {
   [SearchTermTargetingStatus.UNSPECIFIED]: "UNSPECIFIED",
   [SearchTermTargetingStatus.UNKNOWN]: "UNKNOWN",
@@ -112,9 +128,16 @@ const DynamicSearchTermTable = ({
         size: 100,
       },
       {
+        acessorFn: (row: TSearchTerms) =>
+          `${reverseKeywordMatch[row?.search_term_match_type]}`,
         accessorKey: "search_term_match_type",
         header: "Match Type",
         size: 100,
+        Cell: ({ cell }) => (
+          <Typography variant="subtitle2" color="text.secondary">
+            {reverseKeywordMatch[cell.row.original?.search_term_match_type]}
+          </Typography>
+        ),
       },
       {
         accessorFn: (row) => `${(row.cost_micros / 1000000).toFixed(2)}`,

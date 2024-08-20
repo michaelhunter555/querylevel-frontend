@@ -201,7 +201,7 @@ const ShoppingProductPreview: React.FC<{
             <Grid
               container
               direction="row"
-              sx={{ marginBottom: "2rem ", flexWrap: "wrap", padding: "10px" }}
+              sx={{ margin: "2rem auto", flexWrap: "wrap", padding: "10px" }}
               spacing={3}
             >
               {product && (

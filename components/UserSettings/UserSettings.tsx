@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import { FcGoogle } from "react-icons/fc";
 
 import { useAccountSettings } from "@/hooks/useAccountSettings";
+import { useMediaQuery, useTheme } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -33,6 +34,8 @@ const BillingHistoryTable = dynamic(() => import("./BillingHistoryTable"), {
 });
 
 const UserSettings = () => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [togglePlan, setTogglePlan] = useState<boolean>(false);
   const [toggleFaqs, setToggleFaqs] = useState<boolean>(false);
@@ -109,7 +112,13 @@ const UserSettings = () => {
           justifyContent: "space-between",
         }}
       >
-        <Stack direction="row" alignItems="center" spacing={2}>
+        <Stack
+          sx={{
+            flexDirection: { xs: "column", md: "row" },
+            gap: 2,
+            alignItems: "center",
+          }}
+        >
           {togglePlan && (
             <Typography color="text.secondary" variant="subtitle2">
               Your{" "}
@@ -135,7 +144,7 @@ const UserSettings = () => {
             onClick={handleToggleFaqs}
           />
 
-          {togglePlan && canCancel && (
+          {togglePlan && canCancel && !isMobile && (
             <>
               <Divider orientation="vertical" flexItem />
               <Chip
@@ -157,15 +166,17 @@ const UserSettings = () => {
             </Alert>
           )}
         </Stack>
-        <Stack>
-          <Chip
-            icon={<FcGoogle size={20} />}
-            variant="outlined"
-            label="| Log out"
-            component={Button}
-            onClick={handleSignOut}
-          />
-        </Stack>
+        {!isMobile && (
+          <Stack>
+            <Chip
+              icon={<FcGoogle size={20} />}
+              variant="outlined"
+              label="| Log out"
+              component={Button}
+              onClick={handleSignOut}
+            />
+          </Stack>
+        )}
       </Paper>
       <Box sx={{ marginTop: "1rem" }}>
         {toggleFaqs && (
@@ -226,6 +237,33 @@ const UserSettings = () => {
                 planType={userSettings?.planType}
                 handleTogglePlan={handleTogglePlan}
               />
+              {isMobile && (
+                <Stack
+                  sx={{ marginTop: "2rem", gap: 2, flexDirection: "column" }}
+                >
+                  <Stack>
+                    <Chip
+                      icon={<FcGoogle size={20} />}
+                      variant="outlined"
+                      label="| Log out"
+                      component={Button}
+                      onClick={handleSignOut}
+                    />
+                  </Stack>
+                  {togglePlan && canCancel && isMobile && (
+                    <>
+                      <Divider orientation="vertical" flexItem />
+                      <Chip
+                        variant="outlined"
+                        color="error"
+                        component={Button}
+                        onClick={handleDeleteModalToggle}
+                        label="Cancel Subscription"
+                      />
+                    </>
+                  )}
+                </Stack>
+              )}
             </Stack>
           )}
         </Stack>
