@@ -201,7 +201,10 @@ const ShoppingProductPreview: React.FC<{
             <Grid
               container
               direction="row"
-              sx={{ margin: "2rem auto", flexWrap: "wrap", padding: "10px" }}
+              sx={{
+                flexWrap: "wrap",
+                padding: "10px",
+              }}
               spacing={3}
             >
               {product && (
@@ -337,7 +340,7 @@ const ShoppingProductPreview: React.FC<{
               <Divider
                 orientation="vertical"
                 flexItem
-                sx={{ margin: "0 1rem" }}
+                sx={{ margin: "2rem" }}
               />
               <Fade in={!productIsLoading}>
                 <Grid item xs={12} md={7}>
