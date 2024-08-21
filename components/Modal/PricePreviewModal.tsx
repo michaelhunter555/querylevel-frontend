@@ -73,6 +73,10 @@ const PricePreviewModal = ({
         planName === "pro" &&
         "Upgrade to Pro";
 
+  const diff =
+    prorationPreview?.lines?.data[0]?.amount / 100 +
+    prorationPreview?.lines?.data[1]?.amount / 100;
+
   return (
     <Modal open={open} onClose={onClose}>
       <StyledBoxContainer height="auto" sx={{ width: { xs: "100%", md: 400 } }}>
@@ -114,11 +118,11 @@ const PricePreviewModal = ({
                   </ListItem>
                   <ListItem>
                     <Typography color="text.secondary">
-                      difference: $
-                      {(
+                      Difference: ${diff.toFixed(2)}
+                      {/* {(
                         (prorationPreview?.amount_due / 100 -
                           plans[planName as keyof typeof plans]) as number
-                      ).toFixed(2)}
+                      ).toFixed(2)} */}
                     </Typography>
                   </ListItem>
                 </List>
