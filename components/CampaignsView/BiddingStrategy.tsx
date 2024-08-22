@@ -154,7 +154,13 @@ export const BiddingStrategy = ({
               Accounts must have at least <code>15 conversions</code> in the{" "}
               <code>Last 30 Days</code> or update will fail.
             </Alert>
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Stack
+              sx={{
+                flexDirection: { xs: "column", md: "row" },
+                alignItems: { xs: "normal", md: "center" },
+                gap: 2,
+              }}
+            >
               {isStandardStrategy && (
                 <Stack>
                   <InputLabel>Target ROAS %</InputLabel>

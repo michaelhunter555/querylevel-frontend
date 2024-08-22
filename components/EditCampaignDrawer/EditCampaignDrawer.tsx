@@ -290,7 +290,7 @@ const EditCampaignDrawer = ({
       onClose={onClose}
       sx={{
         ".MuiDrawer-paperAnchorRight": {
-          width: "40vw",
+          width: { xs: "60vw", md: "40vw" },
           padding: "1rem",
           background: session?.user?.theme === "light" ? "#f1f3f4" : "",
         },
