@@ -43,10 +43,10 @@ const tiers = [
     buttonVariant: "outlined",
   },
   {
-    id: "price_1PW8noP3CMhEecSyXbslSjWX",
+    id: "price_1PtublP3CMhEecSyzUJ15aDn",
     title: "Growing",
     subheader: "Recommended",
-    price: "69",
+    price: "29",
     description: [
       "Centralized Shopping ads Experience",
       "10 alpha/beta or three-tiered campaigns per month",
@@ -63,12 +63,12 @@ const tiers = [
     buttonVariant: "contained",
   },
   {
-    id: "price_1PW8bfP3CMhEecSytNuKJkJp",
+    id: "price_1Ptug5P3CMhEecSy7P2qmYEA",
     title: "Pro",
-    price: "89",
+    price: "59",
     description: [
       "All features of Growing",
-      "15 alpha/beta or 3-tiered campaigns per month",
+      "unlimited alpha/beta or 3-tiered campaigns",
     ],
     buttonText: "Get started",
     buttonVariant: "outlined",

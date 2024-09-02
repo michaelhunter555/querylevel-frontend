@@ -134,7 +134,7 @@ const SidebarMenu: React.FC<{
             >
               <ListItem>
                 <ListItemButton
-                  disabled={!session?.user?._id || !hasAppAccess}
+                  disabled={!session?.user?._id}
                   sx={{ borderRadius: "15px" }}
                   selected={selectedIndex === i}
                   aria-current={selectedIndex === i ? "page" : undefined}

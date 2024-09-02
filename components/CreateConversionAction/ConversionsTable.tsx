@@ -223,8 +223,9 @@ const Row = ({
         <TableCell>
           <span
             style={{
-              backgroundColor: statusIsActive ? "#5bb75b21" : "#b76f5b21",
+              backgroundColor: statusIsActive ? "#5bb75b66" : "#c3170540",
               color: "inherit",
+              fontWeight: 700,
               padding: "0.2rem 0.5rem",
             }}
           >
