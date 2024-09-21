@@ -1,20 +1,25 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 
-import { useUpdateAdGroups } from "@/hooks/adGroups-hook";
-import { useInvalidateQuery } from "@/hooks/invalidateQueries";
-import { useForm } from "@/hooks/useForm";
-import Button from "@mui/material/Button";
-import Divider from "@mui/material/Divider";
-import MenuItem from "@mui/material/MenuItem";
-import Modal from "@mui/material/Modal";
-import Select, { SelectChangeEvent } from "@mui/material/Select";
-import Skeleton from "@mui/material/Skeleton";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import { useUpdateAdGroups } from '@/hooks/adGroups-hook';
+import { useInvalidateQuery } from '@/hooks/invalidateQueries';
+import { useForm } from '@/hooks/useForm';
+import Button from '@mui/material/Button';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import Modal from '@mui/material/Modal';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import Skeleton from '@mui/material/Skeleton';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
-import { TextFieldInput } from "../CreateCampaignSteps/CreateShoppingCampaign/TextFieldInputs";
-import { Content, PageContainer } from "../Footer/FooterStyles";
-import { StyledBoxContainer } from "./ModalStyles";
+import {
+  TextFieldInput,
+} from '../CreateCampaignSteps/CreateShoppingCampaign/TextFieldInputs';
+import {
+  Content,
+  PageContainer,
+} from '../Footer/FooterStyles';
+import { StyledBoxContainer } from './ModalStyles';
 
 interface BulkAdGroupOperationProps {
   open: boolean;
@@ -270,7 +275,7 @@ const BulkDeleteAdGroups = ({
       <Content>
         {!removingAdGroups ? (
           <Typography color="text.secondary">
-            You are about to delete {selectedAdGroups.length} ad groups. Please
+            You are about to delete {selectedAdGroups.length} ad group{selectedAdGroups.length > 1 ? 's' : ""}. Please
             confirm
           </Typography>
         ) : (

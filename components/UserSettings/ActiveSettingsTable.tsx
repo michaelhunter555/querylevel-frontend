@@ -35,6 +35,26 @@ const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
     user?.planType === PlanTypes.PAY_AS_YOU_GO
       ? "No Billing"
       : user?.nextBillingDate?.split("T")[0];
+
+  const checkDates = () => {
+    if (user?.planType !== PlanTypes.PAY_AS_YOU_GO) {
+      //set end date and current date (today)
+      const currentEndDate = new Date(String(user?.nextBillingDate)).getTime();
+      const todaysDate = new Date().getTime();
+
+      if (currentEndDate > todaysDate) {
+        //1000000000005000 <-> 100000000000005000
+        // return true => this means that there is more time before the plan expires
+        return true; //green
+      }
+
+      return false; //red
+    }
+    return true; // green
+  };
+
+  const planInGoodStanding = checkDates();
+
   return (
     <TableContainer component={Paper}>
       <Table>
@@ -50,40 +70,48 @@ const ActiveSettingsTable = ({ user }: ActiveSettingsProps) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          <TableCell>
-            <Typography>
-              {!user?.stripeCustomerId
-                ? user?.userId?.substring(0, 10) + " ..."
-                : user?.stripeCustomerId}
-            </Typography>
-          </TableCell>
-          <TableCell>
-            <Typography color="text.secondary" variant="h4">
-              {user?.totalCampaignsCreated} / {user?.campaignQuota}
-            </Typography>
-          </TableCell>
+          <TableRow>
+            <TableCell>
+              <Typography>
+                {!user?.stripeCustomerId
+                  ? user?.userId?.substring(0, 10) + " ..."
+                  : user?.stripeCustomerId}
+              </Typography>
+            </TableCell>
+            <TableCell>
+              <Typography color="text.secondary" variant="h4">
+                {user?.totalCampaignsCreated} /{" "}
+                {user?.planType === "pro"
+                  ? String.fromCodePoint(0x221e)
+                  : user?.campaignQuota}
+              </Typography>
+            </TableCell>
 
-          <TableCell>
-            <Typography>{user?.planType}</Typography>
-          </TableCell>
+            <TableCell>
+              <Typography>{user?.planType}</Typography>
+            </TableCell>
 
-          <TableCell>
-            <Typography>${user?.amountDue / 100}</Typography>
-          </TableCell>
+            <TableCell>
+              <Typography>${user?.amountDue / 100}</Typography>
+            </TableCell>
 
-          <TableCell>
-            <Typography>{user?.lastBillingDate?.split("T")[0]}</Typography>
-          </TableCell>
-          <TableCell>
-            <Typography>{endDate}</Typography>
-          </TableCell>
-          <TableCell>
-            {user?.accountActive ? (
-              <Chip label="True" color="success" />
-            ) : (
-              <Chip label="False" color="warning" />
-            )}
-          </TableCell>
+            <TableCell>
+              <Typography>{user?.lastBillingDate?.split("T")[0]}</Typography>
+            </TableCell>
+            <TableCell>
+              <Typography>{endDate}</Typography>
+            </TableCell>
+            <TableCell>
+              {user?.accountActive ? (
+                <Chip
+                  label="True"
+                  color={planInGoodStanding ? "success" : "warning"}
+                />
+              ) : (
+                <Chip label="False" color="warning" />
+              )}
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>

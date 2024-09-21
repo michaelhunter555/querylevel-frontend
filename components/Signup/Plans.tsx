@@ -43,6 +43,7 @@ const tiers = [
     buttonVariant: "outlined",
   },
   {
+    //id: "price_1PW8noP3CMhEecSyXbslSjWX", - TEST
     id: "price_1PtublP3CMhEecSyzUJ15aDn",
     title: "Growing",
     subheader: "Recommended",
@@ -63,6 +64,7 @@ const tiers = [
     buttonVariant: "contained",
   },
   {
+    //id: "price_1PW8bfP3CMhEecSytNuKJkJp", - TEST
     id: "price_1Ptug5P3CMhEecSy7P2qmYEA",
     title: "Pro",
     price: "59",

@@ -126,7 +126,9 @@ const SidebarMenu: React.FC<{
               prefetch={false}
               key={i}
               href={
-                session?.user?._id && session?.user?.googleAccountId
+                session?.user?._id &&
+                session?.user?.googleAccountId &&
+                hasAppAccess
                   ? `${menuText?.route}`
                   : "#"
               }
@@ -134,7 +136,7 @@ const SidebarMenu: React.FC<{
             >
               <ListItem>
                 <ListItemButton
-                  disabled={!session?.user?._id}
+                  disabled={!session?.user?._id || !hasAppAccess}
                   sx={{ borderRadius: "15px" }}
                   selected={selectedIndex === i}
                   aria-current={selectedIndex === i ? "page" : undefined}

@@ -69,14 +69,15 @@ const AppLayout = ({ children }: LayoutProps) => {
   }, [session?.user?._id, authContext?.state.accountId]);
 
   useEffect(() => {
-    if (session?.user?._id && !canAccess) {
+    if (session?.user?._id && !canAccess && router.pathname !== "/") {
       router.push("/manage-subscription"); //instead route to /manage-subscription page
     }
-  }, [session?.user?._id]);
+  }, [session?.user?._id, router.pathname]); //so check if everytime pathname changes as well
 
   const handlePrivacyPolicyModal = () => setOpenPrivacyPolicy((prev) => !prev);
   const handleTermsModal = () => setOpenTerms((prev) => !prev);
 
+  console.log("SESSION", session?.user);
   return (
     <ThemeProvider theme={themeModeSwitch}>
       <PageContainer>

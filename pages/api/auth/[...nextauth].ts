@@ -123,7 +123,7 @@ export default NextAuth({
               refresh_token: encryptedRefreshToken,
               cleanUpService: true,
               createdCampaigns: 0,
-              campaignQuota: 1,
+              campaignQuota: 3,
               totalCreatedCampaigns: 0,
               stripeCustomerId: "",
               theme: "light",

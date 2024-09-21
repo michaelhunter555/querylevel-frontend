@@ -93,6 +93,21 @@ const UserSettings = () => {
 
   const invalidateBilling = userSettings?.planType === PlanTypes.PAY_AS_YOU_GO;
 
+  const checkDateForPlan = () => {
+    //if user is Pay as go, they can be skipped. Otherwise, check.
+    if (userSettings?.planType !== PlanTypes.PAY_AS_YOU_GO) {
+      const today = new Date().getTime();
+      const planExpireDate = new Date(
+        String(userSettings?.nextBillingDate)
+      ).getTime();
+      return planExpireDate > today;
+    }
+    return true;
+  };
+
+  //check if the plan is expired to determine text display
+  const planIsNotExpired = checkDateForPlan();
+
   return (
     <Box sx={{ width: "100%", marginTop: "3rem" }}>
       <DeletePlanModal
@@ -158,11 +173,11 @@ const UserSettings = () => {
           )}
 
           {!isLoading && userSettings?.planType === PlanTypes.FREE && (
-            <Alert severity="info">
-              Your plan will end on{" "}
-              {userSettings?.nextBillingDate?.split("T")[0]} Get $10 off your
-              first month when selecting a plan before the expiry date. *applies
-              for subscriptions
+            <Alert severity={planIsNotExpired ? "info" : "warning"}>
+              Your plan {planIsNotExpired ? "will end" : "ended"} on{" "}
+              {userSettings?.nextBillingDate?.split("T")[0]}. Get $10 off your
+              first month when selecting your first plan *Applies for
+              subscriptions.
             </Alert>
           )}
         </Stack>

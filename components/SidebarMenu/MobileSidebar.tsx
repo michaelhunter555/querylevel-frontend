@@ -40,7 +40,9 @@ const MobileSidebar = ({
             prefetch={false}
             key={i}
             href={
-              session?.user?._id && session?.user?.googleAccountId
+              session?.user?._id &&
+              session?.user?.googleAccountId &&
+              hasAppAccess
                 ? `${menuText?.route}`
                 : "#"
             }
