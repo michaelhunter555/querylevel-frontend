@@ -109,7 +109,7 @@ export default NextAuth({
             //create a new user for that user
 
             const startDate = new Date();
-            const freeTrial = 7 * 24 * 60 * 60 * 1000;
+            const freeTrial = 14 * 24 * 60 * 60 * 1000;
             const endDate = new Date(startDate.getTime() + freeTrial);
 
             const googleAuthUser = {
@@ -123,7 +123,7 @@ export default NextAuth({
               refresh_token: encryptedRefreshToken,
               cleanUpService: true,
               createdCampaigns: 0,
-              campaignQuota: 3,
+              campaignQuota: 2,
               totalCreatedCampaigns: 0,
               stripeCustomerId: "",
               theme: "light",

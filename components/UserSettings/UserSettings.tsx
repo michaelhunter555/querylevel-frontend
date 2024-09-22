@@ -171,7 +171,6 @@ const UserSettings = () => {
               />
             </>
           )}
-
           {!isLoading && userSettings?.planType === PlanTypes.FREE && (
             <Alert severity={planIsNotExpired ? "info" : "warning"}>
               Your plan {planIsNotExpired ? "will end" : "ended"} on{" "}

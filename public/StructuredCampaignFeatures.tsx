@@ -19,11 +19,6 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
-import AlphaBetaDark from "../../assets/alpha-beta-dark.svg";
-import AlphaBetaLight from "../../assets/alpha-beta-light.svg";
-import ThreeTieredDark from "../../assets/three-tier-dark.svg";
-import ThreeTieredLight from "../../assets/three-tier-light.svg";
-
 interface CampaignStructureTheme {
   userTheme: PaletteMode;
 }
@@ -88,9 +83,9 @@ export const StructuredCampaignFeatures = ({
     setIsAlphaBeta((prev) => !prev);
   };
 
-  const threeTiered =
-    userTheme === "light" ? ThreeTieredLight : ThreeTieredDark;
-  const alphaBeta = userTheme === "light" ? AlphaBetaLight : AlphaBetaDark;
+  const determineImage = `/${
+    isAlphaBeta ? "alpha-beta" : "three-tier"
+  }-${userTheme}.svg`;
 
   return (
     <Container maxWidth="lg">
@@ -137,11 +132,9 @@ export const StructuredCampaignFeatures = ({
               <Switch onChange={handleImageIndex} />
               <CardMedia
                 component="img"
-                src={`/${
-                  isAlphaBeta ? "alpha-beta" : "three-tier"
-                }-${userTheme}.svg`}
-                alt="campaign_structures"
-                sx={{ height: "100%", width: "100%" }}
+                src={determineImage}
+                alt={`campaign_structures_${userTheme}`}
+                sx={{ height: "90%", width: "90%" }}
               />
             </Stack>
           </Paper>

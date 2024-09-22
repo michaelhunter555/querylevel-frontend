@@ -32,10 +32,10 @@ export type PlanData = {
 const tiers = [
   {
     id: "",
-    title: "Free 7-day Trial",
+    title: "Free 14-day Trial",
     price: "0",
     description: [
-      "Create 1 alpha/beta or three-tiered campaign",
+      "Create 2 alpha/beta or three-tiered campaign",
       "Full App capabilities",
       "No card required - Create a tiered campaign and see if the app is a fit for your business",
     ],

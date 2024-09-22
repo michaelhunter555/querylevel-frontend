@@ -146,9 +146,7 @@ export default function Home() {
 
       <Divider flexItem sx={{ marginBottom: "5rem" }} />
 
-      <StructuredCampaignFeatures
-        userTheme={session?.user?.theme as PaletteMode}
-      />
+      <StructuredCampaignFeatures userTheme={mode as PaletteMode} />
       <CampaignFeaturesTables />
 
       <Divider flexItem sx={{ margin: "5rem auto" }} />

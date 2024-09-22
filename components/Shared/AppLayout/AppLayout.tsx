@@ -77,7 +77,7 @@ const AppLayout = ({ children }: LayoutProps) => {
   const handlePrivacyPolicyModal = () => setOpenPrivacyPolicy((prev) => !prev);
   const handleTermsModal = () => setOpenTerms((prev) => !prev);
 
-  console.log("SESSION", session?.user);
+  //console.log("SESSION", session?.user);
   return (
     <ThemeProvider theme={themeModeSwitch}>
       <PageContainer>
