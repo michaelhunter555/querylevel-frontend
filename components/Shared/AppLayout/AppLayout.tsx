@@ -23,6 +23,7 @@ import { GlobalStyles } from "../../../styles/GlobalStyles";
 interface LayoutProps {
   children: ReactNode;
 }
+//acceptable routes for tiered campaigns
 const acceptableRoutes = [
   "/user-dashboard",
   "/manage-subscription",
@@ -30,6 +31,22 @@ const acceptableRoutes = [
   "/contact-us",
   "/",
 ];
+//acceptable routes for non-logged in users
+const acceptableNonLoggedInRoutes = [
+  "/",
+  "/user-dashboard",
+  "/privacy-policy",
+  "/terms-of-service",
+];
+
+const expiredUserRoutes = [
+  "/",
+  "/contact-us",
+  "/manage-subscription",
+  "/terms-of-service",
+  "/privacy-policy",
+];
+
 const AppLayout = ({ children }: LayoutProps) => {
   const { data: session, status } = useSession();
   const router = useRouter();
@@ -43,12 +60,24 @@ const AppLayout = ({ children }: LayoutProps) => {
   const canAccess = userCanAccessApp(session);
   const routerIsHome = router.pathname === "/";
   const routerIsAuthPage = router.pathname === "/user-dashboard";
+  //pages we don't want to show the sidebar on for app layout
+  const shouldHideSidebar =
+    routerIsHome ||
+    router.pathname === "/privacy-policy" ||
+    router.pathname === "/terms-of-service";
+
+  const shouldHideLegalInfo =
+    router.pathname === "/privacy-policy" ||
+    router.pathname === "/terms-of-service";
 
   const checkUserStatus = status !== "loading" && status === "unauthenticated";
   const shouldLogin = !session?.user?._id && routerIsAuthPage;
 
   useEffect(() => {
-    if (checkUserStatus && !routerIsHome && !routerIsAuthPage) {
+    if (
+      checkUserStatus &&
+      !acceptableNonLoggedInRoutes.includes(router.pathname)
+    ) {
       router.push("/");
     }
   }, [session?.user?._id, router]);
@@ -69,7 +98,11 @@ const AppLayout = ({ children }: LayoutProps) => {
   }, [session?.user?._id, authContext?.state.accountId]);
 
   useEffect(() => {
-    if (session?.user?._id && !canAccess && router.pathname !== "/") {
+    if (
+      session?.user?._id &&
+      !canAccess &&
+      !expiredUserRoutes.includes(router.pathname)
+    ) {
       router.push("/manage-subscription"); //instead route to /manage-subscription page
     }
   }, [session?.user?._id, router.pathname]); //so check if everytime pathname changes as well
@@ -93,7 +126,7 @@ const AppLayout = ({ children }: LayoutProps) => {
             direction="row"
             sx={{ paddingTop: 2, height: "100%" }}
           >
-            {!routerIsHome && (
+            {!shouldHideSidebar && (
               <Grid item xs={12} md={2}>
                 <SidebarMenu hasAppAccess={canAccess} />
               </Grid>
@@ -102,8 +135,10 @@ const AppLayout = ({ children }: LayoutProps) => {
               orientation="vertical"
               sx={{ margin: "0 0.5rem", maxWidth: "90%" }}
             />
-            {(session?.user?._id || shouldLogin || routerIsHome) && (
-              <Grid item xs={12} md={routerIsHome ? 12 : 9.5}>
+            {(session?.user?._id ||
+              shouldLogin ||
+              acceptableNonLoggedInRoutes.includes(router.pathname)) && (
+              <Grid item xs={12} md={shouldHideSidebar ? 12 : 9.5}>
                 {children}
               </Grid>
             )}
@@ -111,27 +146,28 @@ const AppLayout = ({ children }: LayoutProps) => {
           </Grid>
         </Content>
         <Divider variant="fullWidth" flexItem sx={{ marginTop: "5rem" }} />
-        {!routerIsHome && (
-          <Stack
-            sx={{ margin: "1.5rem 0", paddingLeft: "1rem" }}
-            direction="row"
-            spacing={2}
-            alignItems="center"
-          >
-            <Link
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-              onClick={handlePrivacyPolicyModal}
+        {shouldHideLegalInfo ||
+          (!routerIsHome && (
+            <Stack
+              sx={{ margin: "1.5rem 0", paddingLeft: "1rem" }}
+              direction="row"
+              spacing={2}
+              alignItems="center"
             >
-              Privacy Policy
-            </Link>
-            <Link
-              sx={{ textDecoration: "none", cursor: "pointer" }}
-              onClick={handleTermsModal}
-            >
-              Terms Of Service
-            </Link>
-          </Stack>
-        )}
+              <Link
+                sx={{ textDecoration: "none", cursor: "pointer" }}
+                onClick={handlePrivacyPolicyModal}
+              >
+                Privacy Policy
+              </Link>
+              <Link
+                sx={{ textDecoration: "none", cursor: "pointer" }}
+                onClick={handleTermsModal}
+              >
+                Terms Of Service
+              </Link>
+            </Stack>
+          ))}
       </PageContainer>
     </ThemeProvider>
   );

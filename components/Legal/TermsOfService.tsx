@@ -43,9 +43,10 @@ const TermsOfService = () => {
       </Typography>
       <Typography gutterBottom variant="subtitle1" color="text.secondary">
         Users are expected to use our app responsibly and ethically. Due to API
-        limitations, users with large inventories (+9,000 products) may find
-        that certain features are less beneficial. Users are responsible for
-        understanding these limitations and using our services accordingly.
+        limitations, users with large inventories (+9,000 products per brand)
+        may find that certain features are less beneficial. Users are
+        responsible for understanding these limitations and using our services
+        accordingly.
       </Typography>
 
       <Typography component="h2" variant="h6" color="text.secondary">

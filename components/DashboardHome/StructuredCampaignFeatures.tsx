@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
@@ -19,13 +19,10 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Typography from "@mui/material/Typography";
 
-import AlphaBetaDark from "../../assets/alpha-beta-dark.svg";
-import AlphaBetaLight from "../../assets/alpha-beta-light.svg";
-import ThreeTieredDark from "../../assets/three-tier-dark.svg";
-import ThreeTieredLight from "../../assets/three-tier-light.svg";
-
 interface CampaignStructureTheme {
   userTheme: PaletteMode;
+  isAlphaBeta: boolean;
+  onSwitchChange: () => void;
 }
 const campaignStructFeatures = [
   {
@@ -78,19 +75,15 @@ const campaignStructFeatures = [
 ];
 export const StructuredCampaignFeatures = ({
   userTheme,
+  isAlphaBeta,
+  onSwitchChange,
 }: CampaignStructureTheme) => {
-  const [isAlphaBeta, setIsAlphaBeta] = useState<boolean>(true);
-
   const handleImageIndex = (
     event: React.ChangeEvent<HTMLInputElement>,
     checked: boolean
   ) => {
-    setIsAlphaBeta((prev) => !prev);
+    onSwitchChange();
   };
-
-  const threeTiered =
-    userTheme === "light" ? ThreeTieredLight : ThreeTieredDark;
-  const alphaBeta = userTheme === "light" ? AlphaBetaLight : AlphaBetaDark;
 
   return (
     <Container maxWidth="lg">
@@ -123,8 +116,9 @@ export const StructuredCampaignFeatures = ({
                 charge a hefty sum to implement these campaign stratagies on
                 accounts. This is because the process itself can be very long
                 when you consider all the steps required. The list below details
-                all the steps we perform for you when creating an alpha-beta or
-                3-tiered campaign.
+                some of the steps we perform for you when creating an alpha-beta
+                or 3-tiered campaign, including careful negative keyword
+                allocation for each brand and set of products.
               </Typography>
               <Divider />
             </Stack>
@@ -141,7 +135,7 @@ export const StructuredCampaignFeatures = ({
                   isAlphaBeta ? "alpha-beta" : "three-tier"
                 }-${userTheme}.svg`}
                 alt="campaign_structures"
-                sx={{ height: "100%", width: "100%" }}
+                sx={{ height: "90%", width: "90%", margin: "0 auto" }}
               />
             </Stack>
           </Paper>

@@ -22,7 +22,7 @@ const OneTimePayments = () => {
             md={7}
             sx={{ display: "flex", flexDirection: "column" }}
           >
-            <Typography color="text.secondary" variant="h3">
+            <Typography color="text.secondary" variant="h4">
               Pay As You Go:
             </Typography>
             <Typography gutterBottom color="text.secondary">

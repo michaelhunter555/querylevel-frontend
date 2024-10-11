@@ -10,7 +10,7 @@ import HomePageFooter from "@/components/DashboardHome/HomePageFooter";
 import getLPTheme from "@/components/DashboardHome/HompePageTheme";
 import OneTimePayments from "@/components/DashboardHome/OneTimePayments";
 import { SignInWithGoogle } from "@/components/Signup/GoogleSignUp";
-import UserPlans, { PlanData } from "@/components/Signup/Plans";
+import UserPlans from "@/components/Signup/Plans";
 import { PaletteMode } from "@mui/material";
 import Box from "@mui/material/Box";
 import CardMedia from "@mui/material/CardMedia";
@@ -21,6 +21,7 @@ import Stack from "@mui/material/Stack";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
+import CaseStudy from "../components/DashboardHome/CaseStudyExamples";
 import {
   CampaignFeaturesTables,
   StructuredCampaignFeatures,
@@ -38,16 +39,14 @@ export default function Home() {
   const userTheme = session?.user?.theme as PaletteMode;
   const [mode, setMode] = useState<PaletteMode>(userTheme || "light");
   const customTheme = createTheme(getLPTheme(mode));
-  const defaultTheme = createTheme({ palette: { mode } });
-  const [plan, setPlan] = useState<PlanData | null>(null);
-  //console.log(session);
-
-  const selectPlan = (val: PlanData) => {
-    setPlan(val);
-  };
+  const [isAlphaBeta, setIsAlphaBeta] = useState<boolean>(true);
 
   const handleToggleTheme = () => {
     setMode((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
+  const handleTierToggle = () => {
+    setIsAlphaBeta((prev) => !prev);
   };
 
   return (
@@ -146,9 +145,18 @@ export default function Home() {
 
       <Divider flexItem sx={{ marginBottom: "5rem" }} />
 
-      <StructuredCampaignFeatures userTheme={mode as PaletteMode} />
+      <StructuredCampaignFeatures
+        userTheme={mode as PaletteMode}
+        isAlphaBeta={isAlphaBeta}
+        onSwitchChange={handleTierToggle}
+      />
       <CampaignFeaturesTables />
-
+      <CaseStudy
+        theme={mode as PaletteMode}
+        isAlphaBeta={isAlphaBeta}
+        onSwitchChange={handleTierToggle}
+      />
+      {/* Case study will go here */}
       <Divider flexItem sx={{ margin: "5rem auto" }} />
 
       <UserPlans hideButton={true} />
