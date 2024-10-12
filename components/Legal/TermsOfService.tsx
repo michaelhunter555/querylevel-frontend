@@ -1,9 +1,20 @@
 import React from "react";
 
+import Link from "next/link";
+
+import ToggleColorMode from "@/components/DashboardHome/ToggleColorMode";
+import HomeIcon from "@mui/icons-material/Home";
+import { PaletteMode } from "@mui/material";
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-const TermsOfService = () => {
+interface TermsOfServiceProps {
+  onToggleTheme: () => void;
+  theme: PaletteMode;
+}
+
+const TermsOfService = ({ onToggleTheme, theme }: TermsOfServiceProps) => {
   return (
     <Container
       maxWidth="lg"
@@ -14,9 +25,17 @@ const TermsOfService = () => {
         border: "1px solid #121212",
       }}
     >
-      <Typography component="h2" variant="h3" color="text.secondary">
-        Terms of Service
-      </Typography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography component="h2" variant="h3" color="text.secondary">
+          Terms of Service
+        </Typography>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Link href="/">
+            <HomeIcon color="primary" />
+          </Link>
+          <ToggleColorMode mode={theme} toggleColorMode={onToggleTheme} />
+        </Stack>
+      </Stack>
 
       <Typography component="h2" variant="h6" color="text.secondary">
         1. Acceptance of Terms

@@ -15,10 +15,14 @@ const TermsOfServicePage = () => {
   const [mode, setMode] = useState<PaletteMode>(userTheme || "dark");
   const customTheme = createTheme(getLPTheme(mode));
 
+  const handleThemeChange = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
+  };
+
   return (
     <ThemeProvider theme={customTheme}>
       <CssBaseline />
-      <TermsOfService />
+      <TermsOfService onToggleTheme={handleThemeChange} theme={mode} />
     </ThemeProvider>
   );
 };

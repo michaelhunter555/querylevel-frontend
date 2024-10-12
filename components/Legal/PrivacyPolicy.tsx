@@ -1,13 +1,21 @@
 import React from "react";
 
+import Link from "next/link";
+
+import ToggleColorMode from "@/components/DashboardHome/ToggleColorMode";
+import HomeIcon from "@mui/icons-material/Home";
+import { Link as MuiLink, PaletteMode } from "@mui/material";
 import Container from "@mui/material/Container";
 import Divider from "@mui/material/Divider";
-import Link from "@mui/material/Link";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
-interface PrivacyPolicyProps {}
+interface PrivacyPolicyProps {
+  onToggleTheme: () => void;
+  theme: PaletteMode;
+}
 
-const PrivacyPolicy = () => {
+const PrivacyPolicy = ({ onToggleTheme, theme }: PrivacyPolicyProps) => {
   return (
     <Container
       maxWidth="lg"
@@ -18,9 +26,17 @@ const PrivacyPolicy = () => {
         border: "1px solid #121212",
       }}
     >
-      <Typography component="h2" variant="h3" color="text.secondary">
-        Privacy Policy
-      </Typography>
+      <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Typography component="h2" variant="h3" color="text.secondary">
+          Privacy Policy
+        </Typography>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Link href="/">
+            <HomeIcon color="primary" />
+          </Link>
+          <ToggleColorMode mode={theme} toggleColorMode={onToggleTheme} />
+        </Stack>
+      </Stack>
       <Divider sx={{ margin: "1rem 0" }} />
       <Typography component="h2" variant="h5" color="text.secondary">
         Google Limited Use Policy
@@ -29,12 +45,12 @@ const PrivacyPolicy = () => {
       <Typography gutterBottom variant="subtitle1" color="text.secondary">
         QueryLevel’s use and transfer to any other app of information received
         from Google APIs will adhere to{" "}
-        <Link
+        <MuiLink
           href="https://developers.google.com/terms/api-services-user-data-policy#additional_requirements_for_specific_api_scopes"
           target="_blank"
         >
           Google API Services User Data Policy
-        </Link>
+        </MuiLink>
         , including the Limited Use requirements.
       </Typography>
       <Divider variant="middle" sx={{ margin: "1rem 0" }} />

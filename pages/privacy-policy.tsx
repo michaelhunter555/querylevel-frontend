@@ -15,11 +15,14 @@ const PrivacyPage = () => {
   const [mode, setMode] = useState<PaletteMode>(userTheme || "dark");
   const customTheme = createTheme(getLPTheme(mode));
 
+  const handleThemeChange = () => {
+    setMode((prev) => (prev === "light" ? "dark" : "light"));
+  };
   // console.log(session);
   return (
     <ThemeProvider theme={customTheme}>
       <CssBaseline />
-      <PrivacyPolicy />
+      <PrivacyPolicy onToggleTheme={handleThemeChange} theme={mode} />
     </ThemeProvider>
   );
 };

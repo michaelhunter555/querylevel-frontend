@@ -55,11 +55,11 @@ const caseStudyStats = [
   {
     name: "PFD",
     explanation:
-      "In this example we have a fitness niche website selling USA brand named home fitness products. A three-tiered strategy (see diagram above) was most fitting due to the uniqueness of product names and titles. At the start of restructuring the campaigns for PFD, the owners were paying the same price for lower quality search terms as they were for high-quality, decision-level and buyer-intent based queries. Naturally, not being able to decide which keywords trigger your shopping ad is a limitation of Google shopping, but by there are other means in which we can leverage shopping ads to our advantage. Given full control and the trust of PFD to re-structure their ads, went with a 3-tiered campaign wrapped under a shared budget with various settings and modifications to ensure all three campaigns were performing as one. It took roughly 2-weeks to start seeing consistent results with careful keyword monitoring. By 'keyword monitoring', we mean carefully following the search terms to make sure they are landing in the right campaigns. Overall, for the vendor Proform, PFD had achieved a conversion rate of 2.83% meaning, PFD converted nearly 3 of every 100 users!",
+      "Here we have a fitness niche website selling USA brand named home fitness products. A three-tiered strategy (see diagram above) was most fitting due to the uniqueness of product names and titles. Up until the start of restructuring campaigns for PFD, the same price (CPC) was being paid for lower, unlikely to convert, search terms as was being paid for high-quality, decision-level, buyer-intent based search terms. Naturally, one may consider that not being able to decide which keywords trigger your shopping ad is a limitation of Google shopping, but there are other means in which we can leverage shopping ads to our advantage. The best proposed structure was a 3-tiered campaign wrapped under a shared budget with various settings and modifications to ensure all three campaigns were performing as one. It took roughly 2-weeks to start seeing consistent results with careful keyword monitoring. By 'keyword monitoring', we mean carefully following the search terms to make sure they are landing in the right campaigns. Also, Adjusting bids from the bottom up. Overall, for the brand 'Proform', PFD had achieved a conversion rate of 2.83% meaning, PFD converted nearly 3 of every 100 users.",
     explanationTwo:
-      "Validation is a key phase before mass dispersal and the performance of the proform campaigns under a 3-tier structure worked as hypothesized. As can be seen from the data, Low priority handled all brand specific + product title search terms (see diagram above). It was clear that if a user searches with this keyword intent, it's likely they are in the decision phase. So, why not bid as competitively as possible when we know this is going to likely lead to a sale? Well, that's exactly what we're doing with this structure. At the same time, we did not rule out that an interest-level search term could lead to a sale. However, the likliness that it would[lead to a sale] was much lower if keywords such as the brand and product title were missing. Hence, this is why our high-priority (low quality keywords) show first with the lowest bid. The strategy is not limited to just one brand or type of brand either.",
+      "Validation is a key phase before mass dispersal, and the performance of the proform campaigns under a 3-tier structure worked as hypothesized. As can be seen from the data, Low priority handled all brand specific + product title search terms (see diagram above). It was clear that if a user searches with this keyword intent, it's likely they are in the decision phase. So, why not bid as competitively as possible when we know this is going to likely lead to a sale? Well, that's exactly what we're doing with this structure. At the same time, we did not rule out that an interest-level search term could lead to a sale. However, the likliness that it would[lead to a sale] was much lower if keywords such as the brand and product title were not included in the query. Hence, this is why our high-priority (low quality keywords) show first with the lowest bid. The strategy is not limited to just one brand or type of brand either.",
     explanationThree:
-      " Here you can see the three-tier strategy was then used on multiple brands to which over time a conversion rate of over 5% was acheived. To put it frank, this website quickly became a 7-figure business with the help of this shopping campaign structure. When your store is getting sales, Google's algorithm sort of rewards you in away by noting that your store likely led to a positive experience and therefore the algorithm will optimize your website more for similar search terms int he future. What this means is an increased liklihood of getting more sales. These results are not limited to PFD either but just serve as an example of what can be acheived if the query level bidding strategy is adopted.",
+      "Here you can see the three-tier strategy was then used on multiple brands to which over time a conversion rate of over 5% was acheived. To put it frank, this website quickly became a 7-figure business with the help of this shopping campaign structure. When your store is getting sales, Google's algorithm notes that your store likely led to a positive experience and therefore the algorithm will optimize your website more for similar search terms in the future. What this means is an increased liklihood of better placement positions and getting more views for these decision-level search terms. These results are not limited to one niche either but just serve as an example of what can be acheived if the query level bidding strategy is adopted.",
     AOV: 400,
     niche: "Home Fitness",
     type: "3-tiered",
@@ -76,9 +76,10 @@ const caseStudyStats = [
 
 const CaseStudy = ({ theme, isAlphaBeta, onSwitchChange }: CaseStudyProps) => {
   const themeView = useTheme();
-  const isMobileOrTablet = useMediaQuery(
-    themeView.breakpoints.down("sm") || themeView.breakpoints.down("md")
-  );
+  const isMobile = useMediaQuery(themeView.breakpoints.down("sm"));
+
+  const isTablet = useMediaQuery(themeView.breakpoints.between("sm", "md"));
+  const isIpadPro = useMediaQuery("(max-width: 1024px)");
   const [readMore, setReadMore] = useState(false);
 
   const handleToggle = (
@@ -110,9 +111,9 @@ const CaseStudy = ({ theme, isAlphaBeta, onSwitchChange }: CaseStudyProps) => {
 
         <Box
           sx={{
-            ...(isMobileOrTablet && { overflowX: "scroll" }),
+            ...((isMobile || isTablet || isIpadPro) && { overflowX: "scroll" }),
             padding: 1,
-            width: isMobileOrTablet ? "100%" : "auto",
+            width: isMobile || isTablet || isIpadPro ? "100%" : "auto",
           }}
         >
           {caseStudyStats
@@ -239,7 +240,7 @@ const CaseStudy = ({ theme, isAlphaBeta, onSwitchChange }: CaseStudyProps) => {
           full consent
         </Alert>
         {readMore ? (
-          <Box>
+          <Stack spacing={2}>
             <Typography variant="subtitle2" color="text.secondary">
               {caseStudyStats[0].explanation}
             </Typography>
@@ -267,36 +268,38 @@ const CaseStudy = ({ theme, isAlphaBeta, onSwitchChange }: CaseStudyProps) => {
             <Typography variant="subtitle2" color="text.secondary">
               {caseStudyStats[0].explanationThree}
             </Typography>
-          </Box>
+          </Stack>
         ) : (
           <FadeContentBox>
-            <Typography variant="subtitle2" color="text.secondary">
-              {caseStudyStats[0].explanation}
-            </Typography>
+            <Stack spacing={2}>
+              <Typography variant="subtitle2" color="text.secondary">
+                {caseStudyStats[0].explanation}
+              </Typography>
 
-            <CardMedia
-              component="img"
-              src="/Proform_three-tiered_example.png"
-              alt={"Three-tiered-example"}
-              sx={{
-                obectFit: "contain",
-                width: "100%",
-                height: "100%",
-                borderRadius: 5,
-              }}
-            />
-            <Typography variant="subtitle2" color="text.secondary">
-              {caseStudyStats[0].explanationTwo}
-            </Typography>
-            <CardMedia
-              component="img"
-              src="/profitness_deals_other_examples.png"
-              alt="Other 3-tier examples"
-              sx={{ width: "100%", height: "100%", borderRadius: 5 }}
-            />
-            <Typography variant="subtitle2" color="text.secondary">
-              {caseStudyStats[0].explanationThree}
-            </Typography>
+              <CardMedia
+                component="img"
+                src="/Proform_three-tiered_example.png"
+                alt={"Three-tiered-example"}
+                sx={{
+                  obectFit: "contain",
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: 5,
+                }}
+              />
+              <Typography variant="subtitle2" color="text.secondary">
+                {caseStudyStats[0].explanationTwo}
+              </Typography>
+              <CardMedia
+                component="img"
+                src="/profitness_deals_other_examples.png"
+                alt="Other 3-tier examples"
+                sx={{ width: "100%", height: "100%", borderRadius: 5 }}
+              />
+              <Typography variant="subtitle2" color="text.secondary">
+                {caseStudyStats[0].explanationThree}
+              </Typography>
+            </Stack>
           </FadeContentBox>
         )}
       </Stack>
