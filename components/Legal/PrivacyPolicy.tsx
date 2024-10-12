@@ -11,8 +11,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 interface PrivacyPolicyProps {
-  onToggleTheme: () => void;
-  theme: PaletteMode;
+  onToggleTheme?: () => void;
+  theme?: PaletteMode;
 }
 
 const PrivacyPolicy = ({ onToggleTheme, theme }: PrivacyPolicyProps) => {
@@ -34,7 +34,10 @@ const PrivacyPolicy = ({ onToggleTheme, theme }: PrivacyPolicyProps) => {
           <Link href="/">
             <HomeIcon color="primary" />
           </Link>
-          <ToggleColorMode mode={theme} toggleColorMode={onToggleTheme} />
+          <ToggleColorMode
+            mode={theme as PaletteMode}
+            toggleColorMode={onToggleTheme as () => void}
+          />
         </Stack>
       </Stack>
       <Divider sx={{ margin: "1rem 0" }} />

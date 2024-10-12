@@ -10,8 +10,8 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 interface TermsOfServiceProps {
-  onToggleTheme: () => void;
-  theme: PaletteMode;
+  onToggleTheme?: () => void;
+  theme?: PaletteMode;
 }
 
 const TermsOfService = ({ onToggleTheme, theme }: TermsOfServiceProps) => {
@@ -33,7 +33,10 @@ const TermsOfService = ({ onToggleTheme, theme }: TermsOfServiceProps) => {
           <Link href="/">
             <HomeIcon color="primary" />
           </Link>
-          <ToggleColorMode mode={theme} toggleColorMode={onToggleTheme} />
+          <ToggleColorMode
+            mode={theme as PaletteMode}
+            toggleColorMode={onToggleTheme as () => void}
+          />
         </Stack>
       </Stack>
 
