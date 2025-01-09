@@ -37,7 +37,9 @@ ICampaignInfo) => {
   return (
     <StyledPaper elevation={0}>
       <Stack justifyContent="center">
-        <Typography>1. Select Available Campaign</Typography>
+        <Typography variant="subtitle2" color="text.secondary">
+          1. Select Available Campaign
+        </Typography>
         {isLoading && <LinearProgress />}
         <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
           {!isLoading && campaignNames?.length === 0 && (
@@ -63,6 +65,7 @@ ICampaignInfo) => {
                     color={
                       selectedCampaign === campaign ? "primary" : "default"
                     }
+                    sx={{ margin: "0.2rem auto" }}
                   />
                 </StyledFadeIn>
               );

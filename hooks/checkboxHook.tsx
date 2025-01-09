@@ -1,11 +1,11 @@
 import React, { useCallback, useState } from "react";
 
-export const useCheckboxSelection = (conversionIds: number[]) => {
+export const useCheckboxSelection = (conversionIds: number[] | string[]) => {
   const [rowSelection, setRowSelection] = useState<{ [key: string]: boolean }>(
     {}
   );
 
-  const handleCheckboxSelected = useCallback((id: number) => {
+  const handleCheckboxSelected = useCallback((id: number | string) => {
     setRowSelection((prev) => {
       // const selected = { ...prev, [id]: !prev[id] };
 
@@ -21,25 +21,29 @@ export const useCheckboxSelection = (conversionIds: number[]) => {
   }, []);
 
   const handleSomeRowsSelectedCheck = useCallback(() => {
-    return conversionIds?.some((id: number) => rowSelection[id]);
+    return conversionIds?.some((id: number | string) => rowSelection[id]);
   }, [rowSelection, conversionIds]);
 
   const handleAllRowsSelected = useCallback(() => {
-    return conversionIds?.every((id: number) => rowSelection[id]);
+    return conversionIds?.every((id: number | string) => rowSelection[id]);
   }, [rowSelection, conversionIds]);
 
   const handleParentCheckboxSelection = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       const isChecked = event.target.checked;
-      setRowSelection(
-        conversionIds?.reduce(
-          (acc, id) => ({
-            ...acc,
-            [id]: isChecked,
-          }),
-          {}
-        )
-      );
+      if (isChecked) {
+        setRowSelection(
+          conversionIds?.reduce(
+            (acc, id) => ({
+              ...acc,
+              [id]: true,
+            }),
+            {}
+          )
+        );
+      } else {
+        setRowSelection({});
+      }
     },
     [conversionIds]
   );

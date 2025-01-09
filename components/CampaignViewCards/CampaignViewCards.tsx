@@ -61,6 +61,9 @@ const CampaignViewCards = ({
             sx={{
               minWidth: 100,
               borderRadius: "5px",
+              border: "1px solid",
+              borderColor: (theme) =>
+                theme.palette.mode === "light" ? "#f1f1f1" : "#102e45",
               padding: "0.25rem",
             }}
             alignItems="center"
@@ -77,7 +80,12 @@ const CampaignViewCards = ({
             </Stack>
             <Divider flexItem />
             <Stack sx={{ width: "90%" }} alignItems="center">
-              <Typography variant="subtitle1" color="text.secondary">
+              <Typography
+                variant="subtitle1"
+                sx={(theme) => ({
+                  color: theme.palette.mode === "light" ? "black" : "white",
+                })}
+              >
                 {value}
               </Typography>
             </Stack>

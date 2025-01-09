@@ -15,6 +15,7 @@ import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -72,13 +73,14 @@ const CreateWebsiteConversion = () => {
   return (
     <Box sx={{ marginTop: "1rem" }}>
       <Stack direction={"row"} alignItems="center" spacing={2}>
-        <Button
+        <Chip
           variant="outlined"
-          endIcon={toggleForm ? "" : <AddIcon />}
+          icon={toggleForm ? <ArrowBackIcon /> : <AddIcon />}
+          clickable
           onClick={handleFormToggle}
-        >
-          {toggleForm ? <ArrowBackIcon /> : "Create Conversion"}
-        </Button>
+          component="button"
+          label={toggleForm ? "Go back" : "Create Conversion"}
+        />
         <Alert icon={false} severity="info" variant="outlined">
           This feauture supports website purchase conversion management.
         </Alert>

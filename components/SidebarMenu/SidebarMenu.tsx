@@ -5,11 +5,15 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 
+import { useThemeToggle } from "@/hooks/toggle-hook";
+import Brightness4Icon from "@mui/icons-material/Brightness4";
+import Brightness7Icon from "@mui/icons-material/Brightness7";
 import HomeIcon from "@mui/icons-material/Home";
 import { useMediaQuery, useTheme } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -17,6 +21,7 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 import Header from "../Header/Header";
@@ -30,6 +35,7 @@ const SidebarMenu: React.FC<{
 }> = ({ hasAppAccess }): JSX.Element => {
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { togglePaletteMode } = useThemeToggle();
   const router = useRouter();
   const { data: session } = useSession();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
@@ -76,17 +82,21 @@ const SidebarMenu: React.FC<{
           direction="row"
           alignItems="center"
           justifyContent="center"
-          spacing={1}
+          spacing={2}
+          sx={{ ...(!isMobile && { marginBottom: "0.5rem" }) }}
         >
           {isMobile && (
-            <Chip
-              icon={<FcGoogle />}
-              clickable
-              component="button"
-              onClick={handleMobileSignOut}
-              label="sign out"
-              variant="outlined"
-            />
+            <>
+              <Chip
+                icon={<FcGoogle />}
+                clickable
+                component="button"
+                onClick={handleMobileSignOut}
+                label="sign out"
+                variant="outlined"
+              />
+              <Divider orientation="vertical" flexItem />
+            </>
           )}
           <Avatar
             src={session?.user?.image}
@@ -96,17 +106,33 @@ const SidebarMenu: React.FC<{
           <Typography variant="subtitle2" color="text.secondary">
             Account Id: {session?.user?.googleAccountId}
           </Typography>
-          <Divider orientation="vertical" />
-          <Link
-            prefetch={false}
-            href="/"
-            style={{
-              textDecoration: "none",
-              color: session?.user?.theme === "light" ? "#444" : "#f4f4f4",
-            }}
-          >
-            <HomeIcon />
-          </Link>
+          <Divider orientation="vertical" flexItem />
+          <Tooltip title={isMobile ? "toggle theme" : "homepage"}>
+            {isMobile ? (
+              <IconButton
+                onClick={async () => {
+                  togglePaletteMode(session?.user?._id);
+                }}
+              >
+                {session?.user?.theme === "light" ? (
+                  <Brightness7Icon />
+                ) : (
+                  <Brightness4Icon />
+                )}
+              </IconButton>
+            ) : (
+              <Link
+                prefetch={false}
+                href="/"
+                style={{
+                  textDecoration: "none",
+                  color: session?.user?.theme === "light" ? "#444" : "#f4f4f4",
+                }}
+              >
+                <HomeIcon />
+              </Link>
+            )}
+          </Tooltip>
         </Stack>
       )}
       <Divider

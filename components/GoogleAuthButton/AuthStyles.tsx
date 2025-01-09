@@ -58,3 +58,37 @@ export const styledScroll = {
     },
   },
 };
+
+//invisible scroll for mobile
+export const invisibleScroll = {
+  overflowY: "auto",
+
+  pointerEvents: "auto",
+  "&::-webkit-scrollbar": {
+    width: "0px",
+    background: "transparent",
+  },
+  "&::-webkit-scrollbar-thumb": {
+    background: "transparent",
+    borderRadius: "30px",
+  },
+  "&::-webkit-scrollbar-thumb:hover": {
+    background: "transparent",
+  },
+  "&::-webkit-scrollbar-track": {
+    background: "transparent",
+    borderRadius: "30px",
+  },
+  "&:hover": {
+    "&::-webkit-scrollbar-thumb": {
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-thumb:hover": {
+      transition: "background 1s ease-in",
+      background: "transparent",
+    },
+    "&::-webkit-scrollbar-track": {
+      background: "transparent",
+    },
+  },
+};

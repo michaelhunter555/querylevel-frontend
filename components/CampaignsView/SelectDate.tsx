@@ -1,5 +1,7 @@
 import React from "react";
 
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
@@ -30,6 +32,11 @@ const SelectSegment = ({
           value={segment}
           onChange={segmentChangeHandler}
           disabled={isLoading}
+          startAdornment={
+            <InputAdornment position="start">
+              <CalendarMonthIcon />
+            </InputAdornment>
+          }
         >
           {Object.entries(SelectAdDates).map(([key, value]) => (
             <MenuItem key={key} value={key}>
@@ -45,6 +52,11 @@ const SelectSegment = ({
           value={segment}
           onChange={segmentChangeHandler}
           disabled={isLoading}
+          startAdornment={
+            <InputAdornment position="start">
+              <CalendarMonthIcon />
+            </InputAdornment>
+          }
         >
           {Object.entries(SelectAdDates)
             ?.filter(([key]) => key !== "ALL_TIME")

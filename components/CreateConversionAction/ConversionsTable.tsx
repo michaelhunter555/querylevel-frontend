@@ -225,8 +225,9 @@ const Row = ({
             style={{
               backgroundColor: statusIsActive ? "#5bb75b66" : "#c3170540",
               color: "inherit",
-              fontWeight: 700,
+              fontWeight: "normal",
               padding: "0.2rem 0.5rem",
+              borderRadius: 5,
             }}
           >
             {conversionData?.status === 2 ? "Active" : "Inactive"}

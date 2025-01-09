@@ -71,7 +71,7 @@ export const SelectTimes = ({
   };
 
   return (
-    <Stack direction="row" alignItems="center" spacing={1}>
+    <Stack direction="row" alignItems="center" spacing={1} width="100%">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <TimePicker<Dayjs>
           label="Set Start Time"

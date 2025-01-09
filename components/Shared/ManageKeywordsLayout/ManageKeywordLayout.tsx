@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 import CampaignNameAndId from "@/components/SearchTerms/CampaignInfo";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import {
   Alert,
   Box,
@@ -12,7 +13,6 @@ import {
   Chip,
   Grid,
   LinearProgress,
-  Stack,
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
@@ -41,6 +41,7 @@ const ManageKeywordsLayout = ({
   const { data: session } = useSession();
   const router = useRouter();
   const [campaignId, setCampaignId] = useState("");
+  const { isMobile } = useCheckDevice();
 
   const sessionIsValid = session?.user?._id && session?.user?.googleAccountId;
 
@@ -79,8 +80,8 @@ const ManageKeywordsLayout = ({
     });
 
   return (
-    <Grid container direction="column" spacing={2} sx={{ marginBottom: 3 }}>
-      <Grid item>
+    <Grid container direction="column" spacing={0} sx={{ marginBottom: 3 }}>
+      <Grid sx={{ width: "100%" }}>
         <CampaignNameAndId
           isLoading={campaignNamesLoading}
           campaignNames={campaignNames as string[]}
@@ -88,16 +89,28 @@ const ManageKeywordsLayout = ({
           onCampaignChange={handleCampaignChange}
         />
       </Grid>
-      <Grid item>
+      <Grid sx={{ width: "100%" }}>
         {campaignId?.split(":")[1] &&
         !negativeKeywordsLoading &&
         negativeKeywordsData ? (
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "5px" }}>
-            <Typography color="text.secondary" variant="h5">
+          <>
+            <Typography
+              align={isMobile ? "center" : "inherit"}
+              color="text.secondary"
+              variant="h5"
+            >
               {keywordLevel === "AD_GROUP" ? "Ad Group" : "Campaign"} Negative
               Keywords
             </Typography>
-            <Stack direction="row" alignItems="center" spacing={2}>
+            <Box
+              sx={{
+                margin: "1rem 0",
+                display: "flex",
+                flexDirection: isMobile ? "column" : "row",
+                gap: "5px",
+                alignItems: isMobile ? "normal" : "center",
+              }}
+            >
               <Chip
                 label="Back to search Terms"
                 prefetch={false}
@@ -122,7 +135,7 @@ const ManageKeywordsLayout = ({
                   ? "View Campaign Level"
                   : "View Ad Group Level"}
               </Button>
-            </Stack>
+            </Box>
             <ManageNegativeKeywordsComponent
               keywordLevel={keywordLevel}
               campaignId={campaignId?.split(":")[1]}
@@ -134,7 +147,7 @@ const ManageKeywordsLayout = ({
                     )
               }
             />
-          </Box>
+          </>
         ) : (
           !negativeKeywordsLoading &&
           !campaignId?.split(":")[1] && (

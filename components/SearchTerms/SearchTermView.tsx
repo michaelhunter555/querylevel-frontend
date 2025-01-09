@@ -4,6 +4,7 @@ import { MRT_RowSelectionState } from "material-react-table";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { TSearchTerms } from "@/types";
 import { SelectChangeEvent } from "@mui/material";
 import Alert from "@mui/material/Alert";
@@ -47,10 +48,10 @@ const SearchTermView = ({
   searchTermData,
 }: SearchTermViewProps) => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
-
+  const { isMobile } = useCheckDevice();
   return (
-    <Grid container direction="column" spacing={2} sx={{ marginBottom: 3 }}>
-      <Grid item xs={12}>
+    <Grid container direction="column" spacing={0} sx={{ marginBottom: 3 }}>
+      <Grid xs={12}>
         <CampaignNameAndId
           isLoading={campaignNamesLoading}
           campaignNames={campaignNames}
@@ -60,7 +61,7 @@ const SearchTermView = ({
       </Grid>
       {campaignId ? (
         <>
-          <Grid item xs={12}>
+          <Grid xs={12}>
             <Typography color="text.secondary" variant="h5">
               Shopping Search Terms
             </Typography>
@@ -68,9 +69,9 @@ const SearchTermView = ({
               sx={{
                 margin: "1rem 0",
                 display: "flex",
-                flexDirection: "row",
+                flexDirection: isMobile ? "column" : "row",
                 gap: "5px",
-                alignItems: "center",
+                alignItems: isMobile ? "normal" : "center",
               }}
             >
               <SelectDate

@@ -4,8 +4,10 @@ import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import { useRouter } from "next/router";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { NestedProps, UserCampaign } from "@/types";
 import { campaignView } from "@/util/helpers/campaignView";
+import { useTheme } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import LinearProgress from "@mui/material/LinearProgress";
 import { SelectChangeEvent } from "@mui/material/Select";
@@ -14,6 +16,7 @@ import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
 import CampaignOptionsBar from "../CampaignOptionsBar/CampaignOptionsBar";
+import { invisibleScroll } from "../GoogleAuthButton/AuthStyles";
 import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
 //import CampaignViewCards from "../CampaignViewCards/CampaignViewCards";
 //import DynamicCampaignTable from "../DataTable/DynamicCampaignTable";
@@ -37,12 +40,14 @@ interface CampaignView {
 
 const CampaignView = () => {
   const { data: session } = useSession();
+  const { isMobile, isTablet } = useCheckDevice();
   const router = useRouter();
   const [segment, setSegment] = useState("LAST_7_DAYS");
   const [status, setStatus] = useState<string>("ENABLED");
   const [updatedCampaign, setUpdateCampaign] = useState(0);
   const [isNewCampaign, setIsNewCampaign] = useState(false);
   const sessionIsValid = session?.user?._id && session?.user?.googleAccountId;
+  const theme = useTheme();
 
   useEffect(() => {
     if (!sessionIsValid) {
@@ -128,30 +133,36 @@ const CampaignView = () => {
           isLoading={campaignIsLoading}
         />
 
-        <CampaignViewCards
-          isLoading={campaignIsLoading}
-          campaignData={campaign as UserCampaign[]}
-        />
+        <Stack
+          direction="row"
+          sx={{ ...(isMobile && { overflowX: "auto", ...invisibleScroll }) }}
+          spacing={2}
+        >
+          <CampaignViewCards
+            isLoading={campaignIsLoading}
+            campaignData={campaign as UserCampaign[]}
+          />
+        </Stack>
       </Stack>
 
       <Stack
         spacing={2}
-        direction="row"
+        direction={isMobile ? "column" : "row"}
         alignItems="center"
         justifyContent={isNewCampaign ? "flex-end" : "space-between"}
         sx={{ margin: "1rem 0" }}
       >
         {status === "PAUSED" && !isNewCampaign && (
           <Alert color="info">
-            When Enabling campaigns, please note that active campaign segments
-            need a least 1 impression to be viewable.
+            Activated campaign segments need a least 1 impression to be
+            viewable.
           </Alert>
         )}
 
         {status === "ENABLED" && !isNewCampaign && (
           <Alert color="info">
-            Campaigns, Ad groups and Product Groups (products) must have at
-            least 1 impression to be viewable during date segments.
+            Active campaigns need at least 1 impression to be viewable during
+            date segments.
           </Alert>
         )}
 

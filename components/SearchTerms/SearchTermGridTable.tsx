@@ -10,6 +10,7 @@ import {
 
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
 import { useGetShoppingSearchTerms } from "@/hooks/reports-hooks";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { TSearchTerms } from "@/types";
 import BlockIcon from "@mui/icons-material/Block";
 import Box from "@mui/material/Box";
@@ -72,6 +73,7 @@ const DynamicSearchTermTable = ({
   onRowSelection,
   rowSelection,
 }: DynamicSearchTermTable) => {
+  const { isMobile } = useCheckDevice();
   const [keywordMatchType, setKeywordMatchType] = useState<string>("EXACT");
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [negativeKeywordLevel, setNegativeKeywordLevel] = useState("AD_GROUP");
@@ -191,7 +193,7 @@ const DynamicSearchTermTable = ({
           direction="row"
           alignItems="center"
           spacing={3}
-          sx={{ padding: "1rem" }}
+          sx={{ padding: "1rem", overflowX: "auto" }}
         >
           <Stack>
             <Typography variant="subtitle2" color="text.secondary">
@@ -207,6 +209,8 @@ const DynamicSearchTermTable = ({
             <Button
               variant="contained"
               disabled={noneSelected}
+              size="small"
+              sx={{ fontSize: isMobile ? 9 : 14 }}
               //await then reset state if successful api response
               onClick={async () => {
                 if (negativeKeywordLevel === "AD_GROUP") {
@@ -227,9 +231,7 @@ const DynamicSearchTermTable = ({
                 onRowSelection({});
               }}
             >
-              {addNegativeKeywordsLoading
-                ? "...loading"
-                : "Add Negative Keywords "}
+              {addNegativeKeywordsLoading ? "...loading" : "Add Negatives "}
             </Button>
           </Stack>
 

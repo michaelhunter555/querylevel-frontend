@@ -8,6 +8,8 @@ import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -46,16 +48,16 @@ export const PreLoginInfo = () => {
             </Typography>
             <Divider />
             <Typography variant="subtitle2">Requested Permissions:</Typography>
-            <ol>
-              <li>
-                Permission to communicate with Google Ads to present your ads
+            <List>
+              <ListItem>
+                - Permission to communicate with Google Ads to present your ads
                 data
-              </li>
-              <li>
-                Permission to communicate with Google Shopping to create
+              </ListItem>
+              <ListItem>
+                - Permission to communicate with Google Shopping to create
                 shopping campaigns
-              </li>
-            </ol>
+              </ListItem>
+            </List>
             <Alert
               sx={{ flexDirection: { xs: "column", md: "row" } }}
               severity="info"

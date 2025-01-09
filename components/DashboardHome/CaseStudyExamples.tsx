@@ -101,9 +101,6 @@ const CaseStudy = ({ theme, isAlphaBeta, onSwitchChange }: CaseStudyProps) => {
           {caseStudyStats[0].name} - {caseStudyStats[0].niche}
         </Typography>
 
-        <Typography color="text.secondary" fontWeight={600}>
-          {caseStudyStats[0].dates}
-        </Typography>
         <Typography variant="subtitle2" color="text.secondary">
           Read {readMore ? "less" : "more"}
         </Typography>

@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
@@ -7,6 +8,7 @@ import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
 
 export const TempLoadingCard = () => {
+  const { isMobile } = useCheckDevice();
   let tempLoadingCards = (
     <>
       {Array.from({ length: 5 }).map((_, i) => (
@@ -19,6 +21,7 @@ export const TempLoadingCard = () => {
             justifyContent: "center",
             alignItems: "center",
             padding: "1rem",
+            ...(isMobile && { width: "100%" }),
           }}
         >
           <Grid
@@ -28,7 +31,7 @@ export const TempLoadingCard = () => {
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
-              justifyContent: "center",
+              justifyContent: isMobile ? "normal" : "center",
             }}
           >
             <Typography variant="h6" color="text.secondary">

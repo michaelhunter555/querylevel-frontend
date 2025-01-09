@@ -12,10 +12,10 @@ import { StyledBoxContainer } from "./ModalStyles";
 interface SuccessModalProps {
   open: boolean;
   onClose: () => void;
-  message: string;
-  error: boolean;
-  success: boolean;
-  errorMessage: string;
+  message?: string;
+  error?: boolean;
+  success?: boolean;
+  errorMessage?: string;
 }
 
 function SuccessModal({

@@ -25,13 +25,13 @@ import {
   useUpdateCpcBids,
   useUpdateNegativeStatus,
 } from "@/hooks/productPartion-hook";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { NestedProps, UserCampaign } from "@/types";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 import EventRepeatIcon from "@mui/icons-material/EventRepeat";
 import Inventory2OutlinedIcon from "@mui/icons-material/Inventory2Outlined";
 import PublicIcon from "@mui/icons-material/Public";
 import SettingsIcon from "@mui/icons-material/Settings";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Divider from "@mui/material/Divider";
 import Fab from "@mui/material/Fab";
@@ -232,6 +232,7 @@ const DynamicCampaignTable = ({
   } = useCreateAdGroup();
 
   const { getCampaignCriterionListingScope } = useInventoryFilter();
+  const { isMobile } = useCheckDevice();
 
   const getAdGroupData = async (
     campaignId: string,
@@ -545,173 +546,188 @@ const DynamicCampaignTable = ({
       };
 
       return (
-        <>
-          <Box
+        <Grid
+          container
+          spacing={2}
+          direction={"row"}
+          alignItems={isMobile ? "start" : "normal"}
+          justifyContent={isMobile ? "center" : "normal"}
+          sx={{
+            width: "100%",
+            overflowX: "hidden",
+            maxWidth: { xs: "90vw", md: "none" },
+          }}
+        >
+          <Grid
+            item
+            xs={12}
+            md={2.5}
             sx={{
-              margin: 1,
+              maxWidth: "100%", // Ensure it doesn't exceed the container's width
+              overflow: "hidden", // Avoid horizontal scrolling
             }}
           >
-            <Grid container spacing={2} direction="row">
-              <Grid item xs={12} md={2.5}>
-                <Stack>
-                  <Typography color="text.secondary">Edit Campaign</Typography>
-                  <Stack
-                    direction="row"
-                    spacing={2}
-                    alignItems="center"
-                    sx={{ marginTop: "0.5rem" }}
+            <Stack>
+              <Typography color="text.secondary">Edit Campaign</Typography>
+              <Stack
+                direction="row"
+                spacing={2}
+                alignItems="center"
+                sx={{ marginTop: "0.5rem" }}
+              >
+                <Tooltip title="Campaign Settings">
+                  <Button
+                    variant="contained"
+                    size="small"
+                    onClick={handleEditDrawer}
                   >
-                    <Tooltip title="Campaign Settings">
-                      <Button
-                        variant="contained"
-                        size="small"
-                        onClick={handleEditDrawer}
-                      >
-                        <SettingsIcon sx={{ fontSize: "20px" }} />
-                      </Button>
-                    </Tooltip>
-                    <EditCampaignDrawer
-                      open={isEditing}
-                      onClose={() => {
-                        //console.log("campaignfields", campaignFieldUpdated);
-                        if (campaignFieldUpdated > 0) {
-                          updatedCampaign();
-                          setCampaignFieldUpdated(0);
-                        }
-                        setIsEditing(false);
-                      }}
-                      campaignId={row.original.id}
-                      fieldUpdated={updatedCampaignFieldsHandler}
-                    />
-
-                    <Divider orientation="vertical" flexItem />
-                    <Tooltip title="geo-location settings">
-                      <Fab
-                        size="small"
-                        color="primary"
-                        onClick={handleLocationModal}
-                      >
-                        <PublicIcon />
-                      </Fab>
-                    </Tooltip>
-
-                    <GeoLocationModal
-                      open={openLocationSettings}
-                      onClose={handleLocationModal}
-                      campaignId={row.original.id}
-                      campaignName={row.original.name}
-                    />
-                    <Tooltip title="ad schedule">
-                      <Fab
-                        size="small"
-                        color="primary"
-                        onClick={() => {
-                          setOpenAdSchedule(true);
-                          getAdSchedule(row.original?.id);
-                        }}
-                      >
-                        <EventRepeatIcon />
-                      </Fab>
-                    </Tooltip>
-                    <AdScheduleModal
-                      campaignAdSchedule={campaignAdSchedule}
-                      scheduleIsLoading={adScheduleIsLoading}
-                      open={openAdSchedule}
-                      onClose={handleAdScheduleClick}
-                      name={row.original.name}
-                      campaignId={row.original.id}
-                    />
-                    <Tooltip title="Inventory Filter">
-                      <Fab
-                        onClick={handleOpenListingScope}
-                        size="small"
-                        color="primary"
-                      >
-                        <Inventory2OutlinedIcon />
-                      </Fab>
-                    </Tooltip>
-                    <InventoryFilterModal
-                      open={openListingScope}
-                      loadingListingScope={loadingListingScope}
-                      onClose={handleOpenListingScope}
-                      campaignId={row.original.id}
-                      campaignName={row.original.name}
-                      listingScopeData={listingScopeData}
-                    />
-                  </Stack>
-                </Stack>
-
-                <Divider
-                  sx={{
-                    margin: "0.5rem 0",
+                    <SettingsIcon sx={{ fontSize: "20px" }} />
+                  </Button>
+                </Tooltip>
+                <EditCampaignDrawer
+                  open={isEditing}
+                  onClose={() => {
+                    //console.log("campaignfields", campaignFieldUpdated);
+                    if (campaignFieldUpdated > 0) {
+                      updatedCampaign();
+                      setCampaignFieldUpdated(0);
+                    }
+                    setIsEditing(false);
                   }}
+                  campaignId={row.original.id}
+                  fieldUpdated={updatedCampaignFieldsHandler}
                 />
-                <Stack sx={{ margin: "0.5rem 0" }} spacing={2}>
-                  <CampaignViewSideBar
-                    onMenuItemClick={handleMenuItemClick}
-                    status={status}
-                    selectedIndex={selectedIndex}
-                    onSetSelectedIndex={setSelectedIndex}
-                  />
+
+                <Divider orientation="vertical" flexItem />
+                <Tooltip title="geo-location settings">
+                  <Fab
+                    size="small"
+                    color="primary"
+                    onClick={handleLocationModal}
+                  >
+                    <PublicIcon />
+                  </Fab>
+                </Tooltip>
+
+                <GeoLocationModal
+                  open={openLocationSettings}
+                  onClose={handleLocationModal}
+                  campaignId={row.original.id}
+                  campaignName={row.original.name}
+                />
+                <Tooltip title="ad schedule">
+                  <Fab
+                    size="small"
+                    color="primary"
+                    onClick={() => {
+                      setOpenAdSchedule(true);
+                      getAdSchedule(row.original?.id);
+                    }}
+                  >
+                    <EventRepeatIcon />
+                  </Fab>
+                </Tooltip>
+                <AdScheduleModal
+                  campaignAdSchedule={campaignAdSchedule}
+                  scheduleIsLoading={adScheduleIsLoading}
+                  open={openAdSchedule}
+                  onClose={handleAdScheduleClick}
+                  name={row.original.name}
+                  campaignId={row.original.id}
+                />
+                <Tooltip title="Inventory Filter">
+                  <Fab
+                    onClick={handleOpenListingScope}
+                    size="small"
+                    color="primary"
+                  >
+                    <Inventory2OutlinedIcon />
+                  </Fab>
+                </Tooltip>
+                <InventoryFilterModal
+                  open={openListingScope}
+                  loadingListingScope={loadingListingScope}
+                  onClose={handleOpenListingScope}
+                  campaignId={row.original.id}
+                  campaignName={row.original.name}
+                  listingScopeData={listingScopeData}
+                />
+              </Stack>
+            </Stack>
+
+            <Divider
+              sx={{
+                margin: "0.5rem 0",
+              }}
+            />
+            <Stack sx={{ margin: "0.5rem 0", width: "100%" }} spacing={2}>
+              <CampaignViewSideBar
+                onMenuItemClick={handleMenuItemClick}
+                status={status}
+                selectedIndex={selectedIndex}
+                onSetSelectedIndex={setSelectedIndex}
+              />
+            </Stack>
+          </Grid>
+
+          <Grid
+            item
+            xs={12}
+            md={9.5}
+            sx={{
+              maxWidth: "100%", // Ensure it doesn't exceed the container's width
+              overflow: "hidden", // Avoid horizontal scrolling
+            }}
+          >
+            {toggleChart &&
+              productPartitionData &&
+              campaignComponent === "adgroup" && (
+                <Stack sx={{ width: "100%" }} alignItems="flex-start">
+                  <Button
+                    size="small"
+                    sx={{ fontSize: 11 }}
+                    startIcon={<ArrowBackIcon />}
+                    onClick={() => setToggleChart(false)}
+                  >
+                    Back to Ad Groups
+                  </Button>
                 </Stack>
-              </Grid>
+              )}
 
-              <Grid item xs={12} md={9.5}>
-                {toggleChart &&
-                  productPartitionData &&
-                  campaignComponent === "adgroup" && (
-                    <Stack sx={{ width: "100%" }} alignItems="flex-start">
-                      <Button
-                        size="small"
-                        sx={{ fontSize: 11 }}
-                        startIcon={<ArrowBackIcon />}
-                        onClick={() => setToggleChart(false)}
-                      >
-                        Back to Ad Groups
-                      </Button>
-                    </Stack>
-                  )}
+            {!toggleChart && adGroups && campaignComponent === "adgroup" && (
+              <Typography color="text.secondary">
+                Ad Groups for {row.original.name}
+              </Typography>
+            )}
 
-                {!toggleChart &&
-                  adGroups &&
-                  campaignComponent === "adgroup" && (
-                    <Typography color="text.secondary">
-                      Ad Groups for {row.original.name}
-                    </Typography>
-                  )}
-
-                <RenderCampaignViewSideBar
-                  component={campaignComponent}
-                  campaignData={chartData?.filter(
-                    (c) => c.id === row.original.id
-                  )}
-                  adGroupsLoading={adGroupsIsLoading} //adGroupsLoading
-                  adGroupData={adGroups as AdGroupsTableData[]} //change maade here adGroupData
-                  setCurrentAdGroup={setCurrentAdGroupHandler}
-                  adGroupPostIsLoading={adGroupPostIsLoading}
-                  createAdGroup={createAdGroup}
-                  setCurrentAdGroupName={setCurrentAdGroupName}
-                  currentAdGroupId={currentAdGroup ? currentAdGroup : null}
-                  currentAdGroupName={currentAdGroupName}
-                  toggle={toggleChart}
-                  getProductPartitions={getProductPartitionsHandler} // refetch partitions
-                  partitionIsLoading={partitionIsLoading} //changed - partitionTestLoad
-                  productGroups={productPartitionData} //changed - productGroups
-                  handleToggle={handlePartitionToggle}
-                  open={openPartition}
-                  createRootNode={createRootNode}
-                  editPartitionIsLoading={editPartitionIsLoading}
-                  editPartitionTree={editPartitionTree}
-                  updateNegativeStatus={updateNegativeStatus}
-                  negativeStatusLoading={updatingNegativeStatus}
-                  bidsAreUpdating={bidsAreUpdating}
-                  updateCostPerClick={updateCpCMicros}
-                  createRootNodeIsLoading={createRootNodeIsLoading}
-                />
-              </Grid>
-            </Grid>
-          </Box>
-        </>
+            <RenderCampaignViewSideBar
+              component={campaignComponent}
+              campaignData={chartData?.filter((c) => c.id === row.original.id)}
+              adGroupsLoading={adGroupsIsLoading} //adGroupsLoading
+              adGroupData={adGroups as AdGroupsTableData[]} //change maade here adGroupData
+              setCurrentAdGroup={setCurrentAdGroupHandler}
+              adGroupPostIsLoading={adGroupPostIsLoading}
+              createAdGroup={createAdGroup}
+              setCurrentAdGroupName={setCurrentAdGroupName}
+              currentAdGroupId={currentAdGroup ? currentAdGroup : null}
+              currentAdGroupName={currentAdGroupName}
+              toggle={toggleChart}
+              getProductPartitions={getProductPartitionsHandler} // refetch partitions
+              partitionIsLoading={partitionIsLoading} //changed - partitionTestLoad
+              productGroups={productPartitionData} //changed - productGroups
+              handleToggle={handlePartitionToggle}
+              open={openPartition}
+              createRootNode={createRootNode}
+              editPartitionIsLoading={editPartitionIsLoading}
+              editPartitionTree={editPartitionTree}
+              updateNegativeStatus={updateNegativeStatus}
+              negativeStatusLoading={updatingNegativeStatus}
+              bidsAreUpdating={bidsAreUpdating}
+              updateCostPerClick={updateCpCMicros}
+              createRootNodeIsLoading={createRootNodeIsLoading}
+            />
+          </Grid>
+        </Grid>
       );
     },
   });

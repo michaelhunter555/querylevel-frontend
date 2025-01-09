@@ -367,8 +367,8 @@ const AdGroupsTable = ({
         onRowSelection={setRowSelection}
         onOperation={setOperation}
       />
-      <Paper elevation={2}>
-        <TableContainer>
+      <Paper elevation={2} sx={{ padding: "0.5rem" }}>
+        <TableContainer sx={{ width: "100%" }}>
           <Stack
             direction="row"
             alignItems="center"

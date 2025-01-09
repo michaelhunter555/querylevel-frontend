@@ -1,5 +1,7 @@
 import React from "react";
 
+import { StatusDot } from "@/components/Shared/StatusDot";
+import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 
@@ -15,6 +17,7 @@ export const StatusSelector = ({
   isLoading,
 }: CampaignStatus) => {
   const statusArray = ["ENABLED", "PAUSED"];
+  const determineSatusValue: number = status === "ENABLED" ? 2 : 3;
   return (
     <>
       <Select
@@ -23,6 +26,11 @@ export const StatusSelector = ({
           onStatusChange(event.target.value)
         }
         disabled={isLoading}
+        startAdornment={
+          <InputAdornment position="start">
+            <StatusDot status={determineSatusValue} />
+          </InputAdornment>
+        }
       >
         {statusArray.map((val, i) => (
           <MenuItem key={i} value={val}>

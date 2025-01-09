@@ -1,5 +1,6 @@
 import React from "react";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
@@ -9,18 +10,14 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 export const ShoppingInputsLoading = () => {
+  const { isMobile } = useCheckDevice();
   return (
     <>
       <Paper elevation={1} sx={{ borderRadius: "15px", width: "100%" }}>
-        <Grid
-          container
-          direction="row"
-          sx={{ margin: "2rem auto" }}
-          spacing={3}
-        >
+        <Grid container direction="row" spacing={3}>
           <Grid item xs={12} md={4}>
             <Skeleton
-              sx={{ margin: "0 auto", borderRadius: 10 }}
+              sx={{ margin: "0.5rem auto", borderRadius: 10 }}
               variant="rectangular"
               width={250}
               height={250}

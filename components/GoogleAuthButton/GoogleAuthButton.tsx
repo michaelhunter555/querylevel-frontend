@@ -122,6 +122,7 @@ const GoogleAuthButton = () => {
             conversions: 0,
             conversions_value: 0,
             impressions: 0,
+            optimization_score: 0,
           };
         }
         dateAggregatedData[product.date].clicks += product.clicks;
@@ -131,6 +132,8 @@ const GoogleAuthButton = () => {
           product.conversions_value;
         dateAggregatedData[product.date].conversions += product.conversions;
         dateAggregatedData[product.date].impressions += product.impressions;
+        dateAggregatedData[product.date].optimization_score +=
+          product.optimization_score;
 
         // Product title aggregation
         if (!productAggregatedData[product.product_title]) {
@@ -140,6 +143,7 @@ const GoogleAuthButton = () => {
             conversions: 0,
             conversions_value: 0,
             impressions: 0,
+            optimization_score: 0,
           };
         }
         productAggregatedData[product.product_title].clicks += product.clicks;
@@ -151,6 +155,8 @@ const GoogleAuthButton = () => {
           product.conversions;
         productAggregatedData[product.product_title].impressions +=
           product.impressions;
+        productAggregatedData[product.product_title].optimization_score =
+          product.optimization_score;
       });
 
       const dateFinalData = Object.keys(dateAggregatedData).map((date) => {
@@ -171,9 +177,12 @@ const GoogleAuthButton = () => {
             productData.clicks > 0
               ? productData.cost_micros / productData.clicks
               : 0;
+          const productOptimizationScore: number =
+            productData.optimization_score;
           return {
             product_title: product,
             average_cpc: averageCPC.toFixed(2),
+            optimization_score: productOptimizationScore,
             ...productData,
           };
         }
@@ -247,14 +256,16 @@ const GoogleAuthButton = () => {
       {session?.user?._id && session?.user?.googleAccountId && (
         <StyledBoxContainer>
           <Grid container direction="row" alignItems="start">
-            <Grid item xs={12} md={6}>
-              <LineChart
-                isLoading={analyticsLoading}
-                productsData={
-                  processedData?.dateData as ProductPerformanceData[]
-                }
-              />
-            </Grid>
+            {!isMobile && (
+              <Grid item xs={12} md={6}>
+                <LineChart
+                  isLoading={analyticsLoading}
+                  productsData={
+                    processedData?.dateData as ProductPerformanceData[]
+                  }
+                />
+              </Grid>
+            )}
 
             <Grid
               item

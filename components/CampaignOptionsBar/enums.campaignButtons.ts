@@ -1,11 +1,13 @@
 export enum CampaignType {
   SHOPPING = "shopping",
-  LOCAL_SHOPPING = "local",
-  REMARKET = "remarket",
+  PROMOTION = "promotions",
+  CONVERSION = "remarket",
+  TIERED = "tiered",
 }
 
 export enum CampaignText {
   SHOPPING_AD = "Create Campaign",
-  SEARCH_LOCAL_INVENTORY_AD = "Local Inventory",
-  REMARKETING = "Remarketing",
+  PROMOTION_TEXT = "Promotion",
+  CREATE_CONVERSION = "Conversion Tag",
+  TIERED_CAMPAIGN = "Tiered Campaign",
 }

@@ -44,7 +44,7 @@ export const AnalyticsTableData = ({
       >
         {!isLoading && sparkLineData && (
           <>
-            <Typography variant="h6" color="text.secondary">
+            <Typography variant="subtitle2" color="text.secondary">
               {text}
             </Typography>
             <Divider flexItem />
@@ -52,7 +52,25 @@ export const AnalyticsTableData = ({
               {text === "Total Spent" && "$"} {text === "Avg. CpC" && "$"}{" "}
               {value}
             </Typography>
-            <SparkLineChart data={sparkLineData} height={40} />
+            <svg width={0} height={0}>
+              <defs>
+                <linearGradient
+                  id="sparkLine_gradient"
+                  x1="0%"
+                  y1="0%"
+                  x2="0%"
+                  y2="100%"
+                >
+                  <stop offset="0%" stopColor="#e01cd5" />
+                  <stop offset="100%" stopColor="#1CB5E0" />
+                </linearGradient>
+              </defs>
+            </svg>
+            <SparkLineChart
+              //colors={["url(#sparkLine_gradient)"]}
+              data={sparkLineData}
+              height={40}
+            />
             <Box sx={{ width: "100%" }}></Box>
           </>
         )}

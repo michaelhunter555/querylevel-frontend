@@ -15,8 +15,10 @@ export const TextFieldInput: React.FC<{
   step?: string;
   style?: boolean;
   inputHandler: (id: string, val: string | number, isValid: boolean) => void;
-  adornmentValue?: string | number;
+  adornmentValue?: string | number | React.ReactElement;
   helperText?: string;
+  fullWidth?: boolean;
+  disabled?: boolean;
 }> = ({
   inputHandler,
   name,
@@ -30,6 +32,8 @@ export const TextFieldInput: React.FC<{
   adornmentValue,
   helperText,
   step,
+  fullWidth,
+  disabled,
 }) => {
   return (
     <>
@@ -44,6 +48,7 @@ export const TextFieldInput: React.FC<{
             type={type}
             fullWidth
             defaultValue={defaultValue}
+            value={value}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
@@ -84,6 +89,8 @@ export const TextFieldInput: React.FC<{
             type={type}
             defaultValue={defaultValue}
             value={value}
+            fullWidth={fullWidth}
+            disabled={disabled}
             onChange={(event: any) =>
               inputHandler(
                 id,

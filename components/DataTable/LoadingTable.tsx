@@ -21,7 +21,12 @@ const loadSkeletons = (length: number = 1) => {
   }
   return totalSkeletons;
 };
-
+/**
+ * @name - LoadingTable - loading skeleton table
+ * @param length - @number of rows
+ * @param numCells - @number of cells per row
+ * @returns loading skeleton during server loading
+ */
 export const LoadingTable = ({ length, numCells }: IsHomePage) => {
   const defaultNumCells = numCells ? numCells : 6;
   return (

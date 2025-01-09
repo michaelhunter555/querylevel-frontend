@@ -2,6 +2,7 @@ import React from "react";
 
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
+import PercentIcon from "@mui/icons-material/Percent";
 import PsychologyTwoToneIcon from "@mui/icons-material/PsychologyTwoTone";
 import ReceiptLongIcon from "@mui/icons-material/ReceiptLong";
 import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
@@ -59,6 +60,13 @@ export const menuItems: MenuItem[] = [
     component: MenuComponent.CREATE_CONVERSION,
     icon: <PsychologyTwoToneIcon />,
     route: PageRoutes.CONVERSIONS,
+  },
+  {
+    text: MenuText.PROMOTIONS,
+    secondary: MenuSecondText.PROMOTIONS,
+    component: MenuComponent.PROMOTION,
+    icon: <PercentIcon />,
+    route: PageRoutes.MANAGE_PROMOTIONS,
   },
   {
     text: MenuText.USER_SETTINGS,

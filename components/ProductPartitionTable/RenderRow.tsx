@@ -170,6 +170,7 @@ const RenderRow: React.FC<RenderRowProps> = ({
         />
         <StyledTableRowFadeIn
           visible={true}
+          yAxis={0}
           delay={0.1}
           key={node?.criterion_id}
           onMouseEnter={() => setHoveredNode(node?.criterion_id)}
@@ -183,16 +184,18 @@ const RenderRow: React.FC<RenderRowProps> = ({
               />
               {(isHovered && node?.listing_group?.type !== 2) ||
               negativeAnchorEl[node?.criterion_id] ? (
-                <IconButton
-                  aria-describedby={negativeId as string}
-                  sx={{ padding: "2px" }}
-                  size="small"
-                  onClick={(event: React.MouseEvent<HTMLElement>) =>
-                    negativeAnchorHandler(event, node?.criterion_id)
-                  }
-                >
-                  <KeyboardArrowDownIcon sx={{ fontSize: 12 }} />
-                </IconButton>
+                <Tooltip title={"edit status"}>
+                  <IconButton
+                    aria-describedby={negativeId as string}
+                    sx={{ padding: "2px" }}
+                    size="small"
+                    onClick={(event: React.MouseEvent<HTMLElement>) =>
+                      negativeAnchorHandler(event, node?.criterion_id)
+                    }
+                  >
+                    <KeyboardArrowDownIcon sx={{ fontSize: 12 }} />
+                  </IconButton>
+                </Tooltip>
               ) : (
                 ""
               )}

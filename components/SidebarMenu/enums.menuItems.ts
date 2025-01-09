@@ -8,6 +8,7 @@ export enum MenuText {
   CONTACT = "Contact",
   CREATE_CONVERSION = "My Conversion Tags",
   USER_SETTINGS = "Billing",
+  PROMOTIONS = "Promotions",
 }
 
 export enum MenuComponent {
@@ -21,6 +22,7 @@ export enum MenuComponent {
   CONTACT = "contact",
   DEV_TOKEN = "Dev Tokens",
   USER_SETTINGS = "billing",
+  PROMOTION = "promotion",
 }
 
 export enum PageRoutes {
@@ -31,6 +33,7 @@ export enum PageRoutes {
   CREATE_TIERED = "/create-tiered-campaigns",
   USER_SETTINGS = "/manage-subscription",
   SEARCH_TERM_VIEW = "/search-terms",
+  MANAGE_PROMOTIONS = "/manage-promotions",
 }
 
 export enum MenuSecondText {
@@ -40,6 +43,7 @@ export enum MenuSecondText {
   SEARCH_TERM_VIEW = "shopping search terms",
   CREATE_CONVERSION = "webpage conversion tracking",
   USER_SETTINGS = "manage billing",
+  PROMOTIONS = "Create Shopping promotions",
 }
 
 export enum ThemeColor {

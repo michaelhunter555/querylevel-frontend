@@ -53,7 +53,9 @@ const Brands: React.FC<BrandsProps> = ({
   return (
     <StyledPaper elevation={0}>
       <Stack justifyContent="center">
-        <Typography>1. Select available brand</Typography>
+        <Typography variant="subtitle2" color="text.secondary">
+          1. Select available brand
+        </Typography>
         {isLoading && <LinearProgress />}
         <Stack
           direction="row"

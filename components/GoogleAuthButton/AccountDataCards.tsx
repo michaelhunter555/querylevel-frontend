@@ -1,12 +1,18 @@
 import React, { useMemo } from "react";
 
-import { StyledFadeIn } from "@/components/Shared/StyledFadeInComponents";
+import {
+  StyledFadeIn,
+  StyledStack,
+} from "@/components/Shared/StyledFadeInComponents";
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent } from "@mui/material";
+import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
 
 import SelectDate from "../CampaignsView/SelectDate";
+import AdScore from "./AdScore";
 import { AnalyticsTableData } from "./AnalyticsTableData";
 import { TempLoadingCard } from "./tempLoadingCards";
 
@@ -23,6 +29,15 @@ const AccountDataCards = ({
   segment,
   onSegmentChange,
 }: AccountCard) => {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+
+  const adScore =
+    (shoppingPerformance
+      ?.map((val) => val.optimization_score)
+      ?.reduce((acc, curr) => (acc += curr), 0) /
+      shoppingPerformance?.length) *
+    100;
   const homeAppAnalytics = useMemo(() => {
     //total values
     let total = {
@@ -52,7 +67,6 @@ const AccountDataCards = ({
       total.clicks += clicks;
       total.impressions += impressions;
       total.conversions += conversions;
-
       //make sure cpc is there otherwise ignore it, no point in adding 0 to something.
       //push the list into arrays
       sparkLineClicks.push(Number(clicks));
@@ -116,7 +130,19 @@ const AccountDataCards = ({
       }}
     >
       {isLoading && <TempLoadingCard />}
-
+      {!isLoading && !isMobile && (
+        <Stack sx={{ marginLeft: 1 }} direction="row">
+          <Typography
+            variant="subtitle2"
+            color="text.secondary"
+            sx={{ fontSize: 10 }}
+          >
+            Ad Score:
+          </Typography>
+          <AdScore value={adScore} isLoading={isLoading} />
+        </Stack>
+      )}
+      {!isMobile && <Divider orientation="vertical" flexItem />}
       {!isLoading &&
         shoppingPerformance &&
         homeAppAnalytics?.map((data, index) => (
@@ -140,14 +166,37 @@ const AccountDataCards = ({
           </StyledFadeIn>
         ))}
       <Divider flexItem sx={{ marginTop: "1rem" }} />
-      <StyledFadeIn delay={0.1} visible={true}>
+      <StyledStack
+        delay={0.1}
+        visible={true}
+        sx={{
+          ...(isMobile && {
+            flexDirection: "row",
+            gap: 5,
+            alignItems: "center",
+          }),
+        }}
+      >
         <SelectDate
           removeAllTime={true}
           segment={segment}
           onSegmentChange={segmentChangeHandler}
           isLoading={isLoading}
         />
-      </StyledFadeIn>
+        {isMobile && <Divider orientation="vertical" flexItem />}
+        {isMobile && (
+          <Stack>
+            <Typography
+              variant="subtitle2"
+              color="text.secondary"
+              sx={{ fontSize: 10 }}
+            >
+              Ad Score:
+            </Typography>
+            <AdScore value={adScore} isLoading={isLoading} />
+          </Stack>
+        )}
+      </StyledStack>
     </Grid>
   );
 };

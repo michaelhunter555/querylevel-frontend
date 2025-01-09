@@ -69,7 +69,51 @@ export const useShoppingCampaign = () => {
     }
   }, []);
 
+  const getAllMerchantCenterProducts = useCallback(
+    async (id: string, limit: string, pageToken?: string) => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/get-all-products?id=${id}&nextPageToken=${pageToken}&limit=${limit}`
+        );
+        const data = await response.json();
+
+        if (!data.ok) {
+          throw new Error(data.error);
+        }
+
+        return {
+          productCount: data?.productCount,
+          products: data?.products,
+          nextPageToken: data?.nextPageToken,
+        };
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    []
+  );
+
+  const getMerchantProductTypes = useCallback(async (id: string) => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_APP_SERVER}/api/get-product-types?id=${id}`
+      );
+
+      const data = await response.json();
+
+      if (!data.ok) {
+        throw new Error(data.error);
+      }
+
+      return data?.productTypes;
+    } catch (err) {
+      console.log(err);
+    }
+  }, []);
+
   return {
+    getAllMerchantCenterProducts,
+    getMerchantProductTypes,
     getMerchantsData,
     getProductsData,
     brands,
