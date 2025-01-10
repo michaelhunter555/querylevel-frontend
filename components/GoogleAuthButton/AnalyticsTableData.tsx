@@ -28,6 +28,7 @@ export const AnalyticsTableData = ({
         flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
+        marginBottom: "0.5rem",
         padding: "1rem",
         minWidth: "100px",
       }}

@@ -1,6 +1,7 @@
 import React from "react";
 
 import { ProductPerformanceData } from "@/types";
+import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -22,15 +23,13 @@ const ProductPerformance = ({
   isLoading,
 }: ProductPerformance) => {
   return (
-    <>
-      <TableContainer
-        component={Paper}
-        sx={{
-          padding: "1rem",
-          maxHeight: isLoading ? "auto" : "400px",
-          ...styledScroll,
-        }}
-      >
+    <Box
+      sx={{
+        maxHeight: isLoading ? "auto" : "400px",
+        ...styledScroll,
+      }}
+    >
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
@@ -59,7 +58,7 @@ const ProductPerformance = ({
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Box>
   );
 };
 

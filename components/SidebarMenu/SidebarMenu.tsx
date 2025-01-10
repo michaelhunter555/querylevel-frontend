@@ -6,10 +6,10 @@ import { useRouter } from "next/router";
 import { FcGoogle } from "react-icons/fc";
 
 import { useThemeToggle } from "@/hooks/toggle-hook";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import HomeIcon from "@mui/icons-material/Home";
-import { useMediaQuery, useTheme } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
@@ -33,8 +33,7 @@ import { ToggleTheme } from "./ToggleTheme";
 const SidebarMenu: React.FC<{
   hasAppAccess: boolean;
 }> = ({ hasAppAccess }): JSX.Element => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isMobile } = useCheckDevice();
   const { togglePaletteMode } = useThemeToggle();
   const router = useRouter();
   const { data: session } = useSession();
@@ -81,23 +80,10 @@ const SidebarMenu: React.FC<{
         <Stack
           direction="row"
           alignItems="center"
-          justifyContent="center"
+          justifyContent={isMobile ? "flex-start" : "center"}
           spacing={2}
           sx={{ ...(!isMobile && { marginBottom: "0.5rem" }) }}
         >
-          {isMobile && (
-            <>
-              <Chip
-                icon={<FcGoogle />}
-                clickable
-                component="button"
-                onClick={handleMobileSignOut}
-                label="sign out"
-                variant="outlined"
-              />
-              <Divider orientation="vertical" flexItem />
-            </>
-          )}
           <Avatar
             src={session?.user?.image}
             alt={`${session?.user?.name}-${Math.floor(Math.random() * 1000)}`}
@@ -133,6 +119,19 @@ const SidebarMenu: React.FC<{
               </Link>
             )}
           </Tooltip>
+          {isMobile && (
+            <>
+              <Divider orientation="vertical" flexItem />
+              <Chip
+                icon={<FcGoogle />}
+                clickable
+                component="button"
+                onClick={handleMobileSignOut}
+                label="sign out"
+                variant="outlined"
+              />
+            </>
+          )}
         </Stack>
       )}
       <Divider

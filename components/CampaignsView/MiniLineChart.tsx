@@ -1,46 +1,9 @@
 import React from "react";
 
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
 import { UserCampaign } from "@/types";
+import { LineChart } from "@mui/x-charts/LineChart";
 
 import { DynamicUserCampaign } from "../DataTable/DynamicCampaignTable";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  animation: {
-    duration: 0,
-  },
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "Shopping Performance",
-    },
-  },
-};
 
 type MiniLineChartData = {
   campaignData: UserCampaign[] | DynamicUserCampaign[];
@@ -76,27 +39,27 @@ export function MiniLineChart({ campaignData }: MiniLineChartData) {
   const dataSet1 = Array.from(dataMap.values()).map((data) => data.clicks);
   const dataSet2 = Array.from(dataMap.values()).map((data) => data.impressions);
   //["#02b2af" "rgb(53, 162, 235)", "rgba(53, 162, 235, 0.5)"]
-  const data = {
-    labels,
-    datasets: [
-      {
-        label: "clicks",
-        data: dataSet1,
-        borderColor: "#02b2af",
-        backgroundColor: "#02b2af",
-      },
-      {
-        label: "impressions",
-        data: dataSet2,
-        borderColor: "rgb(53, 162, 235)",
-        backgroundColor: "rgba(53, 162, 235, 0.5)",
-      },
-    ],
-  };
 
   return (
-    <div style={{ width: "80%", margin: "0 auto" }}>
-      <Line options={options} data={data} />
+    <div style={{ width: "100%", margin: "0 auto" }}>
+      <LineChart
+        xAxis={[{ data: labels, label: "Date", scaleType: "point" }]}
+        series={[
+          {
+            data: dataSet1,
+            label: "Clicks",
+            curve: "linear",
+            showMark: false,
+          },
+          {
+            data: dataSet2,
+            label: "Impressions",
+            curve: "linear",
+            showMark: false,
+          },
+        ]}
+        height={355}
+      />
     </div>
   );
 }

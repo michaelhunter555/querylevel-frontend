@@ -7,7 +7,13 @@ import { useRouter } from "next/router";
 import { useGetGoogleAdAccountId } from "@/hooks/accountId-hook";
 import { useGetAppAnalytics } from "@/hooks/customer-hooks";
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
+import {
+  Paper,
+  SelectChangeEvent,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
+import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -16,22 +22,22 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 
+import CampaignOptionsBar from "../CampaignOptionsBar/CampaignOptionsBar";
 import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
-//import AccountDataCards from "./AccountDataCards";
+import AccountDataCards from "./AccountDataCards";
 import { StyledBoxContainer } from "./AuthStyles";
 //import DeviceData from "./DeviceData";
 //import DoughnutChart from "./DoughnutChart";
 //import LineChart  from "./LineChart";
 import { PreLoginInfo } from "./PreLoginInfo";
-import { TempLoadingCard } from "./tempLoadingCards";
 //import ProductPerformance  from "./ProductPerformance";
 import { UserAccountCard } from "./UserAccountCard";
 import { UserNotLoggedIn } from "./UserNotLoggedIn";
 
-const AccountDataCards = dynamic(() => import("./AccountDataCards"), {
-  ssr: false,
-  loading: () => <TempLoadingCard />,
-});
+// const AccountDataCards = dynamic(() => import("./AccountDataCards"), {
+//   ssr: false,
+//   // loading: () => <TempLoadingCard />,
+// });
 const LineChart = dynamic(() => import("./LineChart"), {
   ssr: false,
   loading: () => {
@@ -202,7 +208,7 @@ const GoogleAuthButton = () => {
 
   return (
     <>
-      <StyledBoxContainer>
+      <StyledBoxContainer sx={{ ...(isMobile && { padding: 1 }) }}>
         {session?.user?._id && session?.user?.googleAccountId && (
           <AccountDataCards
             isLoading={analyticsLoading}
@@ -252,42 +258,52 @@ const GoogleAuthButton = () => {
 
         {!session?.user?._id && !isLoading && <PreLoginInfo />}
       </StyledBoxContainer>
+      {isMobile && (
+        <Box sx={{ marginBottom: "1rem" }}>
+          <Typography variant="subtitle2" color="text.secondary">
+            Options:
+          </Typography>
+          <CampaignOptionsBar />
+        </Box>
+      )}
 
       {session?.user?._id && session?.user?.googleAccountId && (
-        <StyledBoxContainer>
-          <Grid container direction="row" alignItems="start">
-            {!isMobile && (
-              <Grid item xs={12} md={6}>
-                <LineChart
-                  isLoading={analyticsLoading}
-                  productsData={
-                    processedData?.dateData as ProductPerformanceData[]
-                  }
-                />
-              </Grid>
-            )}
+        <Grid container direction="row" alignItems="start" spacing={2}>
+          <Grid item xs={12} md={6}>
+            <Paper elevation={0} sx={{ padding: 2, borderRadius: 4 }}>
+              <LineChart
+                isLoading={analyticsLoading}
+                productsData={
+                  processedData?.dateData as ProductPerformanceData[]
+                }
+              />
+            </Paper>
+          </Grid>
 
-            <Grid
-              item
-              xs={12}
-              md={6}
-              sx={{
-                width: "100%",
-              }}
-            >
+          <Grid
+            item
+            xs={12}
+            md={6}
+            sx={{
+              width: "100%",
+            }}
+          >
+            <Paper elevation={0} sx={{ padding: 2, borderRadius: 4 }}>
               <DoughnutChart
                 isLoading={analyticsLoading}
                 productsData={
                   processedData?.productData as ProductPerformanceData[]
                 }
               />
-            </Grid>
+            </Paper>
           </Grid>
-        </StyledBoxContainer>
+        </Grid>
       )}
 
       {session?.user?._id && session?.user?.googleAccountId && (
-        <StyledBoxContainer>
+        <StyledBoxContainer
+          sx={{ marginTop: "1rem", ...(isMobile && { padding: 1 }) }}
+        >
           <Grid container direction="row" alignItems="center" spacing={1}>
             <StyledFadeIn delay={0.1} visible={true} sx={{ width: "100%" }}>
               <ProductPerformance

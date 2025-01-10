@@ -40,7 +40,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
     const sortData = productsData?.sort(
       (a, b) => (b[dataKey] as number) - (a[dataKey] as number)
     );
-    const topPerformers = sortData?.slice(0, 3);
+    const topPerformers = sortData?.slice(0, 5);
 
     return topPerformers?.map((item) => ({
       label: item.product_title, //.length > 30? item.product_title.slice(0, 30) + "...": item.product_title,
@@ -74,13 +74,13 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
         <>
           <Stack
             direction="row"
-            justifyContent="center"
+            justifyContent={isMobile ? "center" : "flex-end"}
             alignItems="center"
             spacing={2}
           >
             <Stack>
               <Typography variant="subtitle1" color="text.secondary">
-                Top 3 Performance Pie
+                Top 5 Performing Products
               </Typography>
             </Stack>
             <Stack>
@@ -116,18 +116,18 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
                 slotProps={{
                   legend: {
                     labelStyle: {
-                      fontSize: 10,
+                      fontSize: isMobile ? 10 : 11,
                     },
                     position: {
                       horizontal: isMobile ? "middle" : "right",
-                      vertical: "top",
+                      vertical: isMobile ? "top" : "middle",
                     },
                   },
                 }}
                 series={[
                   {
                     data: transformDataForPieChart as PieData[],
-                    outerRadius: 100,
+                    outerRadius: isMobile ? 120 : 110,
                     highlightScope: { faded: "global", highlighted: "item" },
                     faded: {
                       innerRadius: 30,
@@ -138,8 +138,11 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
                     cy: "50%",
                   },
                 ]}
-                height={300}
-                margin={{ top: isMobile ? 105 : 0, right: isMobile ? 0 : 250 }}
+                height={isMobile ? 500 : 300}
+                margin={{
+                  top: isMobile ? 105 : 0,
+                  right: isMobile ? 0 : 400,
+                }}
               />
             </StyledFadeIn>
           )}

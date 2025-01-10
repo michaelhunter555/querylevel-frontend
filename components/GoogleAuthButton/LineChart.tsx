@@ -1,47 +1,10 @@
 import React, { useMemo } from "react";
 
-import {
-  CategoryScale,
-  Chart as ChartJS,
-  Legend,
-  LinearScale,
-  LineElement,
-  PointElement,
-  Title,
-  Tooltip,
-} from "chart.js";
-import { Line } from "react-chartjs-2";
-
 import { ProductPerformanceData } from "@/types";
 import Skeleton from "@mui/material/Skeleton";
+import { LineChart as MUILineChart } from "@mui/x-charts/LineChart";
 
 import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Legend
-);
-
-export const options = {
-  responsive: true,
-  animation: {
-    duration: 0,
-  },
-  plugins: {
-    legend: {
-      position: "top" as const,
-    },
-    title: {
-      display: true,
-      text: "Shopping Performance",
-    },
-  },
-};
 
 type LineChartData = {
   productsData: ProductPerformanceData[];
@@ -75,39 +38,58 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
     return { labels, dataSet1, dataSet2 };
   }, [productsData]);
 
-  const data = useMemo(
-    () => ({
-      labels,
-      datasets: [
-        {
-          label: "clicks",
-          data: dataSet1,
-          borderColor: "#02b2af",
-          backgroundColor: "#02b2af",
-        },
-        {
-          label: "impressions",
-          data: dataSet2,
-          borderColor: "rgb(53, 162, 235)",
-          backgroundColor: "rgba(53, 162, 235, 0.5)",
-        },
-      ],
-    }),
-    [labels, dataSet1, dataSet2]
-  );
+  // const data = useMemo(
+  //   () => ({
+  //     labels,
+  //     datasets: [
+  //       {
+  //         label: "clicks",
+  //         data: dataSet1,
+  //         borderColor: "#02b2af",
+  //         backgroundColor: "#02b2af",
+  //       },
+  //       {
+  //         label: "impressions",
+  //         data: dataSet2,
+  //         borderColor: "rgb(53, 162, 235)",
+  //         backgroundColor: "rgba(53, 162, 235, 0.5)",
+  //       },
+  //     ],
+  //   }),
+  //   [labels, dataSet1, dataSet2]
+  // );
 
+  console.log(labels, dataSet1, dataSet2);
   return (
     <>
       {isLoading ? (
         <>
           <Skeleton width="100%" height={40} />
-          {Array.from({ length: 3 }).map((_, i) => (
+          {Array.from({ length: 4 }).map((_, i) => (
             <Skeleton key={i} width="85%" height={45} />
           ))}
         </>
       ) : (
         <StyledFadeIn visible={!isLoading} delay={0.1}>
-          <Line options={options} data={data} />
+          {/* <Line options={options} data={data} /> */}
+          <MUILineChart
+            xAxis={[{ data: labels, label: "Date", scaleType: "point" }]}
+            series={[
+              {
+                data: dataSet1,
+                label: "Clicks",
+                curve: "linear",
+                showMark: false,
+              },
+              {
+                data: dataSet2,
+                label: "Impressions",
+                curve: "linear",
+                showMark: false,
+              },
+            ]}
+            height={355}
+          />
         </StyledFadeIn>
       )}
     </>

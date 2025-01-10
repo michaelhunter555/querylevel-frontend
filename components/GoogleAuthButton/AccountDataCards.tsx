@@ -4,8 +4,9 @@ import {
   StyledFadeIn,
   StyledStack,
 } from "@/components/Shared/StyledFadeInComponents";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
+import { Box, SelectChangeEvent } from "@mui/material";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
@@ -29,8 +30,7 @@ const AccountDataCards = ({
   segment,
   onSegmentChange,
 }: AccountCard) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isMobile } = useCheckDevice();
 
   const adScore =
     (shoppingPerformance
@@ -120,7 +120,6 @@ const AccountDataCards = ({
   return (
     <Grid
       container
-      spacing={1}
       alignItems="center"
       justifyContent="start"
       sx={{
@@ -129,63 +128,14 @@ const AccountDataCards = ({
         flexDirection: { xs: "column-reverse", md: "row" },
       }}
     >
-      {isLoading && <TempLoadingCard />}
-      {!isLoading && !isMobile && (
-        <Stack sx={{ marginLeft: 1 }} direction="row">
-          <Typography
-            variant="subtitle2"
-            color="text.secondary"
-            sx={{ fontSize: 10 }}
-          >
-            Ad Score:
-          </Typography>
-          <AdScore value={adScore} isLoading={isLoading} />
-        </Stack>
-      )}
-      {!isMobile && <Divider orientation="vertical" flexItem />}
-      {!isLoading &&
-        shoppingPerformance &&
-        homeAppAnalytics?.map((data, index) => (
-          <StyledFadeIn
-            key={index}
-            visible={Boolean(!isLoading)}
-            delay={0.1}
-            sx={{
-              width: { xs: "100%", md: "auto" },
-              display: "flex",
-              flexDirection: { xs: "column", md: "row" },
-            }}
-          >
-            <AnalyticsTableData
-              key={index}
-              text={data?.text}
-              value={data?.value as number}
-              isLoading={isLoading}
-              sparkLineData={data?.chartSegment as number[]}
-            />
-          </StyledFadeIn>
-        ))}
-      <Divider flexItem sx={{ marginTop: "1rem" }} />
-      <StyledStack
-        delay={0.1}
-        visible={true}
-        sx={{
-          ...(isMobile && {
-            flexDirection: "row",
-            gap: 5,
-            alignItems: "center",
-          }),
-        }}
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={2}
+        sx={{ width: "100%", ...(isMobile && { overflowX: "auto" }) }}
       >
-        <SelectDate
-          removeAllTime={true}
-          segment={segment}
-          onSegmentChange={segmentChangeHandler}
-          isLoading={isLoading}
-        />
-        {isMobile && <Divider orientation="vertical" flexItem />}
-        {isMobile && (
-          <Stack>
+        {!isLoading && !isMobile && (
+          <Stack sx={{ marginLeft: 1 }} direction="row">
             <Typography
               variant="subtitle2"
               color="text.secondary"
@@ -196,7 +146,74 @@ const AccountDataCards = ({
             <AdScore value={adScore} isLoading={isLoading} />
           </Stack>
         )}
-      </StyledStack>
+        {!isMobile && <Divider orientation="vertical" flexItem />}
+        {isLoading && <TempLoadingCard />}
+        {!isLoading &&
+          shoppingPerformance &&
+          homeAppAnalytics?.map((data, index) => (
+            <StyledFadeIn
+              key={index}
+              visible={Boolean(!isLoading)}
+              delay={0.1}
+              sx={{
+                width: { xs: "100%", md: "auto" },
+                display: "flex",
+                flexDirection: { xs: "column", md: "row" },
+              }}
+            >
+              <AnalyticsTableData
+                key={index}
+                text={data?.text}
+                value={data?.value as number}
+                isLoading={isLoading}
+                sparkLineData={data?.chartSegment as number[]}
+              />
+            </StyledFadeIn>
+          ))}
+        {!isMobile && (
+          <StyledStack delay={0.1} visible={!isMobile}>
+            <SelectDate
+              removeAllTime={true}
+              segment={segment}
+              onSegmentChange={segmentChangeHandler}
+              isLoading={isLoading}
+            />
+          </StyledStack>
+        )}
+      </Stack>
+      {isMobile && (
+        <Box>
+          <StyledStack
+            delay={0.1}
+            visible={true}
+            sx={{
+              flexDirection: "row",
+              gap: 5,
+              alignItems: "center",
+            }}
+          >
+            <SelectDate
+              removeAllTime={true}
+              segment={segment}
+              onSegmentChange={segmentChangeHandler}
+              isLoading={isLoading}
+            />
+            <Divider orientation="vertical" flexItem />
+
+            <Stack>
+              <Typography
+                variant="subtitle2"
+                color="text.secondary"
+                sx={{ fontSize: 10 }}
+              >
+                Ad Score:
+              </Typography>
+              <AdScore value={adScore} isLoading={isLoading} />
+            </Stack>
+          </StyledStack>
+          <Divider sx={{ margin: "0.5rem auto" }} />
+        </Box>
+      )}
     </Grid>
   );
 };

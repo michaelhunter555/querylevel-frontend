@@ -15,10 +15,7 @@ export const StyledBoxContainer = styled(Box)<StyleBoxContent>(
     width: width ? width : "60%",
     height: height ? height : "80vh",
     overflowY: "auto",
-    background:
-      theme.palette.mode === "light"
-        ? "#ededed"
-        : theme.palette.background.paper,
+    background: theme.palette.background.paper,
     border: "1px solid #bbb",
     boxShadow: [theme.shadows[3]],
     padding: 8,
