@@ -161,12 +161,14 @@ const ProductPartitionTable = ({
             <TableRow>
               <TableCell></TableCell>
               <TableCell>
-                Product Group ~{" "}
-                <Typography variant="overline">
-                  {currentAdGroupName.length > 25
-                    ? currentAdGroupName.substring(0, 25) + "..."
-                    : currentAdGroupName}
-                </Typography>
+                {!partitionIsLoading && (
+                  <Typography>
+                    Product Group ~{" "}
+                    {currentAdGroupName.length > 25
+                      ? currentAdGroupName.substring(0, 25) + "..."
+                      : currentAdGroupName}
+                  </Typography>
+                )}
               </TableCell>
               <TableCell>Max cpc</TableCell>
               <TableCell>Clicks</TableCell>

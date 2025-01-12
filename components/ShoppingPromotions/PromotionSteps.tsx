@@ -225,7 +225,10 @@ const PromotionSteps = ({ cancelSteps }: PromotionStepsProps) => {
             {promotionByType.map((val, i) => (
               <StyledFadeIn key={i} visible={promoSelect !== null} delay={0.3}>
                 <Chip
-                  sx={{ width: isMobile ? 300 : "100%" }}
+                  sx={{
+                    width: isMobile ? 300 : "100%",
+                    border: "1px solid grey",
+                  }}
                   size="medium"
                   variant={selectedIndex === i ? "filled" : "outlined"}
                   clickable

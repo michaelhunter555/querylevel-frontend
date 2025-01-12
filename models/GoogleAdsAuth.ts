@@ -13,6 +13,7 @@ export interface GoogleAuth extends mongoose.Document {
   selectedClientId?: string;
   access_token?: string | null | undefined;
   refresh_token?: string | null | undefined;
+  accessTokenExpires?: Date;
   createdCampaigns?: number;
   cleanUpService?: boolean;
   theme?: PaletteMode;
@@ -38,7 +39,7 @@ const GoogleSchema = new mongoose.Schema<GoogleAuth>(
       default: "",
       index: true,
     },
-
+    accessTokenExpires: { type: Date, required: false },
     stripeCustomerId: { type: String, required: false, default: "" },
     merchantCenterId: { type: String, require: false, default: "" },
     access_token: { type: String, required: true, index: true },

@@ -13,10 +13,12 @@ export const SignInWithGoogle = () => {
   //   router.push("/user-dashboard");
   // }
 
+  const userIsLoggedIn = session?.user?._id;
+
   return (
     <Link href="/user-dashboard">
       <Button variant="outlined" size="large">
-        View Dashboard
+        {userIsLoggedIn ? "View Dashboard" : "Get Started"}
       </Button>
     </Link>
   );

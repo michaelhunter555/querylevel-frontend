@@ -183,6 +183,7 @@ export const InventoryFilterModal = ({
           <Divider sx={{ margin: "1rem 0" }} />
           <Stack direction="row" alignItems="center" spacing={2}>
             <Button
+              color="error"
               onClick={() => {
                 onClose();
                 setResetFilterData((prev) => prev + 1);

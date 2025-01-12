@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { State } from "@/types";
 import Autocomplete from "@mui/material/Autocomplete";
 import Button from "@mui/material/Button";
@@ -70,6 +71,7 @@ export const InventoryFilter = ({
   filteredData,
   inventoryFilterIsLoading,
 }: InventoryFilter) => {
+  const { isMobile } = useCheckDevice();
   const [open, setOpen] = useState<boolean>(false);
 
   const clearForm = () => {
@@ -104,7 +106,11 @@ export const InventoryFilter = ({
         </RadioGroup>
       </FormControl>
       {openInventoryFilter && (
-        <Stack direction="row" alignItems="center" spacing={2}>
+        <Stack
+          direction={isMobile ? "column" : "row"}
+          alignItems={isMobile ? "normal" : "center"}
+          spacing={2}
+        >
           <Stack>
             <Select
               sx={{ width: 250 }}
@@ -119,9 +125,13 @@ export const InventoryFilter = ({
               ))}
             </Select>
           </Stack>
-          <Stack>
-            <Typography color="text.secondary">=</Typography>
-          </Stack>
+
+          {!isMobile && (
+            <Stack>
+              <Typography color="text.secondary">=</Typography>
+            </Stack>
+          )}
+
           <Stack>
             <Autocomplete
               id="FilterOptions"
@@ -172,6 +182,7 @@ export const InventoryFilter = ({
               )}
             />
           </Stack>
+
           {selectedFilter && selectedInventoryFilter && (
             <Stack>
               <Button onClick={clearForm}> Clear </Button>

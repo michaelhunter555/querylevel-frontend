@@ -109,7 +109,7 @@ export default NextAuth({
             //create a new user for that user
 
             const startDate = new Date();
-            const freeTrial = 14 * 24 * 60 * 60 * 1000;
+            const freeTrial = 30 * 24 * 60 * 60 * 1000;
             const endDate = new Date(startDate.getTime() + freeTrial);
 
             const googleAuthUser = {

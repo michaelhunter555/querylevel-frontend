@@ -43,7 +43,10 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
     const topPerformers = sortData?.slice(0, 5);
 
     return topPerformers?.map((item) => ({
-      label: item.product_title, //.length > 30? item.product_title.slice(0, 30) + "...": item.product_title,
+      label:
+        item.product_title.length > 59
+          ? item.product_title.slice(0, 59) + "..."
+          : item.product_title,
       value: item[dataKey] || 0, // Value for the segment
     }));
   }, [productsData, dataCase]);
@@ -113,6 +116,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
           ) : (
             <StyledFadeIn visible={!isLoading} delay={0.1}>
               <PieChart
+                tooltip={{ trigger: "none" }}
                 slotProps={{
                   legend: {
                     labelStyle: {

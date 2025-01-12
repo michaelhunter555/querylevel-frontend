@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 
 import { AdSchedule, useAdScheduleApi } from "@/hooks/campaign-hooks";
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import AddIcon from "@mui/icons-material/Add";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/material/Box";
@@ -86,6 +87,8 @@ export const AdScheduleModal = ({
       }
     >
   >({});
+
+  const { isMobile } = useCheckDevice();
 
   const adScheduleMap = useMemo(() => {
     const scheduleMap: {
@@ -267,7 +270,7 @@ export const AdScheduleModal = ({
     <Modal open={open} onClose={onClose}>
       <StyledBoxContainer
         height="auto"
-        width="50%"
+        width={!isMobile ? "40vw" : "100%"}
         sx={{ ...styledScroll, maxHeight: "80vh" }}
       >
         <PageContainer minHeight="auto">
@@ -322,7 +325,7 @@ export const AdScheduleModal = ({
               isUpdatingSchedule && <>{loadingSkeleton}</>
             )}
           </Content>
-          <Divider sx={{ width: "100%", marginBottom: "1rem" }} />
+          <Divider sx={{ width: "100%", margin: "1rem auto" }} />
           <Stack
             direction="row"
             alignItems="center"

@@ -7,6 +7,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 
 import { styledScroll } from "../GoogleAuthButton/AuthStyles";
+import CopyToClipBoard from "../Shared/CopyToClipboards";
 
 interface IConversionSnippet {
   data: TConversionTable;
@@ -43,6 +44,9 @@ export const ConversionCode = ({ data }: IConversionSnippet) => {
                 rows={6}
                 defaultValue={global_site_tag}
                 helperText="Your global tag"
+                InputProps={{
+                  startAdornment: <CopyToClipBoard text={global_site_tag} />,
+                }}
               />
 
               <TextField
@@ -52,6 +56,9 @@ export const ConversionCode = ({ data }: IConversionSnippet) => {
                 rows={5}
                 defaultValue={event_snippet}
                 helperText="Your event snippet"
+                InputProps={{
+                  startAdornment: <CopyToClipBoard text={event_snippet} />,
+                }}
               />
             </Box>
           ))}

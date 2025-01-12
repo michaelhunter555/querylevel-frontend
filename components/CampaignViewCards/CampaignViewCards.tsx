@@ -60,14 +60,15 @@ const CampaignViewCards = ({
             key={name}
             sx={{
               minWidth: 100,
-              borderRadius: "5px",
+              borderRadius: 3,
               border: "1px solid",
               borderColor: (theme) =>
-                theme.palette.mode === "light" ? "#f1f1f1" : "#102e45",
+                theme.palette.mode === "light" ? "#f1f1f1" : "transparent",
               padding: "0.25rem",
             }}
             alignItems="center"
             component={Paper}
+            elevation={0}
           >
             <Stack sx={{ width: "90%" }} alignItems="center">
               <Typography

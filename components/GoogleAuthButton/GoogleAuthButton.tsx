@@ -6,13 +6,9 @@ import { useRouter } from "next/router";
 
 import { useGetGoogleAdAccountId } from "@/hooks/accountId-hook";
 import { useGetAppAnalytics } from "@/hooks/customer-hooks";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { ProductPerformanceData } from "@/types";
-import {
-  Paper,
-  SelectChangeEvent,
-  useMediaQuery,
-  useTheme,
-} from "@mui/material";
+import { Paper, SelectChangeEvent } from "@mui/material";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
 import Grid from "@mui/material/Grid";
@@ -72,8 +68,7 @@ const ProductPerformance = dynamic(() => import("./ProductPerformance"), {
 });
 
 const GoogleAuthButton = () => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isMobile } = useCheckDevice();
   const { data: session, status } = useSession();
   const router = useRouter();
   const [segment, setSegment] = useState("LAST_7_DAYS");

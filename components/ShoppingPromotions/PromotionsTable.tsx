@@ -63,6 +63,7 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell></TableCell>
               <TableCell>Promotion title</TableCell>
               <TableCell>Promotion Id</TableCell>
               <TableCell>Offer Type</TableCell>
@@ -80,6 +81,7 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
                 ?.slice(indexOfFirstPage, indexOfLastPage)
                 ?.map((promotion, i) => (
                   <TableRow key={promotion?.promotionId}>
+                    <TableCell></TableCell>
                     <TableCell>{promotion?.longTitle}</TableCell>
                     <TableCell>{promotion?.promotionId}</TableCell>
                     <TableCell>{promotion?.offerType}</TableCell>
@@ -153,7 +155,7 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
                     </TableCell>
                   </TableRow>
                 ))}
-            {isLoading && <LoadingTable length={3} numCells={7} />}
+            {isLoading && <LoadingTable length={3} numCells={9} />}
           </TableBody>
         </Table>
         <TablePagination

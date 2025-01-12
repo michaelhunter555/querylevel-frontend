@@ -4,7 +4,7 @@ import DatePickerField from "@/components/Shared/DatePicker/DatePicker";
 import { useCheckDevice } from "@/hooks/use-device-hook";
 import { useForm } from "@/hooks/useForm";
 import type { TShoppingPromotionRequest } from "@/types";
-import { Grid } from "@mui/material";
+import { FormHelperText, Grid } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -29,6 +29,13 @@ interface PromotionFormProps {
   response: { message: string; ok: boolean };
   isPostLoading: boolean;
 }
+
+const checkDateConflict = (fromDate: string, toDate: string): boolean => {
+  const startDate = new Date(fromDate).getTime();
+  const endDate = new Date(toDate).getTime();
+  //if start
+  return startDate > endDate;
+};
 
 const customField = (couponValueType: number) => {
   if (couponValueType === 0) {
@@ -112,6 +119,12 @@ const PromotionForm = ({
   };
 
   const input = customField(couponValueType);
+
+  //if true there is a date conflict - should disable button
+  const hasDateConflict = checkDateConflict(
+    String(formState?.inputs?.startTime.value),
+    String(formState?.inputs?.endTime?.value)
+  );
 
   return (
     <Container
@@ -275,7 +288,6 @@ const PromotionForm = ({
               }
             />
           </Grid>
-
           <Grid item xs={6}>
             <Typography color="text.secondary">Start Date</Typography>
             <DatePickerField
@@ -295,6 +307,11 @@ const PromotionForm = ({
             />
           </Grid>
         </Grid>
+        {hasDateConflict && (
+          <FormHelperText error>
+            Start date must be before an end date.
+          </FormHelperText>
+        )}
         <Divider sx={{ margin: "0.5rem auto" }} />
         <Stack
           direction="row"
@@ -308,7 +325,7 @@ const PromotionForm = ({
           <Button
             variant="contained"
             type="submit"
-            disabled={!formState.isValid}
+            disabled={!formState.isValid || hasDateConflict}
           >
             {isPostLoading ? "...Creating" : "Create Promotion"}
           </Button>

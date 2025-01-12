@@ -3,6 +3,7 @@ import React, { useMemo, useState } from "react";
 import { useCheckboxSelection } from "@/hooks/checkboxHook";
 import { useGetConversionData } from "@/hooks/create-conversion-hook";
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { TConversionTable } from "@/types";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
@@ -186,6 +187,7 @@ const Row = ({
 }: ConversionRows) => {
   const { updateWebsiteConversion, isPostLoading } = useGetConversionData();
   const statusIsActive: boolean = conversionData?.status === 2;
+  const { isMobile } = useCheckDevice();
 
   return (
     <>
@@ -244,7 +246,7 @@ const Row = ({
           colSpan={9}
         >
           <Collapse in={isOpen} timeout="auto" unmountOnExit>
-            <Box sx={{ margin: 1 }}>
+            <Box sx={{ margin: 1, ...(isMobile && { width: "90vw" }) }}>
               <Grid container direction="row" spacing={3}>
                 <Grid item xs={12} md={6} sx={{ marginTop: 2 }}>
                   <Typography variant="h5" color="text.secondary">

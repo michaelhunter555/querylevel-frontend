@@ -9,6 +9,7 @@ import Highlights from "@/components/DashboardHome/Highlights";
 import HomePageFooter from "@/components/DashboardHome/HomePageFooter";
 import getLPTheme from "@/components/DashboardHome/HompePageTheme";
 import OneTimePayments from "@/components/DashboardHome/OneTimePayments";
+import HomeScrollAnimation from "@/components/DashboardHome/ScrollAnimation";
 import { SignInWithGoogle } from "@/components/Signup/GoogleSignUp";
 import UserPlans from "@/components/Signup/Plans";
 import { PaletteMode } from "@mui/material";
@@ -54,6 +55,7 @@ export default function Home() {
       <CssBaseline />
 
       <NavAppBar mode={mode} toggleColorMode={handleToggleTheme} />
+      <HomeScrollAnimation mode={mode} />
       <Grid
         container
         direction="column"

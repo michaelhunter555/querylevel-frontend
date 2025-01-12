@@ -111,8 +111,8 @@ const ContactForm = () => {
         <Paper
           sx={{
             borderRadius: "15px",
-            padding: "1rem",
-            width: { xs: "100%", md: "70%" },
+            padding: "0.5rem",
+            width: { xs: "90%", md: "70%" },
             margin: "2rem auto",
           }}
         >
@@ -141,7 +141,7 @@ const ContactForm = () => {
               as possible.
             </Alert>
           )}
-          <Typography variant="subtitle1">
+          <Typography variant="subtitle2">
             If you have any questions, please send us an email and We'll get
             back to you within 24 hours.
           </Typography>

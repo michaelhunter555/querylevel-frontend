@@ -6,9 +6,6 @@ import { useCheckDevice } from "@/hooks/use-device-hook";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
-import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialAction from "@mui/material/SpeedDialAction";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import Stack from "@mui/material/Stack";
 
 import { invisibleScroll } from "../GoogleAuthButton/AuthStyles";
@@ -41,6 +38,7 @@ const CampaignOptionsBar = () => {
             )}
             <Stack direction="column" justifyContent="center">
               <Chip
+                sx={{ border: "1px solid grey" }}
                 color="primary"
                 label={campaign.text}
                 prefetch={false}
@@ -53,25 +51,6 @@ const CampaignOptionsBar = () => {
           </Stack>
         ))}
       </Stack>
-      <SpeedDial
-        ariaLabel="Speed dial control"
-        sx={{ position: "fixed", bottom: 16, right: 16 }}
-        icon={<SpeedDialIcon />}
-        onClose={handleSpeedDial}
-        onOpen={handleSpeedDial}
-        open={open}
-      >
-        {campaignButtonOptions.map((campaign, index) => (
-          <SpeedDialAction
-            key={campaign.text}
-            icon={campaign.icon}
-            tooltipTitle={campaign.text}
-            onClick={() => {
-              window.location.href = campaign?.link as string;
-            }}
-          />
-        ))}
-      </SpeedDial>
     </Box>
   );
 };
