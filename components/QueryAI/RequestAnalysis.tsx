@@ -11,7 +11,7 @@ import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import Container from "@mui/material/Container";
 import FormHelperText from "@mui/material/FormHelperText";
-import Grid from "@mui/material/Grid2";
+import Grid from "@mui/material/Grid";
 import { SelectChangeEvent } from "@mui/material/Select";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
@@ -93,7 +93,7 @@ const AnalyzePerformance = () => {
   return (
     <Container maxWidth="lg" sx={{ marginTop: 5 }}>
       <Grid container direction={isMobile ? "column" : "row"}>
-        <Grid size={isMobile ? 12 : 3}>
+        <Grid xs={12} md={3}>
           {/* previous List */}
 
           <Typography
@@ -139,7 +139,7 @@ const AnalyzePerformance = () => {
           orientation="vertical"
           sx={{ margin: "0.5rem auto" }}
         />
-        <Grid size={isMobile ? 12 : 8}>
+        <Grid xs={12} md={8}>
           {toggleReport && (
             <>
               <Chip
