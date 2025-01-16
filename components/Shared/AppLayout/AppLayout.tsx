@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 import { Content, PageContainer } from "@/components/Footer/FooterStyles";
+import DashboardHeader from "@/components/Header/DashboardHeader";
 import PrivacyPolicyModal from "@/components/Modal/PrivacyPolicyModal";
 import TermsOfServiceModal from "@/components/Modal/TermsOfServiceModal";
 import SidebarMenu from "@/components/SidebarMenu/SidebarMenu";
@@ -139,18 +140,20 @@ const AppLayout = ({ children }: LayoutProps) => {
               shouldLogin ||
               acceptableNonLoggedInRoutes.includes(router.pathname)) && (
               <Grid item xs={12} md={shouldHideSidebar ? 12 : 9.5}>
+                <DashboardHeader />
                 {children}
               </Grid>
             )}
             {/* {status === "loading" && <CircularProgress />} */}
           </Grid>
         </Content>
-        <Divider variant="fullWidth" flexItem sx={{ marginTop: "5rem" }} />
+
         {shouldHideLegalInfo ||
           (!routerIsHome && (
             <Stack
               sx={{ margin: "1.5rem 0", paddingLeft: "1rem" }}
               direction="row"
+              justifyContent="center"
               spacing={2}
               alignItems="center"
             >

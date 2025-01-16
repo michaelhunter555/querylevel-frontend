@@ -85,6 +85,7 @@ const SearchTermView = ({
                 component={Link}
                 href="/manage-ad-group-keywords"
                 variant="outlined"
+                sx={{ cursor: "pointer" }}
               />
 
               <Alert severity="info">

@@ -1,43 +1,43 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
 import { useRouter } from "next/router";
-import { FcGoogle } from "react-icons/fc";
 
-import { useThemeToggle } from "@/hooks/toggle-hook";
 import { useCheckDevice } from "@/hooks/use-device-hook";
-import Brightness4Icon from "@mui/icons-material/Brightness4";
-import Brightness7Icon from "@mui/icons-material/Brightness7";
-import HomeIcon from "@mui/icons-material/Home";
 import Avatar from "@mui/material/Avatar";
-import Chip from "@mui/material/Chip";
+import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import List from "@mui/material/List";
-import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Paper from "@mui/material/Paper";
+import MuiDrawer, { drawerClasses } from "@mui/material/Drawer";
 import Stack from "@mui/material/Stack";
-import Tooltip from "@mui/material/Tooltip";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 
 import Header from "../Header/Header";
 import { PlanTypes } from "../UserSettings/enums.plans";
+import MenuContent from "./MenuContent";
 import { menuItems } from "./menus";
 import MobileSidebar from "./MobileSidebar";
-import { ToggleTheme } from "./ToggleTheme";
+import OptionsMenu from "./OptionMenu";
+
+const Drawer = styled(MuiDrawer)({
+  width: 270,
+  flexShrink: 0,
+  boxSizing: "border-box",
+  mt: 10,
+  [`& .${drawerClasses.paper}`]: {
+    width: 270,
+    boxSizing: "border-box",
+  },
+});
 
 const SidebarMenu: React.FC<{
   hasAppAccess: boolean;
 }> = ({ hasAppAccess }): JSX.Element => {
   const { isMobile } = useCheckDevice();
-  const { togglePaletteMode } = useThemeToggle();
+
   const router = useRouter();
   const { data: session } = useSession();
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  //const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [mobileMenu, setMobileMenu] = useState<boolean>(false);
   const acceptableRoutes = [
     "/user-dashboard",
@@ -54,14 +54,14 @@ const SidebarMenu: React.FC<{
     return true;
   });
 
-  useEffect(() => {
-    if (router.pathname) {
-      const index = filterMenuItems?.findIndex(
-        (value) => value?.route === router.pathname
-      );
-      setSelectedIndex(index !== -1 ? index : 0);
-    }
-  }, [router.pathname]);
+  // useEffect(() => {
+  //   if (router.pathname) {
+  //     const index = filterMenuItems?.findIndex(
+  //       (value) => value?.route === router.pathname
+  //     );
+  //     setSelectedIndex(index !== -1 ? index : 0);
+  //   }
+  // }, [router.pathname]);
 
   const handleMobileMenuToggle = () => {
     setMobileMenu((prev) => !prev);
@@ -76,7 +76,7 @@ const SidebarMenu: React.FC<{
   return (
     <>
       <Header onMobileMenuClick={handleMobileMenuToggle} />
-      {session?.user?.googleAccountId && (
+      {/*{session?.user?.googleAccountId && (
         <Stack
           direction="row"
           alignItems="center"
@@ -133,63 +133,65 @@ const SidebarMenu: React.FC<{
             </>
           )}
         </Stack>
-      )}
-      <Divider
-        sx={{
-          display: { xs: "block", md: "none" },
-          margin: "0.5rem auto",
-          width: "100%",
-        }}
-      />
-      <Paper
+      )} */}
+
+      <Drawer
+        variant="permanent"
         elevation={0}
-        sx={{ borderRadius: "15px", ...(isMobile && { display: "none" }) }}
+        sx={{
+          display: { xs: "none", md: "block" },
+          [`& .${drawerClasses.paper}`]: {
+            backgroundColor: "background.paper",
+          },
+          ...(isMobile && { display: "none" }),
+        }}
       >
-        <List>
-          {filterMenuItems?.map((menuText, i) => (
-            <Link
-              prefetch={false}
-              key={i}
-              href={
-                session?.user?._id &&
-                session?.user?.googleAccountId &&
-                hasAppAccess
-                  ? `${menuText?.route}`
-                  : "#"
-              }
-              style={{ textDecoration: "none", color: "inherit" }}
+        <Header onMobileMenuClick={handleMobileMenuToggle} />
+
+        <Divider
+          flexItem
+          sx={{
+            margin: "0.5rem auto",
+            width: "100%",
+          }}
+        />
+        <MenuContent
+          onClose={handleMobileMenuToggle}
+          hasAppAccess={hasAppAccess}
+        />
+        <Stack
+          direction="row"
+          sx={{
+            p: 2,
+            gap: 1,
+            alignItems: "center",
+            borderTop: "1px solid",
+            borderColor: "divider",
+          }}
+        >
+          <Avatar
+            src={session?.user?.image}
+            alt={`${session?.user?.name}-${Math.floor(Math.random() * 1000)}`}
+            sx={{ width: 25, height: 25, marginBottom: 1 }}
+          />
+          <Box sx={{ mr: "auto" }}>
+            <Typography
+              variant="body2"
+              sx={{ fontWeight: 500, lineHeight: "16px" }}
             >
-              <ListItem>
-                <ListItemButton
-                  disabled={!session?.user?._id || !hasAppAccess}
-                  sx={{ borderRadius: "15px" }}
-                  selected={selectedIndex === i}
-                  aria-current={selectedIndex === i ? "page" : undefined}
-                >
-                  <ListItemIcon>{menuText.icon}</ListItemIcon>
-                  <ListItemText
-                    sx={{
-                      display: "flex",
-                      flexDirection: "column",
-                    }}
-                    primary={menuText.text}
-                    secondary={menuText.secondary}
-                  />
-                </ListItemButton>
-              </ListItem>
-            </Link>
-          ))}
-          <Divider />
-          <Stack direction="row" justifyContent="center">
-            <ToggleTheme />
-          </Stack>
-        </List>
-      </Paper>
+              {session?.user?.name}
+            </Typography>
+            <Typography variant="caption" sx={{ color: "text.secondary" }}>
+              {session?.user?.email}
+            </Typography>
+          </Box>
+          <OptionsMenu />
+        </Stack>
+      </Drawer>
       <MobileSidebar
         open={mobileMenu}
         onClose={handleMobileMenuToggle}
-        selectedIndex={selectedIndex}
-        filteredMenu={filterMenuItems}
+        signOut={handleMobileSignOut}
         hasAppAccess={hasAppAccess}
       />
     </>

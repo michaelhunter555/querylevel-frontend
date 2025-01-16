@@ -2,7 +2,7 @@ import React from "react";
 
 import { useCheckDevice } from "@/hooks/use-device-hook";
 import Divider from "@mui/material/Divider";
-import Grid from "@mui/material/Grid";
+import Grid from "@mui/material/Grid2";
 import Paper from "@mui/material/Paper";
 import Skeleton from "@mui/material/Skeleton";
 import Typography from "@mui/material/Typography";
@@ -25,8 +25,7 @@ export const TempLoadingCard = () => {
           }}
         >
           <Grid
-            item
-            xs={12}
+            size={12}
             sx={{
               display: "flex",
               flexDirection: "column",

@@ -38,7 +38,7 @@ const CampaignOptionsBar = () => {
             )}
             <Stack direction="column" justifyContent="center">
               <Chip
-                sx={{ border: "1px solid grey" }}
+                sx={{ border: "1px solid grey", cursor: "pointer" }}
                 color="primary"
                 label={campaign.text}
                 prefetch={false}

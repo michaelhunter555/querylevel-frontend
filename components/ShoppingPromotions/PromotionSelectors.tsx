@@ -3,10 +3,10 @@ import {
   OfferTypeProps,
   ProductApplicabilityProps,
   RedemptionChannelProps,
-  State,
   StoreApplicability,
   TargetCountryProps,
-} from "@/types";
+} from "@/enums";
+import type { State } from "@/types";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { type SelectChangeEvent } from "@mui/material/Select";
 import Typography from "@mui/material/Typography";

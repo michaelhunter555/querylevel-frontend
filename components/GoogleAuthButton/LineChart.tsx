@@ -2,6 +2,7 @@ import React, { useMemo } from "react";
 
 import { ProductPerformanceData } from "@/types";
 import Skeleton from "@mui/material/Skeleton";
+import { useTheme } from "@mui/material/styles";
 import { LineChart as MUILineChart } from "@mui/x-charts/LineChart";
 
 import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
@@ -11,7 +12,19 @@ type LineChartData = {
   isLoading: boolean;
 };
 
+function AreaGradient({ color, id }: { color: string; id: string }) {
+  return (
+    <defs>
+      <linearGradient id={id} x1="50%" y1="0%" x2="50%" y2="100%">
+        <stop offset="0%" stopColor={color} stopOpacity={0.5} />
+        <stop offset="100%" stopColor={color} stopOpacity={0} />
+      </linearGradient>
+    </defs>
+  );
+}
+
 export default function LineChart({ productsData, isLoading }: LineChartData) {
+  const theme = useTheme();
   const { labels, dataSet1, dataSet2 } = useMemo(() => {
     const dataMap = new Map();
 
@@ -38,28 +51,6 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
     return { labels, dataSet1, dataSet2 };
   }, [productsData]);
 
-  // const data = useMemo(
-  //   () => ({
-  //     labels,
-  //     datasets: [
-  //       {
-  //         label: "clicks",
-  //         data: dataSet1,
-  //         borderColor: "#02b2af",
-  //         backgroundColor: "#02b2af",
-  //       },
-  //       {
-  //         label: "impressions",
-  //         data: dataSet2,
-  //         borderColor: "rgb(53, 162, 235)",
-  //         backgroundColor: "rgba(53, 162, 235, 0.5)",
-  //       },
-  //     ],
-  //   }),
-  //   [labels, dataSet1, dataSet2]
-  // );
-
-  console.log(labels, dataSet1, dataSet2);
   return (
     <>
       {isLoading ? (
@@ -73,19 +64,40 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
         <StyledFadeIn visible={!isLoading} delay={0.1}>
           {/* <Line options={options} data={data} /> */}
           <MUILineChart
-            xAxis={[{ data: labels, label: "Date", scaleType: "point" }]}
+            xAxis={[
+              {
+                data: labels,
+                label: "Date",
+                scaleType: "point",
+
+                tickSize: 6,
+
+                slots: {
+                  axisLine: (props) => (
+                    <line {...props} stroke="#ccc" strokeWidth={1} />
+                  ),
+                  axisTick: (props) => (
+                    <line {...props} stroke="#ccc" strokeWidth={1} />
+                  ),
+                },
+              },
+            ]}
             series={[
               {
+                id: "clicks",
                 data: dataSet1,
                 label: "Clicks",
                 curve: "linear",
                 showMark: false,
+                stack: "total",
               },
               {
+                id: "impressions",
                 data: dataSet2,
                 label: "Impressions",
                 curve: "linear",
                 showMark: false,
+                stack: "total",
               },
             ]}
             height={355}

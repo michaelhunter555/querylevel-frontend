@@ -1,6 +1,7 @@
 import React from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import ToggleColorMode from "@/components/DashboardHome/ToggleColorMode";
 import HomeIcon from "@mui/icons-material/Home";
@@ -16,6 +17,7 @@ interface PrivacyPolicyProps {
 }
 
 const PrivacyPolicy = ({ onToggleTheme, theme }: PrivacyPolicyProps) => {
+  const router = useRouter();
   return (
     <Container
       maxWidth="lg"
@@ -30,15 +32,17 @@ const PrivacyPolicy = ({ onToggleTheme, theme }: PrivacyPolicyProps) => {
         <Typography component="h2" variant="h3" color="text.secondary">
           Privacy Policy
         </Typography>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Link href="/">
-            <HomeIcon color="primary" />
-          </Link>
-          <ToggleColorMode
-            mode={theme as PaletteMode}
-            toggleColorMode={onToggleTheme as () => void}
-          />
-        </Stack>
+        {router.pathname === "/" && (
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Link href="/">
+              <HomeIcon color="primary" />
+            </Link>
+            <ToggleColorMode
+              mode={theme as PaletteMode}
+              toggleColorMode={onToggleTheme as () => void}
+            />
+          </Stack>
+        )}
       </Stack>
       <Divider sx={{ margin: "1rem 0" }} />
       <Typography component="h2" variant="h5" color="text.secondary">

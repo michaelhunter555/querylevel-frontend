@@ -3,6 +3,7 @@ import { useState } from "react";
 import { LoadingTable } from "@/components/DataTable/LoadingTable";
 import type { TShoppingPromotionRequest } from "@/types";
 import {
+  Chip,
   Paper,
   Stack,
   Table,
@@ -61,11 +62,18 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
     <Paper>
       <TableContainer>
         <Table>
-          <TableHead>
+          <TableHead
+            sx={{
+              backgroundColor: (theme) =>
+                theme.palette.mode === "light"
+                  ? "#f8f8f8"
+                  : theme.palette.background.paper,
+            }}
+          >
             <TableRow>
               <TableCell></TableCell>
               <TableCell>Promotion title</TableCell>
-              <TableCell>Promotion Id</TableCell>
+
               <TableCell>Offer Type</TableCell>
               <TableCell>Applies to</TableCell>
               <TableCell>From</TableCell>
@@ -83,9 +91,25 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
                   <TableRow key={promotion?.promotionId}>
                     <TableCell></TableCell>
                     <TableCell>{promotion?.longTitle}</TableCell>
-                    <TableCell>{promotion?.promotionId}</TableCell>
-                    <TableCell>{promotion?.offerType}</TableCell>
-                    <TableCell>{promotion?.productApplicability}</TableCell>
+
+                    <TableCell>
+                      <Chip
+                        label={String(promotion?.offerType)
+                          ?.split("_")
+                          ?.join(" ")
+                          ?.toLowerCase()}
+                        color="default"
+                      />
+                    </TableCell>
+                    <TableCell>
+                      <Chip
+                        label={String(promotion?.productApplicability)
+                          ?.split("_")
+                          ?.join(" ")
+                          ?.toLowerCase()}
+                        variant="outlined"
+                      />
+                    </TableCell>
                     <TableCell>
                       {convertDate(
                         promotion?.promotionEffectiveTimePeriod?.startTime
@@ -155,7 +179,7 @@ const PromotionsTable = ({ promo, isLoading }: PromotionTableProps) => {
                     </TableCell>
                   </TableRow>
                 ))}
-            {isLoading && <LoadingTable length={3} numCells={9} />}
+            {isLoading && <LoadingTable length={3} numCells={8} />}
           </TableBody>
         </Table>
         <TablePagination

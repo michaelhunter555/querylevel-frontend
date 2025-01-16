@@ -143,7 +143,7 @@ const AccountDataCards = ({
             >
               Ad Score:
             </Typography>
-            <AdScore value={adScore} isLoading={isLoading} />
+            <AdScore value={adScore} />
           </Stack>
         )}
         {!isMobile && <Divider orientation="vertical" flexItem />}
@@ -208,7 +208,7 @@ const AccountDataCards = ({
               >
                 Ad Score:
               </Typography>
-              <AdScore value={adScore} isLoading={isLoading} />
+              <AdScore value={adScore} />
             </Stack>
           </StyledStack>
           <Divider sx={{ margin: "0.5rem auto" }} />

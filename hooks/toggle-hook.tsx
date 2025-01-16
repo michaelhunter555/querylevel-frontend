@@ -29,8 +29,6 @@ export const useThemeToggle = () => {
         };
 
         await update(updateUser);
-
-        console.log("USER SESSION CLIENT:", session?.user);
       } catch (err) {
         console.log("There was an error with updating theme.", err);
       }

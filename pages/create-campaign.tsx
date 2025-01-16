@@ -16,6 +16,7 @@ const CreateCampaign = () => {
         label="Back to campaigns"
         variant="filled"
         icon={<ArrowBackIcon />}
+        sx={{ cursor: "pointer" }}
       />
       <CreateNewCampaign />
     </div>

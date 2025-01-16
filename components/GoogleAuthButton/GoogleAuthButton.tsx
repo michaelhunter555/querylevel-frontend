@@ -253,7 +253,7 @@ const GoogleAuthButton = () => {
 
         {!session?.user?._id && !isLoading && <PreLoginInfo />}
       </StyledBoxContainer>
-      {isMobile && (
+      {isMobile && session?.user?._id && (
         <Box sx={{ marginBottom: "1rem" }}>
           <Typography variant="subtitle2" color="text.secondary">
             Options:

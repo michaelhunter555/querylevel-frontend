@@ -5,6 +5,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
+import { areaElementClasses } from "@mui/x-charts/LineChart";
 import { SparkLineChart } from "@mui/x-charts/SparkLineChart";
 
 type AnlayticsTableData = {
@@ -68,9 +69,14 @@ export const AnalyticsTableData = ({
               </defs>
             </svg>
             <SparkLineChart
-              //colors={["url(#sparkLine_gradient)"]}
+              colors={["url(#sparkLine_gradient)"]}
               data={sparkLineData}
               height={40}
+              sx={{
+                [`& .${areaElementClasses.root}`]: {
+                  fill: `url(#area-gradient-${value})`,
+                },
+              }}
             />
             <Box sx={{ width: "100%" }}></Box>
           </>

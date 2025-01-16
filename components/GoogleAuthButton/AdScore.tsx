@@ -6,7 +6,7 @@ import CircularProgress, {
 import Typography from "@mui/material/Typography";
 
 export default function AdScore(
-  props: CircularProgressProps & { value: number; isLoading: boolean }
+  props: CircularProgressProps & { value: number }
 ) {
   const { isMobile } = useCheckDevice();
   return (
@@ -44,7 +44,7 @@ export default function AdScore(
             component="div"
             sx={{ color: "text.secondary" }}
           >
-            {props.isLoading ? "-" : `${Math.round(props.value)}%`}
+            {!props.value ? "-" : `${Math.round(props.value)}%`}
           </Typography>
         </Box>
       </Box>

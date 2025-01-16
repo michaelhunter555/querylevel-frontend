@@ -76,7 +76,7 @@ const HomeScrollAnimation = ({ mode }: IScrollAnimation) => {
                 align="center"
                 sx={{ fontSize: isMobile ? 11 : "20px" }}
               >
-                We Combined essential features from Google Ads & Google Shopping
+                We combined essential features from Google Ads & Google Shopping
               </Typography>
             </Stack>
             <Divider flexItem />

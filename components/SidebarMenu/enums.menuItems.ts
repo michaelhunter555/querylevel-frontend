@@ -9,6 +9,7 @@ export enum MenuText {
   CREATE_CONVERSION = "My Conversion Tags",
   USER_SETTINGS = "Billing",
   PROMOTIONS = "Promotions",
+  AI_ANALYSIS = "Data Analysis",
 }
 
 export enum MenuComponent {
@@ -23,6 +24,7 @@ export enum MenuComponent {
   DEV_TOKEN = "Dev Tokens",
   USER_SETTINGS = "billing",
   PROMOTION = "promotion",
+  AI_ANALYSIS = "ai",
 }
 
 export enum PageRoutes {
@@ -34,6 +36,7 @@ export enum PageRoutes {
   USER_SETTINGS = "/manage-subscription",
   SEARCH_TERM_VIEW = "/search-terms",
   MANAGE_PROMOTIONS = "/manage-promotions",
+  AI_DATA_ANALYZE = "/query-ai-analysis",
 }
 
 export enum MenuSecondText {
@@ -44,6 +47,7 @@ export enum MenuSecondText {
   CREATE_CONVERSION = "webpage conversion tracking",
   USER_SETTINGS = "manage billing",
   PROMOTIONS = "Create Shopping promotions",
+  AI = "AI Analysis & Feedback",
 }
 
 export enum ThemeColor {

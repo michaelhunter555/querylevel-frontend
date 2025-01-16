@@ -117,6 +117,7 @@ const ManageKeywordsLayout = ({
                 component={Link}
                 href="/search-terms"
                 variant="outlined"
+                sx={{ cursor: "pointer" }}
               />
               <Alert severity="info">
                 Add, modify and remove negative keywords at the{" "}

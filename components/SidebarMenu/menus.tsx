@@ -1,6 +1,7 @@
 import React from "react";
 
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import PercentIcon from "@mui/icons-material/Percent";
 import PsychologyTwoToneIcon from "@mui/icons-material/PsychologyTwoTone";
@@ -9,12 +10,7 @@ import ScreenSearchDesktopIcon from "@mui/icons-material/ScreenSearchDesktop";
 import SpaceDashboardIcon from "@mui/icons-material/SpaceDashboard";
 import TableChartTwoToneIcon from "@mui/icons-material/TableChartTwoTone";
 
-import {
-  MenuComponent,
-  MenuSecondText,
-  MenuText,
-  PageRoutes,
-} from "./enums.menuItems";
+import { MenuComponent, MenuText, PageRoutes } from "./enums.menuItems";
 
 export interface MenuItem {
   text: string;
@@ -27,50 +23,61 @@ export interface MenuItem {
 export const menuItems: MenuItem[] = [
   {
     text: MenuText.HOME,
-    secondary: MenuSecondText.HOME,
+    //secondary: MenuSecondText.HOME,
     component: MenuComponent.AUTHENTICATE,
     icon: <SpaceDashboardIcon />,
     route: PageRoutes.USER_DASHBOARD,
   },
   {
     text: MenuText.MY_CAMPAIGNS,
-    secondary: MenuSecondText.MY_CAMPAIGNS,
+    //secondary: MenuSecondText.MY_CAMPAIGNS,
     component: MenuComponent.CAMPAIGN,
     icon: <TableChartTwoToneIcon />,
     route: PageRoutes.CAMPAIGN_VIEW,
   },
+
   {
     text: MenuText.CREATE_NEW_CAMPAIGN,
-    secondary: MenuSecondText.CREATE_NEW_CAMPAIGN,
+    // secondary: MenuSecondText.CREATE_NEW_CAMPAIGN,
     component: MenuComponent.CREATE_CAMPAIGN,
     icon: <AccountTreeTwoToneIcon />,
     route: PageRoutes.CREATE_TIERED,
   },
   {
+    text: MenuText.AI_ANALYSIS,
+    //secondary: MenuSecondText.AI,
+    component: MenuComponent.AI_ANALYSIS,
+    icon: <AutoAwesomeIcon />,
+    route: PageRoutes.AI_DATA_ANALYZE,
+  },
+  {
     // was added to render component FOR NOW
     text: MenuText.SEARCH_TERM_VIEW,
-    secondary: MenuSecondText.SEARCH_TERM_VIEW,
+    //secondary: MenuSecondText.SEARCH_TERM_VIEW,
     component: MenuComponent.SEARCH_TERM_VIEW,
     icon: <ScreenSearchDesktopIcon />,
     route: PageRoutes.SEARCH_TERM_VIEW,
   },
   {
     text: MenuText.CREATE_CONVERSION,
-    secondary: MenuSecondText.CREATE_CONVERSION,
+    //secondary: MenuSecondText.CREATE_CONVERSION,
     component: MenuComponent.CREATE_CONVERSION,
     icon: <PsychologyTwoToneIcon />,
     route: PageRoutes.CONVERSIONS,
   },
   {
     text: MenuText.PROMOTIONS,
-    secondary: MenuSecondText.PROMOTIONS,
+    // secondary: MenuSecondText.PROMOTIONS,
     component: MenuComponent.PROMOTION,
     icon: <PercentIcon />,
     route: PageRoutes.MANAGE_PROMOTIONS,
   },
+];
+
+export const secondaryMenuItems: MenuItem[] = [
   {
     text: MenuText.USER_SETTINGS,
-    secondary: MenuSecondText.USER_SETTINGS,
+    //secondary: MenuSecondText.USER_SETTINGS,
     component: MenuComponent.USER_SETTINGS,
     icon: <ReceiptLongIcon />,
     route: PageRoutes.USER_SETTINGS,
