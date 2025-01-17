@@ -1,5 +1,7 @@
 import React from "react";
 
+import { useSession } from "next-auth/react";
+
 import { ProductPerformanceData } from "@/types";
 import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
@@ -22,6 +24,7 @@ const ProductPerformance = ({
   productsData,
   isLoading,
 }: ProductPerformance) => {
+  const { data: session } = useSession();
   return (
     <Box
       sx={{
@@ -29,7 +32,14 @@ const ProductPerformance = ({
         ...styledScroll,
       }}
     >
-      <TableContainer component={Paper}>
+      <TableContainer
+        component={Paper}
+        sx={{
+          ...(session?.user?.theme === "dark" && {
+            backgroundColor: "#12121200",
+          }),
+        }}
+      >
         <Table>
           <TableHead>
             <TableRow>

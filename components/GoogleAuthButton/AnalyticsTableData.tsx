@@ -24,6 +24,7 @@ export const AnalyticsTableData = ({
   return (
     <Paper
       sx={{
+        backgroundColor: "#12121200",
         borderRadius: "15px",
         display: "flex",
         flexDirection: "row",
@@ -69,7 +70,7 @@ export const AnalyticsTableData = ({
               </defs>
             </svg>
             <SparkLineChart
-              colors={["url(#sparkLine_gradient)"]}
+              //colors={["url(#sparkLine_gradient)"]}
               data={sparkLineData}
               height={40}
               sx={{

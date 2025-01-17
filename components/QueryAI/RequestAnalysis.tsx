@@ -31,6 +31,8 @@ const AnalyzePerformance = () => {
     isLoading: AIDataIsLoading,
     AIResponse,
     getFeedback,
+    deleteFeedback,
+    isDeleting,
   } = useAI();
   const { invalidateQuery } = useInvalidateQuery();
   const [resource, setResource] = useState<
@@ -84,11 +86,15 @@ const AnalyzePerformance = () => {
     setToggleReport(true);
   };
 
-  console.log(
-    "GPT Response",
-    gptResponses?.feedback[reportIndex as keyof typeof gptResponses.feedback]
-      ?.response
-  );
+  const handleDeleteFeedback = async (feedbackId: string) => {
+    console.log("feedbackId-client", feedbackId);
+    if (feedbackId) {
+      await deleteFeedback(String(session?.user?._id), feedbackId).then(() => {
+        invalidateQuery("ai_feedback_data");
+        setToggleReport(false);
+      });
+    }
+  };
 
   return (
     <Container maxWidth="lg" sx={{ marginTop: 5 }}>
@@ -110,11 +116,14 @@ const AnalyzePerformance = () => {
             gptResponses?.feedback?.length !== 0 ? (
               gptResponses?.feedback?.map(
                 (queryGPT: QueryGptResponse, i: number) => (
-                  <ListItem key={queryGPT?._id}>
+                  <ListItem key={queryGPT?.id}>
                     <FeedbackItems
                       response={queryGPT?.response}
                       date={queryGPT?.date}
-                      onDelete={() => console.log("deleted")}
+                      onDelete={() => {
+                        console.log(queryGPT?.id);
+                        handleDeleteFeedback(queryGPT?.id);
+                      }}
                       onGet={() => handleToggleReport(i)}
                     />
                   </ListItem>

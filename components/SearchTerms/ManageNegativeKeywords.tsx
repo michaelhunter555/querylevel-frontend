@@ -6,6 +6,7 @@ import {
   MRT_GlobalFilterTextField,
   useMaterialReactTable,
 } from "material-react-table";
+import { useSession } from "next-auth/react";
 
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
 import { useGetShoppingSearchTerms } from "@/hooks/reports-hooks";
@@ -55,6 +56,7 @@ const ManageNegativeKeywords = ({
   data,
   keywordLevel,
 }: ManageNegativeKeywords) => {
+  const { data: session } = useSession();
   const [openBulkMatch, setOpenBulkMatchType] = useState<boolean>(false);
   const [rowSelection, setRowSelection] = useState({});
   const [openAddNegativeKeyword, setOpenAddNegativeKeyword] =
@@ -62,6 +64,8 @@ const ManageNegativeKeywords = ({
   const { bulkRemoveIsLoading, bulkRemoveNegativeKeywords } =
     useGetShoppingSearchTerms();
   const { invalidateQuery } = useInvalidateQuery();
+
+  const goTransparent = session?.user?.theme === "dark";
 
   const { anchorEl, anchorElementHandler } = useAnchorElement();
   const editAnchorId = anchorEl ? "editKeyword" : null;
@@ -255,6 +259,36 @@ const ManageNegativeKeywords = ({
         </Box>
       );
     },
+    muiTableBodyRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiSelectCheckboxProps: ({ row }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableFooterRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableHeadRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiPaginationProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTablePaperProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "#12121285" }),
+      },
+    }),
   });
 
   return (

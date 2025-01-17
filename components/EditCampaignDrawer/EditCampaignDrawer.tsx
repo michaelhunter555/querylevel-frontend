@@ -292,7 +292,8 @@ const EditCampaignDrawer = ({
         ".MuiDrawer-paperAnchorRight": {
           width: { xs: "60vw", md: "40vw" },
           padding: "1rem",
-          background: session?.user?.theme === "light" ? "#f1f3f4" : "",
+          background:
+            session?.user?.theme === "light" ? "#f1f3f4" : "#212121f0",
         },
       }}
     >

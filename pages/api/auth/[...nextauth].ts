@@ -129,6 +129,7 @@ export default NextAuth({
               theme: "light",
               googleAccountId: "",
               selectedClientId: "",
+              gptQuota: 3,
             } as GoogleAuth;
 
             const newGoogleAuth = new GoogleAdsAuth(googleAuthUser);

@@ -88,7 +88,7 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
                 data: dataSet1,
                 label: "Clicks",
                 curve: "linear",
-                showMark: false,
+
                 stack: "total",
               },
               {
@@ -96,7 +96,7 @@ export default function LineChart({ productsData, isLoading }: LineChartData) {
                 data: dataSet2,
                 label: "Impressions",
                 curve: "linear",
-                showMark: false,
+
                 stack: "total",
               },
             ]}

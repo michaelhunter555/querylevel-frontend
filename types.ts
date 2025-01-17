@@ -947,7 +947,7 @@ export type TShoppingPromotionRequest = {
 export type PriceAmountProps = { value?: string | number; currency?: string };
 
 export type QueryGptResponse = {
-  _id: string;
+  id: string;
   date: string;
   response: string;
 };

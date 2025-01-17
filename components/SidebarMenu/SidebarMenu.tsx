@@ -75,7 +75,7 @@ const SidebarMenu: React.FC<{
 
   return (
     <>
-      <Header onMobileMenuClick={handleMobileMenuToggle} />
+      {isMobile && <Header onMobileMenuClick={handleMobileMenuToggle} />}
       {/*{session?.user?.googleAccountId && (
         <Stack
           direction="row"
@@ -141,9 +141,11 @@ const SidebarMenu: React.FC<{
         sx={{
           display: { xs: "none", md: "block" },
           [`& .${drawerClasses.paper}`]: {
-            backgroundColor: "background.paper",
+            backgroundColor:
+              session?.user?.theme === "dark"
+                ? "#12121200"
+                : "background.paper",
           },
-          ...(isMobile && { display: "none" }),
         }}
       >
         <Header onMobileMenuClick={handleMobileMenuToggle} />

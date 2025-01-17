@@ -51,5 +51,19 @@ export const selectPalette = (mode: PaletteMode): ThemeOptions => ({
     MuiButton: {
       ...fonts,
     },
+    MuiPaper: {
+      styleOverrides: {
+        root: {
+          ...(mode === "dark" && { backgroundColor: "#12121285" }),
+        },
+      },
+    },
+    MuiMenu: {
+      styleOverrides: {
+        paper: {
+          ...(mode === "dark" && { backgroundColor: "#121212" }),
+        },
+      },
+    },
   },
 });

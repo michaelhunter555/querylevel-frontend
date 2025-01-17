@@ -203,7 +203,14 @@ const GoogleAuthButton = () => {
 
   return (
     <>
-      <StyledBoxContainer sx={{ ...(isMobile && { padding: 1 }) }}>
+      <StyledBoxContainer
+        sx={{
+          ...(isMobile && { padding: 1 }),
+          ...(session?.user?.theme === "dark" && {
+            backgroundColor: "#12121285",
+          }),
+        }}
+      >
         {session?.user?._id && session?.user?.googleAccountId && (
           <AccountDataCards
             isLoading={analyticsLoading}
@@ -265,7 +272,16 @@ const GoogleAuthButton = () => {
       {session?.user?._id && session?.user?.googleAccountId && (
         <Grid container direction="row" alignItems="start" spacing={2}>
           <Grid item xs={12} md={6}>
-            <Paper elevation={0} sx={{ padding: 2, borderRadius: 4 }}>
+            <Paper
+              elevation={0}
+              sx={{
+                padding: 2,
+                borderRadius: 4,
+                ...(session?.user?.theme === "dark" && {
+                  backgroundColor: "#12121285",
+                }),
+              }}
+            >
               <LineChart
                 isLoading={analyticsLoading}
                 productsData={
@@ -283,7 +299,16 @@ const GoogleAuthButton = () => {
               width: "100%",
             }}
           >
-            <Paper elevation={0} sx={{ padding: 2, borderRadius: 4 }}>
+            <Paper
+              elevation={0}
+              sx={{
+                padding: 2,
+                borderRadius: 4,
+                ...(session?.user?.theme === "dark" && {
+                  backgroundColor: "#12121285",
+                }),
+              }}
+            >
               <DoughnutChart
                 isLoading={analyticsLoading}
                 productsData={
@@ -297,7 +322,13 @@ const GoogleAuthButton = () => {
 
       {session?.user?._id && session?.user?.googleAccountId && (
         <StyledBoxContainer
-          sx={{ marginTop: "1rem", ...(isMobile && { padding: 1 }) }}
+          sx={{
+            marginTop: "1rem",
+            ...(isMobile && { padding: 1 }),
+            ...(session?.user?.theme === "dark" && {
+              backgroundColor: "#12121285",
+            }),
+          }}
         >
           <Grid container direction="row" alignItems="center" spacing={1}>
             <StyledFadeIn delay={0.1} visible={true} sx={{ width: "100%" }}>

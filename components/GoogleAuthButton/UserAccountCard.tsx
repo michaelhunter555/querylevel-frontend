@@ -24,22 +24,21 @@ export const UserAccountCard = ({ loading }: { loading: boolean }) => {
         padding: "0.5rem",
         borderRadius: "15px",
         border: "1px solid #bbb",
-        margin: { xs: "2rem auto", md: "" },
       }}
     >
       <Stack direction="row" alignItems="center" spacing={2}>
         <Avatar
           src={session?.user?.image}
           alt={`${session?.user?.name}-${Math.floor(Math.random() * 1000)}`}
-          sx={{ width: 50, height: 50, marginBottom: 1 }}
+          sx={{ width: 25, height: 25, marginBottom: 1 }}
         />
         <Typography variant="subtitle2" color="text.secondary">
-          Connected to Account Id:{" "}
-          {loading ? "loading..." : session?.user?.googleAccountId}
+          Account Id: {loading ? "loading..." : session?.user?.googleAccountId}
         </Typography>
       </Stack>
       <Stack justifyContent="center" alignItems="center" sx={{ width: "100%" }}>
         <Button
+          size="small"
           sx={{
             backgroundColor: "white",
             color: "#444",

@@ -2,6 +2,7 @@ import { useCallback, useState } from "react";
 
 export const useAI = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
   const [AIResponse, setAIResponse] = useState<string>("");
 
   const performDataAnalysis = useCallback(
@@ -60,5 +61,35 @@ export const useAI = () => {
     []
   );
 
-  return { performDataAnalysis, isLoading, AIResponse, getFeedback };
+  const deleteFeedback = useCallback(
+    async (id: string, feedbackId: string): Promise<string | undefined> => {
+      setIsDeleting(true);
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_APP_SERVER}/api/ai/delete-feedback?id=${id}&feedbackId=${feedbackId}`,
+          { method: "DELETE" }
+        );
+        const data = await response.json();
+        if (!data.ok) {
+          setIsDeleting(false);
+          throw new Error(data.error);
+        }
+        setIsDeleting(false);
+        return data.message;
+      } catch (err) {
+        setIsDeleting(false);
+        console.log(err);
+      }
+    },
+    []
+  );
+
+  return {
+    performDataAnalysis,
+    isLoading,
+    AIResponse,
+    getFeedback,
+    deleteFeedback,
+    isDeleting,
+  };
 };

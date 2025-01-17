@@ -372,6 +372,9 @@ const DynamicCampaignTable = ({
     setToggleChart(true);
   };
 
+  //theme
+  const goTransparent = session?.user?.theme === "dark";
+
   const columns = useMemo<MRT_ColumnDef<DynamicUserCampaign>[]>(
     () => [
       {
@@ -488,6 +491,32 @@ const DynamicCampaignTable = ({
         </Stack>
       );
     },
+
+    muiTableBodyRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableFooterRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableHeadRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiPaginationProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTablePaperProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "#12121285" }),
+      },
+    }),
     enableRowSelection: true,
     enableDensityToggle: false,
     getRowId: (row, index) => `${row.id}`,

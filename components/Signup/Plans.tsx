@@ -37,6 +37,7 @@ const tiers = [
     description: [
       "Create 3 alpha/beta or three-tiered campaign",
       "Full App capabilities",
+      "3 free Query AI Analyses",
       "No credit-card required - Create tiered campaigns and see if the app is a fit for your business",
     ],
     buttonText: "Try for free",
@@ -59,6 +60,7 @@ const tiers = [
       "Manage Geo-location",
       "Manage Inventory Filter",
       "Manage Ad Schedule",
+      "Manage Product Groups",
       "Edit Settings",
     ],
     buttonText: "Get started",
@@ -72,6 +74,7 @@ const tiers = [
     description: [
       "All features of Growing",
       "unlimited alpha/beta or 3-tiered campaigns",
+      "10 QueryAI Shopping Performance Analyses",
     ],
     buttonText: "Get started",
     buttonVariant: "outlined",

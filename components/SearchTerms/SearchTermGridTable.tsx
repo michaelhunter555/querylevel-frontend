@@ -7,6 +7,7 @@ import {
   MRT_RowSelectionState,
   useMaterialReactTable,
 } from "material-react-table";
+import { useSession } from "next-auth/react";
 
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
 import { useGetShoppingSearchTerms } from "@/hooks/reports-hooks";
@@ -74,6 +75,7 @@ const DynamicSearchTermTable = ({
   rowSelection,
 }: DynamicSearchTermTable) => {
   const { isMobile } = useCheckDevice();
+  const { data: session } = useSession();
   const [keywordMatchType, setKeywordMatchType] = useState<string>("EXACT");
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [negativeKeywordLevel, setNegativeKeywordLevel] = useState("AD_GROUP");
@@ -83,6 +85,8 @@ const DynamicSearchTermTable = ({
     addNegativeKeywordsLoading,
   } = useGetShoppingSearchTerms();
   const { invalidateQuery } = useInvalidateQuery();
+
+  const goTransparent = session?.user?.theme === "dark";
   const columns = useMemo<MRT_ColumnDef<TSearchTerms>[]>(
     () => [
       {
@@ -182,6 +186,26 @@ const DynamicSearchTermTable = ({
     positionToolbarAlertBanner: "bottom",
     enableColumnActions: false,
     onRowSelectionChange: onRowSelection,
+    muiTableBodyRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableFooterRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTableHeadRowProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "transparent" }),
+      },
+    }),
+    muiTablePaperProps: ({ table }) => ({
+      sx: {
+        ...(goTransparent && { backgroundColor: "#12121285" }),
+      },
+    }),
     renderTopToolbar: ({ table }) => {
       const handleClearSelections = () => {
         onRowSelection({});

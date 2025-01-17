@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { useSession } from "next-auth/react";
+
 import { AdGroupCriterionResource } from "@/types";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
@@ -82,6 +84,7 @@ export const PopperMessage = ({
 }: PopperMessage) => {
   const [negativeStatus, setNegativeStatus] = useState<number>(status);
   const [shouldUpdateCpc, setShouldUpdateCpc] = useState<boolean>(false);
+  const { data: session } = useSession();
 
   const toggleCostPerClickForm = () => {
     setShouldUpdateCpc((prev) => !prev);
@@ -98,6 +101,11 @@ export const PopperMessage = ({
   return (
     <>
       <Popper
+        sx={{
+          ...(session?.user?.theme === "dark" && {
+            backgroundColor: (theme) => theme.palette.background.paper,
+          }),
+        }}
         id={id}
         open={open}
         anchorEl={anchorEl}

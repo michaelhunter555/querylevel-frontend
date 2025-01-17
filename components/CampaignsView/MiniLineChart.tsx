@@ -49,13 +49,11 @@ export function MiniLineChart({ campaignData }: MiniLineChartData) {
             data: dataSet1,
             label: "Clicks",
             curve: "linear",
-            showMark: false,
           },
           {
             data: dataSet2,
             label: "Impressions",
             curve: "linear",
-            showMark: false,
           },
         ]}
         height={355}

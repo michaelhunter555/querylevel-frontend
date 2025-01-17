@@ -131,7 +131,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
                 series={[
                   {
                     data: transformDataForPieChart as PieData[],
-                    outerRadius: isMobile ? 120 : 110,
+                    outerRadius: isMobile ? 120 : 100,
                     highlightScope: { faded: "global", highlighted: "item" },
                     faded: {
                       innerRadius: 30,
