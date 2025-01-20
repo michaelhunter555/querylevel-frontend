@@ -11,6 +11,7 @@ interface Segment {
   segment: string;
   onSegmentChange: (val: SelectChangeEvent) => void;
   removeAllTime?: boolean;
+  noSingleDays?: boolean;
   isLoading?: boolean;
 }
 
@@ -18,6 +19,7 @@ const SelectSegment = ({
   segment,
   onSegmentChange,
   removeAllTime,
+  noSingleDays,
   isLoading,
 }: Segment) => {
   const segmentChangeHandler = (val: SelectChangeEvent<string>) => {
@@ -58,13 +60,22 @@ const SelectSegment = ({
             </InputAdornment>
           }
         >
-          {Object.entries(SelectAdDates)
-            ?.filter(([key]) => key !== "ALL_TIME")
-            .map(([key, value]) => (
-              <MenuItem key={key} value={key}>
-                {value}
-              </MenuItem>
-            ))}
+          {noSingleDays
+            ? Object.entries(SelectAdDates)
+                ?.slice(2)
+                ?.filter(([key]) => key !== "ALL_TIME")
+                .map(([key, value]) => (
+                  <MenuItem key={key} value={key}>
+                    {value}
+                  </MenuItem>
+                ))
+            : Object.entries(SelectAdDates)
+                ?.filter(([key]) => key !== "ALL_TIME")
+                .map(([key, value]) => (
+                  <MenuItem key={key} value={key}>
+                    {value}
+                  </MenuItem>
+                ))}
         </Select>
       )}
     </>

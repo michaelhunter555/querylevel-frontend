@@ -1,6 +1,7 @@
 import React from "react";
 
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 import ToggleColorMode from "@/components/DashboardHome/ToggleColorMode";
 import HomeIcon from "@mui/icons-material/Home";
@@ -15,6 +16,8 @@ interface TermsOfServiceProps {
 }
 
 const TermsOfService = ({ onToggleTheme, theme }: TermsOfServiceProps) => {
+  const router = useRouter();
+
   return (
     <Container
       maxWidth="lg"
@@ -29,15 +32,17 @@ const TermsOfService = ({ onToggleTheme, theme }: TermsOfServiceProps) => {
         <Typography component="h2" variant="h3" color="text.secondary">
           Terms of Service
         </Typography>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Link href="/">
-            <HomeIcon color="primary" />
-          </Link>
-          <ToggleColorMode
-            mode={theme as PaletteMode}
-            toggleColorMode={onToggleTheme as () => void}
-          />
-        </Stack>
+        {router.pathname === "/" && (
+          <Stack direction="row" alignItems="center" spacing={2}>
+            <Link href="/">
+              <HomeIcon color="primary" />
+            </Link>
+            <ToggleColorMode
+              mode={theme as PaletteMode}
+              toggleColorMode={onToggleTheme as () => void}
+            />
+          </Stack>
+        )}
       </Stack>
 
       <Typography component="h2" variant="h6" color="text.secondary">

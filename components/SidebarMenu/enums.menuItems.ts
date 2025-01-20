@@ -10,6 +10,7 @@ export enum MenuText {
   USER_SETTINGS = "Billing",
   PROMOTIONS = "Promotions",
   AI_ANALYSIS = "Data Analysis",
+  FAQS = "FAQs",
 }
 
 export enum MenuComponent {
@@ -25,6 +26,7 @@ export enum MenuComponent {
   USER_SETTINGS = "billing",
   PROMOTION = "promotion",
   AI_ANALYSIS = "ai",
+  FAQ = "faqs",
 }
 
 export enum PageRoutes {
@@ -37,6 +39,7 @@ export enum PageRoutes {
   SEARCH_TERM_VIEW = "/search-terms",
   MANAGE_PROMOTIONS = "/manage-promotions",
   AI_DATA_ANALYZE = "/query-ai-analysis",
+  FAQs = "/faqs",
 }
 
 export enum MenuSecondText {
@@ -48,6 +51,7 @@ export enum MenuSecondText {
   USER_SETTINGS = "manage billing",
   PROMOTIONS = "Create Shopping promotions",
   AI = "AI Analysis & Feedback",
+  FAQs = "frequently asked questions",
 }
 
 export enum ThemeColor {

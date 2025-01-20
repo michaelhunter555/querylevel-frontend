@@ -74,7 +74,7 @@ const tiers = [
     description: [
       "All features of Growing",
       "unlimited alpha/beta or 3-tiered campaigns",
-      "10 QueryAI Shopping Performance Analyses",
+      "10 QueryAI Analyses for shopping performance and product groups",
     ],
     buttonText: "Get started",
     buttonVariant: "outlined",

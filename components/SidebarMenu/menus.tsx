@@ -2,6 +2,7 @@ import React from "react";
 
 import AccountTreeTwoToneIcon from "@mui/icons-material/AccountTreeTwoTone";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
+import HelpIcon from "@mui/icons-material/Help";
 import MailTwoToneIcon from "@mui/icons-material/MailTwoTone";
 import PercentIcon from "@mui/icons-material/Percent";
 import PsychologyTwoToneIcon from "@mui/icons-material/PsychologyTwoTone";
@@ -75,6 +76,13 @@ export const menuItems: MenuItem[] = [
 ];
 
 export const secondaryMenuItems: MenuItem[] = [
+  {
+    text: MenuText.FAQS,
+    //secondary: MenuSecondText.USER_SETTINGS,
+    component: MenuComponent.FAQ,
+    icon: <HelpIcon />,
+    route: PageRoutes.FAQs,
+  },
   {
     text: MenuText.USER_SETTINGS,
     //secondary: MenuSecondText.USER_SETTINGS,

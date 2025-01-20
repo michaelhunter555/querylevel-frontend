@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 import { useAI } from "@/hooks/ai-hook";
 import { useInvalidateQuery } from "@/hooks/invalidateQueries";
@@ -25,6 +26,7 @@ import FeedbackItems from "./FeedbackItems";
 
 const AnalyzePerformance = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const { isMobile } = useCheckDevice();
   const {
     performDataAnalysis,
@@ -48,6 +50,15 @@ const AnalyzePerformance = () => {
     page: 1,
     limit: 10,
   });
+  const isProductGroup =
+    router.query.adGroupId && router.query.type && router.query.adGroupName;
+
+  useEffect(() => {
+    if (isProductGroup) {
+      setAdGroupId(String(router.query.adGroupId));
+      setResource(String(router.query.type) as "product_group_view");
+    }
+  }, []);
 
   const { data: gptResponses, isLoading: gptIsLoading } = useQuery({
     queryKey: ["ai_feedback_data", page.page, page.limit],
@@ -190,9 +201,20 @@ const AnalyzePerformance = () => {
                 Analyze your shopping performance over the last 7, 14 or 30
                 days.
               </Typography>
+
               <Divider sx={{ margin: "1rem auto" }} />
 
               <Stack spacing={2}>
+                {!isProductGroup && (
+                  <Alert severity="info">
+                    You can also analyze at the <code>product group</code> level
+                    by selecting a <code>campaign</code> & <code>ad group</code>{" "}
+                    in "my campaigns"
+                  </Alert>
+                )}
+                <Typography color="text.secondary" variant="subtitle2">
+                  Remaining analyses: {gptResponses?.gptQuota}
+                </Typography>
                 <FormHelperText>Select resource for analysis:</FormHelperText>
                 <StyledStack
                   direction="row"
@@ -203,15 +225,18 @@ const AnalyzePerformance = () => {
                     session?.user?._id && session?.user?.googleAccountId
                   )}
                 >
-                  <Chip
-                    variant={
-                      resource === "product_group_view" ? "filled" : "outlined"
-                    }
-                    label="Product Group View"
-                    onClick={() => setResource("product_group_view")}
-                    clickable
-                    disabled={true}
-                  />
+                  {isProductGroup && (
+                    <Chip
+                      variant={
+                        resource === "product_group_view"
+                          ? "filled"
+                          : "outlined"
+                      }
+                      label={"Product Group View"}
+                      onClick={() => setResource("product_group_view")}
+                      clickable
+                    />
+                  )}
                   <Chip
                     variant={
                       resource === "shopping_performance_view"
@@ -232,7 +257,16 @@ const AnalyzePerformance = () => {
                     session?.user?._id && session?.user?.googleAccountId
                   )}
                 >
+                  {isProductGroup && (
+                    <Typography color="text.secondary" variant="subtitle2">
+                      QueryAI can analyze the <code>Product Group</code> from:{" "}
+                      <b>
+                        {String(router.query.adGroupName).split("-").join(" ")}
+                      </b>
+                    </Typography>
+                  )}
                   <SelectSegment
+                    noSingleDays={resource === "product_group_view"}
                     segment={segment}
                     onSegmentChange={handleSegmentChange}
                     isLoading={AIDataIsLoading}
@@ -240,10 +274,14 @@ const AnalyzePerformance = () => {
                   />
                 </StyledStack>
                 <Stack alignItems="end">
+                  <Typography variant="subtitle2" color="text.secondary">
+                    We utilize our own fine-tuned GPT model to analyze your
+                    data. We only share raw ad performance data with openai, but
+                    wont do so without your consent.
+                  </Typography>
                   <Stack direction="row" alignItems="center">
                     <Typography variant="subtitle2" color="text.secondary">
-                      I understand and give my consent to share my google ads
-                      metrics data with openai
+                      I understand.
                     </Typography>
                     <Checkbox
                       checked={isChecked}

@@ -31,7 +31,7 @@ const MenuContent = ({ hasAppAccess, onClose }: MenuContentProps) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { isMobile } = useCheckDevice();
-  const [selected, setSelected] = useState<number | null>(0);
+  const [selected, setSelected] = useState<number | null>(null);
   const [secondSelect, setSecondSelect] = useState<number | null>(null);
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const MenuContent = ({ hasAppAccess, onClose }: MenuContentProps) => {
       const index = filterMenuItems?.findIndex(
         (value) => value?.route === router.pathname
       );
-      setSelected(index !== -1 ? index : 0);
+      setSelected(index !== -1 ? index : null);
     }
   }, [router.pathname]);
 

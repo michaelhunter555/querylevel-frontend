@@ -53,6 +53,7 @@ export const useAI = () => {
           totalPages: data.totalPages,
           totalFeedback: data.totalFeedback,
           feedback: data.gptData,
+          gptQuota: data.gptQuota,
         };
       } catch (err) {
         console.log(err);

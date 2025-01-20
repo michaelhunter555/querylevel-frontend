@@ -1,7 +1,8 @@
 import React, { useMemo, useState } from "react";
 
+import { useCheckDevice } from "@/hooks/use-device-hook";
 import { ProductPerformanceData } from "@/types";
-import { SelectChangeEvent, useMediaQuery, useTheme } from "@mui/material";
+import { SelectChangeEvent } from "@mui/material";
 import Box from "@mui/material/Box";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
@@ -23,8 +24,7 @@ type PieData = {
 };
 
 const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isMobile } = useCheckDevice();
   const [dataCase, setDataCase] = useState<string>("Impressions");
 
   const transformDataForPieChart = useMemo(() => {
@@ -116,7 +116,7 @@ const DoughnutChart = ({ productsData = [], isLoading }: DonutData) => {
           ) : (
             <StyledFadeIn visible={!isLoading} delay={0.1}>
               <PieChart
-                tooltip={{ trigger: "none" }}
+                tooltip={{ trigger: isMobile ? "none" : "item" }}
                 slotProps={{
                   legend: {
                     labelStyle: {

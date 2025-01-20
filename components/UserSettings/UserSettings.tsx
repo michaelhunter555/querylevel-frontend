@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 import { signOut, useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
 
 import { useAccountSettings } from "@/hooks/useAccountSettings";
@@ -38,7 +39,6 @@ const UserSettings = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const [openDeleteModal, setOpenDeleteModal] = useState<boolean>(false);
   const [togglePlan, setTogglePlan] = useState<boolean>(false);
-  const [toggleFaqs, setToggleFaqs] = useState<boolean>(false);
   const { getAccountSettings } = useAccountSettings();
   const { data: session, status } = useSession();
   const userId = session?.user?._id;
@@ -66,10 +66,6 @@ const UserSettings = () => {
 
   const handleDeleteModalToggle = () => {
     setOpenDeleteModal((prev) => !prev);
-  };
-
-  const handleToggleFaqs = () => {
-    setToggleFaqs((prev) => !prev);
   };
 
   const handleSignOut = () => {
@@ -153,11 +149,7 @@ const UserSettings = () => {
             onClick={handleTogglePlan}
           />
 
-          <Chip
-            label={toggleFaqs ? "hide FAQS" : "FAQS"}
-            component={Button}
-            onClick={handleToggleFaqs}
-          />
+          <Chip component={Link} label={"FAQS"} href="/faqs" clickable />
 
           {togglePlan && canCancel && !isMobile && (
             <>
@@ -193,11 +185,6 @@ const UserSettings = () => {
         )}
       </Paper>
       <Box sx={{ marginTop: "1rem" }}>
-        {toggleFaqs && (
-          <Box sx={{ margin: "1rem 0" }}>
-            <BillingFaqs />
-          </Box>
-        )}
         {userSettings?.stripeCustomerId &&
           userSettings?.planType === "canceled" && (
             <Alert severity="warning" variant="outlined">

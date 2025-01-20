@@ -141,12 +141,12 @@ export default function BillingFaqs() {
             >
               When a plan is canceled, the plan status is updated to 'canceled'.
               There will be no further charges when your plan expires. If you
-              upgrade from growing to pro and agreed to the new fee, you will
-              may be charged an additional amount as an outstanding balance for
-              the next billing period. The difference would be settled based on
-              the amount of time passed since the currently selected plan, the
-              would be amount of time remaining on the new plan and the
-              calculated difference in total due.
+              upgrade from growing to pro and agreed to the new fee, you may be
+              charged an additional amount as an outstanding balance for the
+              next billing period. The difference would be settled based on the
+              amount of time passed since the current selected plan, the would
+              be amount of time remaining on the new plan and the calculated
+              difference in total due.
             </Typography>
             <Typography variant="h6">
               I downgraded and canceled, what's next?
@@ -342,11 +342,12 @@ export default function BillingFaqs() {
               gutterBottom
               sx={{ maxWidth: { sm: "100%", md: "70%" } }}
             >
-              No. We only encrypt and store your Google Ads account Id and
-              neccessary credentials issued to Query Level by Google after
-              successful app authorization. This is to retrieve specific Google
-              Shopping Ads data when you're using the app. The app can only
-              retrieve and perform operations at your request.
+              We store and encrypt your Google Ads account Id and neccessary
+              credentials issued to Query Level from Google after successful app
+              authorization. When you perform actions, the app uses these
+              credentials (and Account Id) to retrieve specific Google Shopping
+              Ads data when you're using the app. The app can only retrieve and
+              perform operations at your request.
             </Typography>
           </AccordionDetails>
         </Accordion>

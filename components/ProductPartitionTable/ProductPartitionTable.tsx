@@ -1,7 +1,13 @@
 import React, { useMemo, useState } from "react";
 
+import Link from "next/link";
+
+import { useAI } from "@/hooks/ai-hook";
 import { AdGroupCriterionResource, CriterionData } from "@/types";
+import InsightsIcon from "@mui/icons-material/Insights";
 import Button from "@mui/material/Button";
+import Chip from "@mui/material/Chip";
+import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Table from "@mui/material/Table";
@@ -11,6 +17,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 
 import { LoadingTable } from "../DataTable/LoadingTable";
@@ -64,6 +71,7 @@ const ProductPartitionTable = ({
 }: PartitionTable) => {
   const [page, setPage] = useState<number>(0);
   const [rowsPerPage, setRowsPerPage] = useState<number>(10);
+  const { performDataAnalysis } = useAI();
 
   const createHierarchyTable = useMemo(() => {
     let nodeMap = new Map();
@@ -162,12 +170,35 @@ const ProductPartitionTable = ({
               <TableCell></TableCell>
               <TableCell>
                 {!partitionIsLoading && (
-                  <Typography>
-                    Product Group ~{" "}
-                    {currentAdGroupName.length > 25
-                      ? currentAdGroupName.substring(0, 25) + "..."
-                      : currentAdGroupName}
-                  </Typography>
+                  <Stack direction={"row"} spacing={1}>
+                    <Typography>
+                      Product Group ~{" "}
+                      {currentAdGroupName.length > 25
+                        ? currentAdGroupName.substring(0, 25) + "..."
+                        : currentAdGroupName}
+                    </Typography>
+                    <Divider orientation="vertical" flexItem />
+                    <Tooltip title="Perform Query analysis?">
+                      <Chip
+                        component={Link}
+                        size="small"
+                        label="Analyze"
+                        icon={<InsightsIcon />}
+                        sx={{
+                          "& .MuiChip-icon": {
+                            color: (theme) =>
+                              theme.palette.mode === "light"
+                                ? "purple"
+                                : "yellow",
+                          },
+                        }}
+                        clickable
+                        href={`/query-ai-analysis?adGroupId=${currentAdGroupId}&type=product_group_view&adGroupName=${currentAdGroupName
+                          ?.split(" ")
+                          .join("-")}`}
+                      />
+                    </Tooltip>
+                  </Stack>
                 )}
               </TableCell>
               <TableCell>Max cpc</TableCell>
