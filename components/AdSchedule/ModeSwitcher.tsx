@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
+import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
+import Chip from '@mui/material/Chip';
+import Stack from '@mui/material/Stack';
+import Typography from '@mui/material/Typography';
 
 interface ModeSwitch {
   toggle: boolean;
@@ -47,3 +47,4 @@ export const ModeSwitcher: React.FC<ModeSwitch> = ({
 };
 
 export default ModeSwitcher;
+//jeff test

@@ -14,9 +14,11 @@ import { useGetShoppingSearchTerms } from "@/hooks/reports-hooks";
 import { useCheckDevice } from "@/hooks/use-device-hook";
 import { TSearchTerms } from "@/types";
 import BlockIcon from "@mui/icons-material/Block";
+import FilterAltIcon from "@mui/icons-material/FilterAlt";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
+import Chip from "@mui/material/Chip";
 import Divider from "@mui/material/Divider";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -28,12 +30,14 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 
 import { StyledFadeIn } from "../Shared/StyledFadeInComponents";
+import { TooltipMessage } from "../TooltipMessage/TooltipMessage";
 
 interface DynamicSearchTermTable {
   data: TSearchTerms[];
   isLoading: boolean;
   onRowSelection: React.Dispatch<React.SetStateAction<MRT_RowSelectionState>>;
   rowSelection: MRT_RowSelectionState;
+  openKeywordModal: () => void;
 }
 
 enum SearchTermTargetingStatus {
@@ -73,6 +77,7 @@ const DynamicSearchTermTable = ({
   isLoading,
   onRowSelection,
   rowSelection,
+  openKeywordModal,
 }: DynamicSearchTermTable) => {
   const { isMobile } = useCheckDevice();
   const { data: session } = useSession();
@@ -227,12 +232,31 @@ const DynamicSearchTermTable = ({
           </Stack>
 
           <Stack>
+            <Stack direction="row" alignItems="center" spacing={1}>
+              <Typography variant="subtitle2" color="text.secondary">
+                Clean up service
+              </Typography>
+              <TooltipMessage
+                title="Keyword Clean up service"
+                text="If you are using tiered campaigns sometimes search terms land in the wrong campaign usually as a result of bids being too low or high. This service will remove all the keywords that should not be landing in these campaigns and add them as phrase match negative keywords saving you time and money."
+              />
+            </Stack>
+            <Chip
+              onClick={openKeywordModal}
+              size="small"
+              label="Keyword clean up"
+              clickable
+              icon={<FilterAltIcon />}
+            />
+          </Stack>
+
+          <Stack>
             <Typography variant="subtitle2" color="text.secondary">
               Add Negative Keywords
             </Typography>
             <Button
               variant="contained"
-              disabled={noneSelected}
+              disabled={noneSelected || addNegativeKeywordsLoading}
               size="small"
               sx={{ fontSize: isMobile ? 9 : 14 }}
               //await then reset state if successful api response

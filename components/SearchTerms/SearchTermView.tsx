@@ -15,6 +15,7 @@ import LinearProgress from "@mui/material/LinearProgress";
 import Typography from "@mui/material/Typography";
 
 import SelectDate from "../CampaignsView/SelectDate";
+import KeywordServiceModal from "../Modal/KeywordServiceModal";
 import { CampaignNameAndId } from "./CampaignInfo";
 
 //import ManageNegativeKeywords from "./ManageNegativeKeywords";
@@ -48,9 +49,21 @@ const SearchTermView = ({
   searchTermData,
 }: SearchTermViewProps) => {
   const [rowSelection, setRowSelection] = useState<MRT_RowSelectionState>({});
+  const [openkwService, setOpenkwService] = useState<boolean>(false);
   const { isMobile } = useCheckDevice();
+
+  const handleKeywordServiceModal = () => {
+    setOpenkwService((prev) => !prev);
+  };
+
   return (
     <Grid container direction="column" spacing={0} sx={{ marginBottom: 3 }}>
+      <KeywordServiceModal
+        open={openkwService}
+        onClose={handleKeywordServiceModal}
+        segment={segment}
+        campaignId={campaignId}
+      />
       <Grid xs={12}>
         <CampaignNameAndId
           isLoading={campaignNamesLoading}
@@ -100,6 +113,7 @@ const SearchTermView = ({
                 data={searchTermData as TSearchTerms[]}
                 onRowSelection={setRowSelection}
                 rowSelection={rowSelection}
+                openKeywordModal={handleKeywordServiceModal}
               />
             )}
             {searchTermsIsLoading && <LinearProgress />}

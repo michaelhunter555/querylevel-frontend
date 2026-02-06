@@ -77,7 +77,7 @@ export const useKeywordCleanUpService = () => {
   ) => {
     try {
       const response = await sendRequest(
-        `${process.env.NEXT_PUBLIC_APP_SERVER}/api/KeywordCleanUpService/keyword-clean-up?id=${session?.user?._id}&segment=${segment}`,
+        `${process.env.NEXT_PUBLIC_APP_SERVER}/api/search-term-service/clean-up?id=${session?.user?._id}&segment=${segment}`,
         "POST",
         JSON.stringify({ campaignId, brand, operationLevel }),
         { "Content-Type": "application/json" }
